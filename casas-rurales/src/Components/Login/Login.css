@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     margin: auto;
-    margin-top: 200px;
+    margin-top: 100px;
     background-color: rgb(255, 249, 243);
     padding-bottom: 30px;
 }
@@ -13,7 +13,7 @@
     align-items: center;
     gap: 9px;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 25px;
 }
 
 .text{
@@ -31,10 +31,10 @@
 }
 
 .inputs{
-    margin-top: 55px;
+    margin-top: 35px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
 }
 
 .input{
@@ -42,7 +42,7 @@
     align-items: center;
     margin: auto;
     width: 480px;
-    height: 80px;
+    height: 70px;
     background-color: rgb(236, 230, 224);
     border-radius: 6px;
 }
@@ -64,14 +64,23 @@
 .submit-container{
     display: flex;
     gap: 30px;
-    margin: 60px auto;
+    margin: 20px auto;
 }
 
 .submit{
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 40px;
     width: 220px;
-    color: rgb(236, 230, 224);
+    color: rgb(255, 255, 255);
     background: rgb(255, 136, 0);
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.gray{
+    background: rgb(211, 184, 159);
 }
