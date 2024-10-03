@@ -7,7 +7,7 @@ import icon_email from '../Assets/email.png'
 const LoginSignup = () => {
 
   const [action,setAction] = useState("Iniciar Sesión");
-
+  const [userType,setUserType] = useState("Huésped");
 
 
 
@@ -18,6 +18,13 @@ const LoginSignup = () => {
         <div className='text'>{action}</div>
         <div className='underline'></div>
       </div>
+
+      
+      <div className="submit-container">
+            <div className={action==="Iniciar Sesión"?"submit":"submit gray"}onClick={()=>{setAction("Iniciar Sesión")}}>Iniciar Sesión</div>
+            <div className={action==="Registrarse"?"submit":"submit gray"}onClick={()=>{setAction("Registrarse")}}>Registrarse</div>
+        </div>
+        
       <div className='inputs'>
       
         <div className="input">
@@ -34,10 +41,13 @@ const LoginSignup = () => {
             <img src={icon_password} alt="" />
             <input type="password" placeholder="Contraseña"/>
         </div>
-        <div className="submit-container">
-            <div className={action==="Iniciar Sesión"?"submit":"submit gray"}onClick={()=>{setAction("Iniciar Sesión")}}>Iniciar Sesión</div>
-            <div className={action==="Registrarse"?"submit":"submit gray"}onClick={()=>{setAction("Registrarse")}}>Registrarse</div>
-        </div>
+
+        {action==="Iniciar Sesión"?<div></div>:<div className="user-type-container">
+            <div className={userType==="Huésped"?"user-type":"user-type gray"}onClick={()=>{setUserType("Huésped")}}>Huésped</div>
+            <div className={userType==="Propietario"?"user-type":"user-type gray"}onClick={()=>{setUserType("Propietario")}}>Propietario</div>
+        </div>}
+
+        
       </div>
     </div>
     
