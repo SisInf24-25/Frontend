@@ -11,8 +11,8 @@ const Header = () => {
         <Link to="/contact">Contacto</Link>
       </div>
       <div className="right">
-        <Link to="/">Iniciar sesión</Link>
-        <Link to="/">Registrarse</Link>
+        <Link to="/auth?action=login">Iniciar sesión</Link>
+        <Link to="/auth?action=signup">Registrarse</Link>
       </div>
     </header>
   );

@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Components/Header/Header';
-import Login from './Components/Login/Login';
+import Auth from './Components/Auth/Auth';
 import Index from './Components/Index/Index';
 
 function App() {
@@ -9,8 +9,8 @@ function App() {
     <Router>
       <Header />
       <Routes>
-        <Route path="/" element={<Login />}></Route>
-        <Route path="/index" element={<Index />}></Route>
+        <Route path="/" element={<Index />}></Route>
+        <Route path="/auth" element={<Auth />}></Route>
       </Routes>
     </Router>
   );

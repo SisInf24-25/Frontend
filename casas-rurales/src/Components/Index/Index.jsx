@@ -1,7 +1,7 @@
 import React from 'react'
 import './Index.css'
 
-const LoginSignup = () => {
+const Index = () => {
   return (
     <div className='container'>
       <div className='title'>
@@ -12,4 +12,4 @@ const LoginSignup = () => {
   )
 }
 
-export default LoginSignup
+export default Index

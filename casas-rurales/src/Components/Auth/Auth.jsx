@@ -1,17 +1,33 @@
-import React, { useState } from 'react'
-import './Login.css'
+import React, { useState, useEffect } from 'react'
+import './Auth.css'
 import icon_user from '../Assets/person.png'
 import icon_password from '../Assets/password.png'
 import icon_email from '../Assets/email.png'
+import { useLocation } from 'react-router-dom'
 
-const LoginSignup = () => {
-  const [action, setAction] = useState("login");
+const Auth = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const initialAction = queryParams.get('action') || 'login';
+
+  const [action, setAction] = useState(initialAction);
   const [userType, setUserType] = useState("guest");
+
+  useEffect(() => {
+    const newAction = queryParams.get('action') || 'login';
+    setAction(newAction);
+  }, [location.search]);
+
+  const actionNames = {
+    "login": "Iniciar sesión",
+    "signup": "Registrarse"
+  }
 
   return (
     <div className='container'>
       <div className='title'>
-        <div className='text'>{action}</div>
+        <div className='text'>{actionNames[action]}</div>
         <div className='underline'></div>
       </div>
 
@@ -45,4 +61,4 @@ const LoginSignup = () => {
   )
 }
 
-export default LoginSignup
+export default Auth
