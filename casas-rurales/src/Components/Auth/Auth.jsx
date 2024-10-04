@@ -3,10 +3,11 @@ import './Auth.css'
 import icon_user from '../Assets/person.png'
 import icon_password from '../Assets/password.png'
 import icon_email from '../Assets/email.png'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Auth = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
 
   const initialAction = queryParams.get('action') || 'login';
@@ -19,22 +20,27 @@ const Auth = () => {
     setAction(newAction);
   }, [location.search]);
 
+  const handleActionChange = (newAction) => {
+    setAction(newAction);
+    navigate(`/auth?action=${newAction}`);
+  };
+
   const actionNames = {
     "login": "Iniciar sesión",
     "signup": "Registrarse"
   }
 
   return (
-    <div className='container'>
-      <div className='title'>
-        <div className='text'>{actionNames[action]}</div>
-        <div className='underline'></div>
+    <div className="container">
+      <div className="title">
+        <div className="text">{actionNames[action]}</div>
+        <div className="underline"></div>
       </div>
 
       <div className="submit-container">
-          <div className={ action === "login" ? "submit" : "submit gray" } onClick={ ()=>{ setAction("login") } }>Iniciar Sesión</div>
-          <div className={ action === "signup" ? "submit" : "submit gray" } onClick={ ()=>{ setAction("signup") } }>Registrarse</div>
-        </div>
+        <div className={ action === "login" ? "submit" : "submit gray" } onClick={ ()=>{ handleActionChange("login") } }>{actionNames[action]}</div>
+        <div className={ action === "signup" ? "submit" : "submit gray" } onClick={ ()=>{ handleActionChange("signup") } }>{actionNames[action]}</div>
+      </div>
         
       <div className="inputs">
         <div className="input">
