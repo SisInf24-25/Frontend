@@ -14,10 +14,10 @@
     gap: 9px;
     width: 100%;
     margin-top: 25px;
+    color: rgb(255, 136, 0);
 }
 
 .text{
-    color: rgb(255, 136, 0);
     font-size: 30px;
     font-weight: 700;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -57,8 +57,8 @@
     background: transparent;
     border: none;
     outline: none;
-    color: rgb(236, 230, 224);
     font-size: 19px;
+    color:rgb(27, 27, 27);
 }
 
 .user-type-container{
@@ -104,4 +104,54 @@
 
 .gray{
     background: rgb(211, 184, 159);
+}
+
+.accept{
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.accept-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 220px;
+    color: rgb(255, 255, 255);
+    background: rgb(57, 110, 255);
+    font-size: 19px;
+    font-weight: 550;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+.header a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+.left {
+    display: flex;
+    gap: 20px;
+}
+
+.right {
+    display: flex;
+    gap: 20px;
 }
