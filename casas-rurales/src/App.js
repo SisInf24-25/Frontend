@@ -4,17 +4,26 @@ import Header from './Components/Header';
 import Index from './Pages/Index';
 import Auth from './Pages/Auth';
 import House from './Pages/Houses/House';
+import HouseAdd from './Pages/Houses/HouseAdd';
+import HouseEdit from './Pages/Houses/HouseEdit';
+import HouseList from './Pages/Houses/HouseList';
 import Admin from './Pages/Admin/Admin';
 import AdminReports from './Pages/Admin/AdminReports';
 import AdminHouses from './Pages/Admin/AdminHouses';
 import AdminUsers from './Pages/Admin/AdminUsers';
 import Book from './Pages/Books/Book'
 import BookList from './Pages/Books/BookList';
-import HostProfile from './Pages/ContactProfile';
-import HostBookList from './Pages/Books/BookListWith';
+import BookEdit from './Pages/Books/BookEdit';
 import ContactProfile from './Pages/ContactProfile';
 import BookListWith from './Pages/Books/BookListWith';
 import NotifList from './Pages/Notifs/NotifList';
+import Notif from './Pages/Notifs/Notif';
+import Host from './Pages/Host/Host'
+import Calendar from './Pages/Host/Host'
+import Profile from './Pages/Profile'
+import Report from './Pages/Report'
+
+
 
 
 function App() {

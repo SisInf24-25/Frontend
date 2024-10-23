@@ -1,0 +1,29 @@
+### OBTENER COOKIE Y CONTEXTO
+import React, { useState, useContext, useEffect } from 'react';
+import AuthContext from '../context/AuthProvider';
+
+// Variables para conocer el contexto (Usuario conectado o no)
+const { auth } = useContext(AuthContext);
+const { username } = auth;
+const { role } = auth;
+
+    --esto esta en Home.jsx--
+
+MIRAR CARPETA context PARA LA COOKIE Y ESO
+
+
+### PETICION
+useEffect(() => {
+    axios.get(URL_AUDIOLIBROS)
+      .then(response => {
+        // Actualiza el estado de los libros con los datos de los audiolibros recibidos
+        setBooks(response.data.audiolibros);
+        console.log(response.data.audiolibros);
+      })
+      .catch(error => {
+        // Maneja los errores si ocurrieron
+        console.error('Hubo un error al obtener los audiolibros:', error);
+      });
+  }, []); // La dependencia vacía [] asegura que este efecto se ejecute solo una vez al montar el componente
+
+    --esto esta en Home.jsx--
