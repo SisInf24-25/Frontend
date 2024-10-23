@@ -1,0 +1,20 @@
+.house-content {
+    display: flex; /* Usar flexbox para alinear la imagen y el número */
+    align-items: center; /* Centrar verticalmente */
+    margin-top: 20px; /* Espaciado superior */
+  }
+  
+  .house-foto {
+    width: 300px; /* Ancho fijo para la imagen de la casa */
+    height: auto; /* Mantener proporción */
+    border-radius: 8px; /* Bordes redondeados para la imagen */
+    margin-right: 20px; /* Espaciado entre la imagen y el número */
+    margin-left: 30px;
+}
+  
+  .house-numero {
+    font-size: 1.5em; /* Tamaño de fuente para el número */
+    color: #666; /* Color gris claro para el número */
+    flex-grow: 1; /* Permitir que el número ocupe el espacio restante */
+    text-align: center; /* Centrar el número dentro de su contenedor */
+  }

@@ -50,10 +50,10 @@ function App() {
         <Route path="/book/edit" element={<BookEdit />}></Route>
         <Route path="/book/with" element={<BookListWith />}></Route>
 
-        <Route path="/house" element={<House />}></Route>
-        <Route path="/house/list" element={<HouseList />}></Route>
-        <Route path="/house/edit" element={<HouseEdit />}></Route>
-        <Route path="/house/add" element={<HouseAdd />}></Route>
+        <Route path="/houses" element={<HouseList />}></Route>
+        <Route path="/houses/element" element={<House />}></Route>
+        <Route path="/houses/edit" element={<HouseEdit />}></Route>
+        <Route path="/houses/add" element={<HouseAdd />}></Route>
 
         <Route path="/notifs" element={<NotifList />}></Route>
         <Route path="/notifs/notif" element={<Notif />}></Route>

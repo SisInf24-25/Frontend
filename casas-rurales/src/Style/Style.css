@@ -1,3 +1,4 @@
+/* GENERAL */
 .container{
     display: flex;
     flex-direction: column;
@@ -155,3 +156,7 @@
     display: flex;
     gap: 20px;
 }
+
+
+
+

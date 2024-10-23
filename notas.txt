@@ -27,3 +27,28 @@ useEffect(() => {
   }, []); // La dependencia vacía [] asegura que este efecto se ejecute solo una vez al montar el componente
 
     --esto esta en Home.jsx--
+
+
+### PETICION ASINCRONA
+useEffect( () => {
+        const URL_COLECCION = `/colecciones/${id_coleccion}`
+
+      async function fetchLibros(){
+          await axios.get(URL_COLECCION, {withCredentials: true})
+          .then(response=>{
+              setColeccion(response.data);
+              setLoading(false);
+              console.log(response.data);
+          }).catch(error=>{
+              console.log(error);
+              setLoading(false);
+              if (error.response && error.response.status === 401) { 
+                console.log('No autorizado');
+                return <ErrorNoSesion/>
+              }
+          })
+      }
+      fetchLibros();
+  }, []);
+
+    --esto está en Coleccion.jsx--
