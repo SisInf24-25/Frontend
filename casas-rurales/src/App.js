@@ -7,6 +7,7 @@ import House from './Pages/Houses/House';
 import HouseAdd from './Pages/Houses/HouseAdd';
 import HouseEdit from './Pages/Houses/HouseEdit';
 import HouseList from './Pages/Houses/HouseList';
+import HouseCalendar from './Pages/Houses/HouseCalendar'
 import Admin from './Pages/Admin/Admin';
 import AdminReports from './Pages/Admin/AdminReports';
 import AdminHouses from './Pages/Admin/AdminHouses';
@@ -19,7 +20,6 @@ import BookListWith from './Pages/Books/BookListWith';
 import NotifList from './Pages/Notifs/NotifList';
 import Notif from './Pages/Notifs/Notif';
 import Host from './Pages/Host/Host'
-import Calendar from './Pages/Host/Host'
 import Profile from './Pages/Profile'
 import Report from './Pages/Report'
 
@@ -43,7 +43,6 @@ function App() {
         <Route path="/panel/users" element={<AdminUsers />}></Route>
 
         <Route path="/host" element={<Host />}></Route>
-        <Route path="/host/calendar" element={<Calendar />}></Route>
 
         <Route path="/book" element={<Book />}></Route>
         <Route path="/book/list" element={<BookList />}></Route>
@@ -52,8 +51,9 @@ function App() {
 
         <Route path="/houses" element={<HouseList />}></Route>
         <Route path="/houses/element" element={<House />}></Route>
-        <Route path="/houses/edit" element={<HouseEdit />}></Route>
-        <Route path="/houses/add" element={<HouseAdd />}></Route>
+        <Route path="/houses/element/edit" element={<HouseEdit />}></Route>
+        <Route path="/houses/element/add" element={<HouseAdd />}></Route>
+        <Route path="/houses/element/calendar" element={<HouseCalendar />}></Route>
 
         <Route path="/notifs" element={<NotifList />}></Route>
         <Route path="/notifs/notif" element={<Notif />}></Route>

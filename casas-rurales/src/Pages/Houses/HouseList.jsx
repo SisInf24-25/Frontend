@@ -12,7 +12,6 @@ const HouseList = () => {
     { id: 3, imgSrc: casaImg, nombre: 'Casa C', numero: 40 },
   ]);
 
-
   return (
     <div className='container'>
       <div className='title'>
@@ -22,6 +21,7 @@ const HouseList = () => {
           {elementos.map((elemento, i) => (
             <ElementoCasa
               key={i}
+              id={elemento.id}
               imgSrc={elemento.imgSrc}
               nombre={elemento.nombre}
               numero={elemento.numero}
