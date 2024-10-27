@@ -12,6 +12,7 @@
   /* Animación al pasar el mouse */
   .elementocasa-container:hover {
     transform: scale(1.02);
+    cursor: pointer;
   }
   
   /* Contenido de la casa */
@@ -26,12 +27,7 @@
   .elementocasa-nombre h2 {
     margin: 0;
     color: #333;
-    cursor: pointer;
     transition: color 0.3s ease;
-  }
-  
-  .elementocasa-nombre h2:hover {
-    color: #007bff;
   }
   
   /* Número de la casa */

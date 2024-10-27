@@ -1,20 +1,54 @@
+/* Contenedor de contenido de la casa */
 .house-content {
-    display: flex; /* Usar flexbox para alinear la imagen y el número */
-    align-items: center; /* Centrar verticalmente */
-    margin-top: 20px; /* Espaciado superior */
-  }
-  
-  .house-foto {
-    width: 300px; /* Ancho fijo para la imagen de la casa */
-    height: auto; /* Mantener proporción */
-    border-radius: 8px; /* Bordes redondeados para la imagen */
-    margin-right: 20px; /* Espaciado entre la imagen y el número */
-    margin-left: 30px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  justify-content: center;
 }
-  
-  .house-numero {
-    font-size: 1.5em; /* Tamaño de fuente para el número */
-    color: #666; /* Color gris claro para el número */
-    flex-grow: 1; /* Permitir que el número ocupe el espacio restante */
-    text-align: center; /* Centrar el número dentro de su contenedor */
-  }
+
+/* Imagen de la casa, ubicada a la izquierda con margen derecho */
+.house-foto {
+  width: 300px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.house-fotobotones{
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+  margin-left: 60px;
+}
+
+.house-info {
+  display: flex;
+  flex-direction: column;
+  margin-top:auto;
+  margin:auto;
+}
+
+/* Contenedor del número, centrado a la derecha de la imagen */
+.house-numero {
+  font-size: 1.5em;
+  color: #666;
+  flex-grow: 1; /* Ocupa el espacio sobrante para centrar */
+  text-align: center;
+  margin-bottom: 10px; /* Espacio entre número y botón */
+}
+
+/* Botón centrado en la parte inferior de la pantalla */
+.house-botoneditar {
+  position: absolute;
+  bottom: 20px; /* Posición desde el borde inferior */
+  transform: translateX(-50%); /* Ajuste para centrar */
+  background-color: rgb(206, 196, 191);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.house-botoneditar:hover {
+  transform: translateX(-50%) scale(1.02); /* Aumenta en hover sin descentrarse */
+}
