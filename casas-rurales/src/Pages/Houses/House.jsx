@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import '../../Style/Style.css'
 import './House.css'
 import { useLocation } from 'react-router-dom';  // Para acceder al estado pasado
-import BotonIDGenerico from '../../Components/BotonIDGenerico';
+import BotonEditCasa from '../../Components/BotonEditCasa';
+import BotonCalendar from '../../Components/BotonCalendar';
 import InterruptorGenerico from '../../Components/InterruptorGenerico';
+import BotonEliminar from '../../Components/BotonEliminar';
 
 const House = () => {
   const location = useLocation();  // Hook para obtener el estado enviado
-  const { nombre, numero, imgSrc } = location.state || {};  // Extraer datos del estado
+  const { id, nombre, numero, imgSrc } = location.state || {};  // Extraer datos del estado
   // visibleState es un booleano que guarda el estado de si la casa es o no visible
   const [visibleState, setVisibleState] = useState("on");
 
@@ -16,13 +18,12 @@ const House = () => {
     console.log("Estado \"visible\":", isOn ? "on" : "off");
   };
 
-  // Función para obtener los parámetros de consulta
-  const getQueryParams = () => {
-    const params = new URLSearchParams(location.search);
-    return params.get('id'); // Obtener el valor del parámetro 'id'
-  };
 
-  const id = getQueryParams();
+  // Función para realizar la acción de eliminar casa
+  const handleBotonEliminarClick = (id) => {
+    alert("Eliminar pulsado");
+    //TODO
+  };
 
   if (!nombre || !numero || !imgSrc) {
     return <p>No se encontró la información de la casa.</p>;  // Mensaje si no se pasan los datos
@@ -37,16 +38,22 @@ const House = () => {
       <div className='house-content'>
         <div className='house-fotobotones'>
           <img src={imgSrc} alt={`Imagen de ${nombre}`} className="house-foto" />
-          <BotonIDGenerico className="house-botoneditar"
-            nombre={'Ver calendario'}
+          <div className='house-infosobteboton-content'>
+            <div className='house-infosobreboton'>Cancelación: Sí</div>
+            <div className='house-infosobreboton'>Días de antelación cancelable: 3</div>
+            <div className='house-infosobreboton'>Visible: Sí</div>
+          </div>
+          <BotonCalendar className="house-boton"
+            nombre={nombre}
             id={numero}
-            direccion={`/houses/element/calendar?id=${id}`}
           />
-          <BotonIDGenerico className="house-botoneditar"
-            nombre={'Editar'}
+          <BotonEditCasa className="house-boton"
+            nombre={nombre}
             id={numero}
-            direccion={'/book'}
           />
+
+          <BotonEliminar id={id} handleBotonClick={() => handleBotonEliminarClick(id)}></BotonEliminar>
+
           <InterruptorGenerico onToggle={handleToggle} />
           <p>Estado del interruptor: {visibleState ? "Activado" : "Desactivado"}</p>
 

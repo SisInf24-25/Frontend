@@ -50,9 +50,9 @@ function App() {
         <Route path="/book/with" element={<BookListWith />}></Route>
 
         <Route path="/houses" element={<HouseList />}></Route>
+        <Route path="/houses/add" element={<HouseAdd />}></Route>
         <Route path="/houses/element" element={<House />}></Route>
         <Route path="/houses/element/edit" element={<HouseEdit />}></Route>
-        <Route path="/houses/element/add" element={<HouseAdd />}></Route>
         <Route path="/houses/element/calendar" element={<HouseCalendar />}></Route>
 
         <Route path="/notifs" element={<NotifList />}></Route>

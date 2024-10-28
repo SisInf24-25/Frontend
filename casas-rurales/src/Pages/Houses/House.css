@@ -38,7 +38,7 @@
 }
 
 /* Botón centrado en la parte inferior de la pantalla */
-.house-botoneditar {
+.house-boton {
   position: absolute;
   bottom: 20px; /* Posición desde el borde inferior */
   transform: translateX(-50%); /* Ajuste para centrar */
@@ -51,4 +51,8 @@
 
 .house-botoneditar:hover {
   transform: translateX(-50%) scale(1.02); /* Aumenta en hover sin descentrarse */
+}
+
+.house-infosobteboton-content{
+  margin: 20px 0px;
 }

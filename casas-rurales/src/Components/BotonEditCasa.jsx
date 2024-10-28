@@ -1,22 +1,22 @@
 import React from 'react';
-import './BotonIDGenerico.css'
+import './BotonGenerico.css'
 import { useNavigate } from 'react-router-dom';
 
-const BotonIDGenerico = ({ nombre, id, direccion }) => {
+const BotonIDGenerico = ({ nombre, id }) => {
     const navigate = useNavigate(); 
 
   // Función para manejar el click en el nombre
-  const handleBotonClick = ( id, direccion) => {
-    navigate(direccion, {
-      state: { id }  // Pasamos el objeto como estado
+  const handleBotonClick = ( id ) => {
+    navigate(`/houses/element/edit?id=${id}`, {
+      state: { id, nombre }  // Pasamos el objeto como estado
     });
   };
 
   return (
-    <button className='botongen-container' onClick={() => handleBotonClick(id, direccion)}>
+    <button className='botongen-container' onClick={() => handleBotonClick(id)}>
       <div className='botongen-content'>
         <div className='botongen-nombre'>
-          <h2>{nombre}</h2>
+          <h2>Editar casa</h2>
         </div>
       </div>
     </button>
