@@ -1,0 +1,36 @@
+/* Contenedor de contenido de la casa */
+.book-content {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    align-items: flex-start;
+  }
+  
+  .book-fotocontent{
+    margin-left: 60px;
+  }
+
+  /* Imagen de la casa, ubicada a la izquierda con margen derecho */
+  .book-foto {
+    width: 300px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .book-info {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
+  
+  /* Contenedor del número, centrado a la derecha de la imagen */
+  .book-numero {
+    font-size: 1.5em;
+    color: #666;
+    flex-grow: 1; /* Ocupa el espacio sobrante para centrar */
+    text-align: center;
+    margin-bottom: 10px; /* Espacio entre número y botón */
+  }
+  

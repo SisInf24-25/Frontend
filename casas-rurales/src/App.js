@@ -44,10 +44,10 @@ function App() {
 
         <Route path="/host" element={<Host />}></Route>
 
-        <Route path="/book" element={<Book />}></Route>
-        <Route path="/book/list" element={<BookList />}></Route>
-        <Route path="/book/edit" element={<BookEdit />}></Route>
-        <Route path="/book/with" element={<BookListWith />}></Route>
+        <Route path="/books" element={<BookList />}></Route>
+        <Route path="/books/element" element={<Book />}></Route>
+        <Route path="/books/element/edit" element={<BookEdit />}></Route>
+        <Route path="/books/with" element={<BookListWith />}></Route>
 
         <Route path="/houses" element={<HouseList />}></Route>
         <Route path="/houses/add" element={<HouseAdd />}></Route>
@@ -56,7 +56,7 @@ function App() {
         <Route path="/houses/element/calendar" element={<HouseCalendar />}></Route>
 
         <Route path="/notifs" element={<NotifList />}></Route>
-        <Route path="/notifs/notif" element={<Notif />}></Route>
+        <Route path="/notifs/element" element={<Notif />}></Route>
 
       </Routes>
     </Router>

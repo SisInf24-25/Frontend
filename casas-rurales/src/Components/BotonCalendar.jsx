@@ -1,8 +1,8 @@
 import React from 'react';
-import './BotonGenerico.css'
+import './BotonCalendar.css'
 import { useNavigate } from 'react-router-dom';
 
-const BotonIDGenerico = ({ nombre, id }) => {
+const BotonCalendar = ({ nombre, id }) => {
     const navigate = useNavigate(); 
 
   // Función para manejar el click en el nombre
@@ -23,4 +23,4 @@ const BotonIDGenerico = ({ nombre, id }) => {
   );
 };
 
-export default BotonIDGenerico;
+export default BotonCalendar;

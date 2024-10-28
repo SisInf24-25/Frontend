@@ -5,7 +5,7 @@ import '../../Style/Style.css'
 
 const HouseList = () => {
 
-  // Lista de elementos con nombre y número
+  // Ejemplo de lista de elementos con nombre y número
   const [elementos, setElementos] = useState([
     { id: 1, imgSrc: casaImg, nombre: 'Casa A', numero: 10 },
     { id: 2, imgSrc: casaImg, nombre: 'Casa B', numero: 25 },

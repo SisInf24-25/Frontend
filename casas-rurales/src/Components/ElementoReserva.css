@@ -1,6 +1,6 @@
 
 
-  .elementocalendar-container {
+  .elementoreserva-container {
     background-color: white;
     border-radius: 8px;
     margin-bottom: 8px;
@@ -9,9 +9,14 @@
     transition: transform 0.2s ease;
   }
   
+  /* Animación al pasar el mouse */
+  .elementoreserva-container:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+  }
   
   /* Contenido de la casa */
-  .elementocalendar-content {
+  .elementoreserva-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,20 +24,21 @@
   }
   
   /* Nombre de la casa */
-  .elementocalendar-nombre h2 {
+  .elementoreserva-nombre h2 {
     margin: 0;
     color: #333;
     transition: color 0.3s ease;
   }
   
   /* Número de la casa */
-  .elementocalendar-numero p {
+  .elementoreserva-numero p {
     margin: 0;
     font-size: 1.2em;
     color: #666;
+    margin-left: 50px;
   }
 
-  .elementocalendar-foto img {
+  .elementoreserva-foto img {
     width: 70px; /* Ajusta el tamaño de la imagen */
     height: auto;
     border-radius: 8px; /* Bordes redondeados */

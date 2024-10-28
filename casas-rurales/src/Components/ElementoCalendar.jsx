@@ -1,5 +1,5 @@
 import React from 'react';
-import './ElementoCasa.css'
+import './ElementoCalendar.css'
 
 const ElementoCalendar = ({ id, fechaIni, fechaFin }) => {
 
