@@ -8,7 +8,7 @@ const Host = () => {
   return (
     <div className='container'>
       <div className='title'>
-        <div className='text'>Host</div>
+        <div className='text'>Perfil de Host</div>
         <div className='underline'></div>
       </div>
       <div className='container'>

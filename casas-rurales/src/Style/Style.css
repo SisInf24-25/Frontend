@@ -49,17 +49,20 @@
 }
 
 .input img{
-    margin: 0px 30px;
+    margin-left: 30px;
 }
 
-.input input{
+.input input,
+.genericinput input{
     height: 50px;
     width: 400px;
     background: transparent;
     border: none;
     outline: none;
+    margin: auto;
     font-size: 19px;
     color:rgb(27, 27, 27);
+    margin-left: 30px;
 }
 
 .user-type-container{
@@ -114,6 +117,7 @@
     padding-top: 20px;
 }
 
+
 .accept-button{
     display: flex;
     justify-content: center;
@@ -125,6 +129,11 @@
     font-size: 19px;
     font-weight: 550;
     border-radius: 10px;
+    cursor: pointer;
+}
+
+.accept-button:hover{
+    transform: scale(1.02);
     cursor: pointer;
 }
 
@@ -157,6 +166,68 @@
     gap: 20px;
 }
 
+.infoizq-infodcha {
+    display: flex;
+    width: 100%;
+}
+
+.infoizq {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 10px;
+    gap: 10px;
+}
+
+.infodcha {
+    width: 70%;
+    margin: 20px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.genericinput{
+    display: flex;
+    margin-right: auto;
+    margin: 10px 40px;
+    width: 600px;
+    height: 70px;
+    background-color: rgb(236, 230, 224);
+    border-radius: 6px;
+}
+
+.interruptor-content{
+    display: flex;
+    flex-direction: row;
+}
+
+.interruptor-texto{
+    font-size: 19px;
+    margin-right: 20px;
+    margin: auto;
+}
+
+
+.cancelable-container{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.cancelable-input {
+    margin-left: 10px; /* Espacio al lado del interruptor */
+    height: 30px;
+    width: 60px;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.cancelable-texto {
+    margin-top: 4px; /* Espacio entre el input y el texto */
+    margin-left: 5px; /* Opcional: desplaza el texto un poco a la izquierda */
+}
 
 
 
