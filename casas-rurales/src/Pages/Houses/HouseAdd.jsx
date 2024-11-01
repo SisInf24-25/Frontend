@@ -66,6 +66,7 @@ const HouseAdd = () => {
           <div className="genericinput">
             <input type="text" placeholder="Campo 2" />
           </div>
+          <div className="genericinput">
             <input type="text" placeholder="Campo 3" />
           </div>
           <div className="genericinput">
