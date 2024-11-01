@@ -4,6 +4,7 @@ import '../../Style/Style.css'
 import '../../Components/BotonIDGenerico.css'
 import './Host.css'
 
+
 const Host = () => {
   return (
     <div className='container'>

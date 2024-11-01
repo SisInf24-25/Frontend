@@ -3,12 +3,10 @@
 .botongen-container {
     background-color: rgb(206, 196, 191);
     border-radius: 8px;
-    padding-left: 100px;
-    padding-right: 100px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
     height: 50px;
-    width: auto;
+    width: 300px;
     display: inline-block;
     margin: 5px;
   }

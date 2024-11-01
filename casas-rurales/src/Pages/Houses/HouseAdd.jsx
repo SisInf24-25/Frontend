@@ -9,7 +9,7 @@ const HouseAdd = () => {
 
   const [visibleState, setVisibleState] = useState("visible");
   const [cancelableState, setCancelableState] = useState("cancelable");
-  const [cancelableNumber, setCancelableNumber] = useState(''); // cancelableNumber almacena el valor del input de número
+  const [cancelableNumber, setCancelableNumber] = useState('1'); // cancelableNumber almacena el valor del input de número
 
   const handleVisibleToggle = (isVisible) => {
     setVisibleState(isVisible);
@@ -45,6 +45,11 @@ const HouseAdd = () => {
                   onChange={(e) => setCancelableNumber(e.target.value)}
                   className="cancelable-input"
                   min='1'
+                  onBlur={() => {
+                    if (cancelableNumber < 1) {
+                      setCancelableNumber('1');
+                    }
+                  }}
                 />
               </div>
             )}
@@ -59,7 +64,15 @@ const HouseAdd = () => {
           </div>
 
           <div className="genericinput">
-            <input type="text" placeholder="Contraseña" />
+            <input type="text" placeholder="Campo 2" />
+          </div>
+            <input type="text" placeholder="Campo 3" />
+          </div>
+          <div className="genericinput">
+            <input type="text" placeholder="Campo 4" />
+          </div>
+          <div className="genericinput">
+            <input type="text" placeholder="Campo 5" />
           </div>
         </div>        
       </div>

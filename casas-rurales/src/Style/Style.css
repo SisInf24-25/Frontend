@@ -182,10 +182,12 @@
 }
 
 .infodcha {
-    width: 70%;
+    width: 50%;
     margin: 20px 10px;
     display: flex;
     flex-direction: column;
+    height: 50vh;        /* Hace que la división ocupe toda la altura de la pantalla */
+    overflow-y: auto;     
 }
 
 .genericinput{
@@ -205,8 +207,7 @@
 
 .interruptor-texto{
     font-size: 19px;
-    margin-right: 20px;
-    margin: auto;
+    margin-right: 10px;
 }
 
 

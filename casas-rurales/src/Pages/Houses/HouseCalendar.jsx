@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import '../../Style/Style.css'
 import ElementoCalendar from '../../Components/ElementoCalendar'
 
 const HouseCalendar = () => {
   const location = useLocation();  // Hook para obtener el estado enviado
+  const navigate = useNavigate();
   const { id, nombre } = location.state || {};  // Extraer datos del estado
 
    // Lista de elementos con nombre y número
@@ -28,6 +30,9 @@ const HouseCalendar = () => {
               fechaFin={elemento.fechaFin}
             />
           ))}
+      </div>
+      <div className="accept">
+        <div className="accept-button" onClick={ () => { navigate(-1); }}>Aceptar</div>
       </div>
     </div>
   )

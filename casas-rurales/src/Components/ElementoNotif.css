@@ -1,6 +1,6 @@
 
 
-  .elementocasa-container {
+  .elementonotif-container {
     background-color: white;
     border-radius: 8px;
     margin-bottom: 8px;
@@ -10,13 +10,13 @@
   }
   
   /* Animación al pasar el mouse */
-  .elementocasa-container:hover {
+  .elementonotif-container:hover {
     transform: scale(1.02);
     cursor: pointer;
   }
   
   /* Contenido de la casa */
-  .elementocasa-content {
+  .elementonotif-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,23 +24,16 @@
   }
   
   /* Nombre de la casa */
-  .elementocasa-nombre h2 {
+  .elementonotif-nombre h2 {
     margin: 0;
     color: #333;
     transition: color 0.3s ease;
   }
   
   /* Número de la casa */
-  .elementocasa-numero p {
+  .elementonotif-numero p {
     margin: 0;
     font-size: 1.2em;
     color: #666;
     margin-left: 50px;
-  }
-
-  .elementocasa-foto img {
-    width: 70px; /* Ajusta el tamaño de la imagen */
-    height: auto;
-    border-radius: 8px; /* Bordes redondeados */
-    margin-right: 20px; /* Espacio entre la imagen y el texto */
   }

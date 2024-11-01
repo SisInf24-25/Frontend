@@ -8,24 +8,10 @@
 
 /* Imagen de la casa, ubicada a la izquierda con margen derecho */
 .house-foto {
-  width: 300px;
+  width: 200px;
   height: auto;
   border-radius: 8px;
   margin-bottom: 20px;
-}
-
-.house-fotobotones{
-  display: flex;
-  flex-direction: column;
-  margin-right: auto;
-  margin-left: 60px;
-}
-
-.house-info {
-  display: flex;
-  flex-direction: column;
-  margin-top:auto;
-  margin:auto;
 }
 
 /* Contenedor del número, centrado a la derecha de la imagen */
@@ -37,22 +23,16 @@
   margin-bottom: 10px; /* Espacio entre número y botón */
 }
 
-/* Botón centrado en la parte inferior de la pantalla */
-.house-boton {
-  position: absolute;
-  bottom: 20px; /* Posición desde el borde inferior */
-  transform: translateX(-50%); /* Ajuste para centrar */
-  background-color: rgb(206, 196, 191);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.2s ease;
+.house-infoizq {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 10px;
+  gap: 5px;
 }
 
-.house-botoneditar:hover {
-  transform: translateX(-50%) scale(1.02); /* Aumenta en hover sin descentrarse */
-}
-
-.house-infosobteboton-content{
+.house-infoizq-content{
   margin: 20px 0px;
 }

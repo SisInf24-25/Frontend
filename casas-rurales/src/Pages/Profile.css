@@ -1,0 +1,25 @@
+.profile-infoizq{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 0px;
+  gap: 10px;
+}
+
+.profile-infodcha {
+  width: 50%;
+  margin: 20px;
+  margin-right: 200px;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;        /* Hace que la división ocupe toda la altura de la pantalla */
+  overflow-y: auto;     
+}
+
+.profile-foto {
+  width: 200px;
+  height: auto;
+
+}
