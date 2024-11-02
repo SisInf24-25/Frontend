@@ -20,7 +20,7 @@ const House = () => {
     toast.warn(
       ({ closeToast }) => (
         <div>
-          <p style={{fontSize: '25px', textAlign: 'center'}}>¿Estás seguro de que deseas <b>eliminar</b> esta casa?</p>
+          <p style={{ fontSize: '25px', textAlign: 'center' }}>¿Estás seguro de que deseas <b>eliminar</b> esta casa?</p>
           <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
           <button
               onClick={closeToast}

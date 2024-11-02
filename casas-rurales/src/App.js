@@ -12,6 +12,7 @@ import Admin from './Pages/Admin/Admin';
 import AdminReports from './Pages/Admin/AdminReports';
 import AdminHouses from './Pages/Admin/AdminHouses';
 import AdminUsers from './Pages/Admin/AdminUsers';
+import AdminUser from './Pages/Admin/AdminUser';
 import Book from './Pages/Books/Book'
 import BookList from './Pages/Books/BookList';
 import BookEdit from './Pages/Books/BookEdit';
@@ -22,9 +23,6 @@ import Notif from './Pages/Notifs/Notif';
 import Host from './Pages/Host/Host'
 import Profile from './Pages/Profile'
 import Report from './Pages/Report'
-
-
-
 
 function App() {
   return (
@@ -38,9 +36,10 @@ function App() {
         <Route path="/report" element={<Report />}></Route>
 
         <Route path="/panel" element={<Admin />}></Route>
-        <Route path="/panel/reports" element={<AdminReports />}></Route>
-        <Route path="/panel/houses" element={<AdminHouses />}></Route>
         <Route path="/panel/users" element={<AdminUsers />}></Route>
+        <Route path="/panel/user" element={<AdminUser />}></Route>
+        <Route path="/panel/houses" element={<AdminHouses />}></Route>
+        <Route path="/panel/reports" element={<AdminReports />}></Route>
 
         <Route path="/host" element={<Host />}></Route>
 

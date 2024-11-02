@@ -1,0 +1,56 @@
+
+
+  .elementoadmincasa-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  /* Contenido de la casa */
+  .elementoadmincasa-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 120px; /* Añadimos padding lateral para dar más espacio */
+  }
+
+  /* Animación al pasar el mouse */
+  .elementoadmincasa-content:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+  }
+  
+  /* Nombre de la casa */
+  .elementoadmincasa-nombre h2 {
+    margin: 0;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  /* Número de la casa */
+  .elementoadmincasa-numero p {
+    margin: 0;
+    font-size: 1.2em;
+    color: #666;
+    margin-left: 50px;
+  }
+
+  /* Dueño de la casa */
+  .elementoadmincasa-host p {
+    margin: 0;
+    font-size: 1.2em;
+    color: #666;
+    margin-left: 50px;
+  }
+
+  .elementoadmincasa-foto img {
+    width: 70px; /* Ajusta el tamaño de la imagen */
+    height: auto;
+    border-radius: 8px; /* Bordes redondeados */
+    margin-right: 20px; /* Espacio entre la imagen y el texto */
+  }
