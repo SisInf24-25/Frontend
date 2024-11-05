@@ -190,11 +190,41 @@
     overflow-y: auto;     
 }
 
+.infocentroizq {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 20px;
+    gap: 10px;
+}
+
+.infocentrocentro {
+    width: 30%;
+    margin: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;        /* Hace que la división ocupe toda la altura de la pantalla */
+    overflow-y: auto;
+}
+
+.infocentrodcha {
+    width: 50%;
+    margin: 20px 0px;
+    margin-right: 10px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;        /* Hace que la división ocupe toda la altura de la pantalla */
+    overflow-y: auto;     
+}
+
 .genericinput{
     display: flex;
     margin-right: auto;
     margin: 10px 40px;
-    width: 600px;
+    width: auto;
     height: 70px;
     background-color: rgb(236, 230, 224);
     border-radius: 6px;

@@ -1,3 +1,9 @@
+### INSTALAR
+react-router-dom
+react-calendar
+leaflet react-leaflet
+
+
 ### OBTENER COOKIE Y CONTEXTO
 import React, { useState, useContext, useEffect } from 'react';
 import AuthContext from '../context/AuthProvider';

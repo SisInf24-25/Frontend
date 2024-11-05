@@ -1,0 +1,49 @@
+/* Estilo para el contenedor del calendario */
+.calendar-container {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .calendar-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Resalta el rango de fechas seleccionado */
+  .highlight-range {
+    background-color: #e6ffe6 !important;
+    color: #333 !important;
+  }
+  
+  /* Estilo para las fechas ocupadas */
+  .react-calendar__tile--disabled {
+    background-color: #ffd6d6 !important;
+    color: #999 !important;
+    cursor: not-allowed;
+  }
+  
+  /* Estilo general del calendario */
+  .react-calendar {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .react-calendar__navigation button {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus {
+    background-color: #f0f8ff;
+  }
+  
+  /* Cambia el color de la fecha seleccionada */
+  .react-calendar__tile--active {
+    background-color: #4caf50 !important;
+    color: white !important;
+  }
+  

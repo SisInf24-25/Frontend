@@ -2,7 +2,11 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import casaImg from '../../Images/sample-house.jpg';
 import InterruptorGenerico from '../../Components/InterruptorGenerico';
+import Mapa from '../../Components/Mapa'
 import '../../Style/Style.css'
+import { MapContainer, TileLayer } from 'react-leaflet';
+
+
 
 const HouseAdd = () => {
   const navigate = useNavigate();
@@ -10,7 +14,14 @@ const HouseAdd = () => {
   const [visibleState, setVisibleState] = useState("visible");
   const [cancelableState, setCancelableState] = useState("cancelable");
   const [cancelableNumber, setCancelableNumber] = useState('1'); // cancelableNumber almacena el valor del input de número
-
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  
+  const handleMapClick = (lat, lng) => {
+    setLatitude(lat);
+    setLongitude(lng);
+  };
+  
   const handleVisibleToggle = (isVisible) => {
     setVisibleState(isVisible);
     console.log("Estado \"visible\":", isVisible ? "visible" : "no-visible");
@@ -29,7 +40,7 @@ const HouseAdd = () => {
         <div className='underline'></div>
       </div>
       <div className='infoizq-infodcha'>
-        <div className='infoizq'>
+        <div className='infocentroizq'>
           <img src={casaImg} alt={`Imagen`} className="house-foto" />
           <div className='interruptor-content'>
             <div className='interruptor-texto'>¿Cancelable?</div>
@@ -58,14 +69,19 @@ const HouseAdd = () => {
             <InterruptorGenerico onToggle={handleVisibleToggle} />
           </div>
         </div>
-        <div className="infodcha">
+        <div className='infodcentrocentro'>
+        <h2>Seleccione la ubicación:</h2>
+        <Mapa onMapClick={handleMapClick} />
+        </div>  
+        <div className="infocentrodcha">
           <div className="genericinput">
             <input type="text" placeholder="Nombre de la casa" />
           </div>
-
+          
           <div className="genericinput">
             <input type="text" placeholder="Campo 2" />
           </div>
+        
           <div className="genericinput">
             <input type="text" placeholder="Campo 3" />
           </div>
@@ -75,7 +91,8 @@ const HouseAdd = () => {
           <div className="genericinput">
             <input type="text" placeholder="Campo 5" />
           </div>
-        </div>        
+        </div>
+              
       </div>
       <div className="accept">
             <div className="accept-button" onClick={ () => { navigate('/houses'); }}>Aceptar</div>
