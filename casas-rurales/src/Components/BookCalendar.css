@@ -11,12 +11,38 @@
     font-family: Arial, sans-serif;
   }
   
-  /* Resalta el rango de fechas seleccionado */
-  .highlight-range {
-    background-color: #e6ffe6 !important;
-    color: #333 !important;
+  
+  /* Cambia el color de la fecha seleccionada */
+  .react-calendar__tile--active {
+    background-color: #a1e6f2 !important;
+    color: white !important;
   }
   
+  /* Día inicial del rango seleccionado */
+.highlight-start {
+  background-color: #35b0cfc7 !important; /* Azul oscuro */
+  color: white !important;
+}
+
+/* Día final del rango seleccionado */
+.highlight-end {
+  background-color: #35b0cfc7 !important; /* Azul oscuro */
+  color: white !important;
+}
+
+/* Días intermedios del rango seleccionado */
+.highlight-middle {
+  background-color: #a1e6f2 !important; /* Azul más claro */
+  color: #333 !important;
+}
+  
+
+  .tile-no-disponible {
+    background-color: #ff565685 !important; /* Fondo rojo */
+    color: rgba(90, 90, 90, 0.438) !important;
+    cursor: not-allowed;
+  }
+
   /* Estilo para las fechas ocupadas */
   .react-calendar__tile--disabled {
     background-color: #ffd6d6 !important;
@@ -39,11 +65,5 @@
   .react-calendar__tile:enabled:hover,
   .react-calendar__tile:enabled:focus {
     background-color: #f0f8ff;
-  }
-  
-  /* Cambia el color de la fecha seleccionada */
-  .react-calendar__tile--active {
-    background-color: #4caf50 !important;
-    color: white !important;
   }
   

@@ -1,61 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './BookCalendar.css';
 
 const BookCalendar = ({ onDateRangeChange }) => {
   const [dateRange, setDateRange] = useState([null, null]);
-  const [availability, setAvailability] = useState({
-    '2024-11-28': 'ocupado',
-    '2024-12-05': 'ocupado',
-  });
 
-  // Maneja la selección de rango de fechas
+  const [availability, setAvailability] = useState([
+    { start: new Date(2024, 10, 20), end: new Date(2024, 10, 25) },
+    { start: new Date(2024, 11, 1), end: new Date(2024, 11, 10) }
+  ]);
+
   const handleDateChange = (range) => {
     const [start, end] = range;
 
-    // Genera una lista de fechas entre `start` y `end`
-    const selectedDates = [];
-    let currentDate = new Date(start);
-    while (currentDate <= end) {
-      const dateStr = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
-        .toString()
-        .padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
-
-      selectedDates.push(dateStr);
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    // Verifica si alguna de las fechas en `selectedDates` está ocupada
-    const hasUnavailableDate = selectedDates.some(
-      (date) => availability[date] === 'ocupado'
+    const hasUnavailableRange = availability.some(({ start: rangeStart, end: rangeEnd }) => 
+      (start >= rangeStart && start <= rangeEnd) || 
+      (end >= rangeStart && end <= rangeEnd) || 
+      (start <= rangeStart && end >= rangeEnd)
     );
 
-    if (hasUnavailableDate) {
-      setDateRange([null, null]); // Resetea la selección
+    if (hasUnavailableRange) {
+      setDateRange([null, null]); 
     } else {
-      setDateRange(range); // Guarda el rango si es válido
+      setDateRange(range);
       if (onDateRangeChange) {
-        onDateRangeChange(range); // Llama a la función de la página para pasar el rango
+        onDateRangeChange(range); 
       }
     }
   };
 
   const isTileDisabled = ({ date, view }) => {
     if (view === 'month') {
-      const dateStr = `${date.getFullYear()}-${(date.getMonth() + 1)
-        .toString()
-        .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-      return availability[dateStr] === 'ocupado';
+      return availability.some(({ start, end }) => date >= start && date <= end);
     }
     return false;
   };
 
   const tileClassName = ({ date, view }) => {
-    if (view === 'month' && dateRange[0] && dateRange[1]) {
-      const [start, end] = dateRange;
-      if (date >= start && date <= end) {
-        return 'highlight-range';
+    if (view === 'month') {
+      if (availability.some(({ start, end }) => date >= start && date <= end)) {
+        return 'tile-no-disponible';
+      }
+
+      if (dateRange[0] && dateRange[1]) {
+        const [start, end] = dateRange;
+
+        if (date.toDateString() === start.toDateString()) {
+          return 'highlight-start';
+        }
+        if (date.toDateString() === end.toDateString()) {
+          return 'highlight-end';
+        }
+        if (date > start && date < end) {
+          return 'highlight-middle';
+        }
       }
     }
     return null;
