@@ -40,7 +40,10 @@ const ElementoCalendar = ({ onDateRangeChange, selectable, fechas }) => {
 
   const isTileDisabled = ({ date, view }) => {
     if (view === 'month') {
-      return dateFechas.some(({ fechaIni, fechaFin }) => date >= fechaIni && date <= fechaFin);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      return (selectable && date < today) || dateFechas.some(({ fechaIni, fechaFin }) => date >= fechaIni && date <= fechaFin);
     }
     return false;
   };

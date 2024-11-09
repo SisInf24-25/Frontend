@@ -47,7 +47,7 @@
 }
 
 /* Asegúrate de habilitar la selección de texto y el cursor en campos interactivos */
-input, textarea, select, button, a {
+input, textarea, select, button {
   -webkit-user-select: text;  /* Permite seleccionar texto en campos de entrada */
   -moz-user-select: text;
   -ms-user-select: text;
