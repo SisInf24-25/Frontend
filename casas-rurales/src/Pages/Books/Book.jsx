@@ -13,8 +13,14 @@ const Book = () => {
 
   const handleDateRangeChange = (range) => {
     setSelectedDateRange(range);
-    console.log("Rango de fechas seleccionado:\n", range[0], "\n-----\n", range[1] );
+    console.log("Rango de fechas seleccionado:\n", range[0].toLocaleDateString('es-ES'), "--->", range[1].toLocaleDateString('es-ES') );
   };
+
+  const [elementos, setElementos] = useState([
+    { id: 1, fechaIni: [2, 11, 2024] , fechaFin: [4, 11, 2024] },
+    { id: 2, fechaIni: [7, 11, 2024], fechaFin: [15, 11, 2024] },
+    { id: 3, fechaIni: [18, 11, 2024], fechaFin: [21, 11, 2024] },
+  ]);
 
   return (
     <div className='container'>
@@ -28,7 +34,7 @@ const Book = () => {
           </div>
           <div className='book-info'>
             <div className='book-numero'>Número: {numero}</div>
-            <BookCalendar onDateRangeChange={handleDateRangeChange} />
+            <BookCalendar onDateRangeChange={handleDateRangeChange} selectable={true} fechas={elementos}/>
           </div>
         </div>
     </div>

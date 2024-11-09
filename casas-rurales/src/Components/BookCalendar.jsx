@@ -1,20 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './BookCalendar.css';
 
-const BookCalendar = ({ onDateRangeChange }) => {
-  const [dateRange, setDateRange] = useState([null, null]);
+const BookCalendar = ({ onDateRangeChange, selectable, fechas }) => {
 
-  const [availability, setAvailability] = useState([
-    { start: new Date(2024, 10, 20), end: new Date(2024, 10, 25) },
-    { start: new Date(2024, 11, 1), end: new Date(2024, 11, 10) }
-  ]);
+  const [dateRange, setDateRange] = useState([null, null]);
+    // Convertir las fechas de string a Date solo una vez
+  const [dateFechas, setDateFechas] = useState([]);
+
+  useEffect(() => {
+    // Convertir las fechas de string a Date solo una vez
+    const dates = fechas.map(fecha => ({
+      id: fecha.id,
+      fechaIni: new Date(fecha.fechaIni[2], fecha.fechaIni[1] - 1, fecha.fechaIni[0]), // Ajustar formato
+      fechaFin: new Date(fecha.fechaFin[2], fecha.fechaFin[1] - 1, fecha.fechaFin[0]) // Ajustar formato
+    }));
+    console.log(dates);
+    setDateFechas(dates);
+  }, [fechas]); // Solo ejecuta cuando `fechas` cambie
 
   const handleDateChange = (range) => {
+    if (!selectable) return;
     const [start, end] = range;
-
-    const hasUnavailableRange = availability.some(({ start: rangeStart, end: rangeEnd }) => 
+    const hasUnavailableRange = dateFechas.some(({ fechaIni: rangeStart, fechaFin: rangeEnd }) => 
       (start >= rangeStart && start <= rangeEnd) || 
       (end >= rangeStart && end <= rangeEnd) || 
       (start <= rangeStart && end >= rangeEnd)
@@ -32,14 +41,14 @@ const BookCalendar = ({ onDateRangeChange }) => {
 
   const isTileDisabled = ({ date, view }) => {
     if (view === 'month') {
-      return availability.some(({ start, end }) => date >= start && date <= end);
+      return dateFechas.some(({ start, end }) => date >= start && date <= end);
     }
     return false;
   };
 
   const tileClassName = ({ date, view }) => {
     if (view === 'month') {
-      if (availability.some(({ start, end }) => date >= start && date <= end)) {
+      if (dateFechas.some(({ start, end }) => date >= start && date <= end)) {
         return 'tile-no-disponible';
       }
 
@@ -71,7 +80,7 @@ const BookCalendar = ({ onDateRangeChange }) => {
         value={dateRange}
       />
       {dateRange[0] && dateRange[1] && (
-        <p>Rango seleccionado: {dateRange[0].toLocaleDateString()} - {dateRange[1].toLocaleDateString()}</p>
+                    <p>Rango seleccionado: {dateRange[0].toLocaleDateString('es-ES')} - {dateRange[1].toLocaleDateString('es-ES')}</p>
       )}
     </div>
   );
