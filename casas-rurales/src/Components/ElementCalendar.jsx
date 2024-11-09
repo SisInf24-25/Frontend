@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './BookCalendar.css';
+import './ElementCalendar.css';
 
 const BookCalendar = ({ onDateRangeChange, selectable, fechas }) => {
 
@@ -16,7 +16,6 @@ const BookCalendar = ({ onDateRangeChange, selectable, fechas }) => {
       fechaIni: new Date(fecha.fechaIni[2], fecha.fechaIni[1] - 1, fecha.fechaIni[0]), // Ajustar formato
       fechaFin: new Date(fecha.fechaFin[2], fecha.fechaFin[1] - 1, fecha.fechaFin[0]) // Ajustar formato
     }));
-    console.log(dates);
     setDateFechas(dates);
   }, [fechas]); // Solo ejecuta cuando `fechas` cambie
 
@@ -29,7 +28,7 @@ const BookCalendar = ({ onDateRangeChange, selectable, fechas }) => {
       (fechaIni <= rangeStart && fechaFin >= rangeEnd)
     );
 
-    if (hasUnavailableRange) {
+    if (hasUnavailableRange || dateRange == [null,null]) {
       setDateRange([null, null]); 
     } else {
       setDateRange(range);
@@ -52,6 +51,13 @@ const BookCalendar = ({ onDateRangeChange, selectable, fechas }) => {
         return 'tile-no-disponible';
       }
 
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (selectable && date < today) {
+        return 'tile-no-disponible';
+      }
+
       if (dateRange[0] && dateRange[1]) {
         const [fechaIni, fechaFin] = dateRange;
 
@@ -71,7 +77,9 @@ const BookCalendar = ({ onDateRangeChange, selectable, fechas }) => {
 
   return (
     <div className="calendar-container">
-      <h3>Seleccione un rango de fechas</h3>
+      {selectable &&
+        (<h3>Seleccione un rango de fechas</h3>)    
+      }
       <Calendar
         selectRange={true}
         onChange={handleDateChange}

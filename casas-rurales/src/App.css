@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+/* Eliminar el cursor de texto en todos los elementos que no sean de entrada o áreas de texto */
+* {
+  -webkit-user-select: none;  /* Deshabilita la selección de texto */
+  -moz-user-select: none;     /* Deshabilita la selección de texto */
+  -ms-user-select: none;      /* Deshabilita la selección de texto */
+  user-select: none;          /* Deshabilita la selección de texto */
+  caret-color: transparent;   /* Hace invisible el cursor (caret) */
+}
+
+/* Asegúrate de habilitar la selección de texto y el cursor en campos interactivos */
+input, textarea, select, button, a {
+  -webkit-user-select: text;  /* Permite seleccionar texto en campos de entrada */
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;          /* Permite seleccionar texto */
+  caret-color: auto;          /* Restaura el cursor visible en los campos de entrada */
+}

@@ -5,14 +5,15 @@ import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'
 import casaImg from '../Images/sample-house.jpg';
 import ElementoCasaExtendida from '../Components/ElementoCasaExtendida';
-import BookCalendar from '../Components/BookCalendar';
+import BookCalendar from '../Components/ElementCalendar';
 
 const Index = () => {
 
   const location = useLocation();
   const [toastShown, setToastShown] = useState(false); // Estado para evitar múltiples toasts
   const [searchCity, setSearchCity] = useState(''); // Estado para almacenar la ciudad buscada
-  
+  const [selectedRange, setSelectedRange] = useState([null, null]);
+
 
   const [casas, setCasas] = useState([
     { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza" },
@@ -34,8 +35,8 @@ const Index = () => {
     casa.ciudad.toLowerCase().includes(searchCity.toLowerCase()) // Filtra las casas por ciudad
   );
 
-  const handleCambioFechas = () => {
-
+  const handleCambioFechas = (selectedRange) => {
+    console.log("Fechas cambiadas: ", selectedRange[0].toLocaleDateString('es-ES'), "--->", selectedRange[1].toLocaleDateString('es-ES'))
   }
   
 
@@ -68,7 +69,7 @@ const Index = () => {
           />
         </div>
         <div className='index-calendar'>
-          <BookCalendar onDateRangeChange={handleCambioFechas()} selectable={true} fechas={[]}/>
+          <BookCalendar onDateRangeChange={handleCambioFechas} selectable={true} fechas={[]}/>
         </div>
         {/* Mapea las casas filtradas */}
         {searchCity === '' ? (

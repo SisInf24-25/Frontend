@@ -33,7 +33,7 @@ const HouseList = () => {
               imgSrc={casa.imgSrc}
               nombre={casa.nombre}
               numero={casa.numero}
-              host={false}
+              host={true}
               fechaIni={"07/02/2024"} // QUITAR, solo sirve en menu huesped
               fechaFin={"07/02/2024"} // QUITAR, solo sirve en menu huesped
             />
