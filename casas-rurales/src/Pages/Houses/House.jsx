@@ -10,13 +10,19 @@ import BotonCalendar from '../../Components/Botones/BotonCalendar';
 import BotonEliminar from '../../Components/Botones/BotonEliminar';
 import BotonReservar from '../../Components/Botones/BotonReservar';
 import BotonAtras from '../../Components/Botones/BotonVolver';
+import Mapa from '../../Components/Mapa';
 
 const House = () => {
   const location = useLocation();  // Hook para obtener el estado enviado
   const navigate = useNavigate();
-  const { id, nombre, numero, imgSrc, host, fechaIni, fechaFin } = location.state || {};  // Extraer datos del estado
+  const { id, nombre, numero, imgSrc, host, posicion, fechaIni, fechaFin } = location.state || {};  // Extraer datos del estado
 
 
+  useEffect(() => {
+    console.log("house pos ", posicion)
+  }); // Este hook se activa cuando hay un estado en la navegación
+
+  
   // Función para realizar la acción de eliminar casa
   const handleBotonEliminarClick = () => {
     toast.warn(
@@ -90,7 +96,9 @@ const House = () => {
           
           <ToastContainer />
         </div>
-        <div className='infocentrocentro'></div>
+        <div className='infocentrocentro'>
+          <Mapa onMapClick={null} posicion={posicion}/>
+        </div>
 
         <div className='infocentrodcha'>
           <div className='house-info'>

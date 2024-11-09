@@ -86,6 +86,7 @@ const Index = () => {
               numero={casa.numero}
               ciudad={casa.ciudad}
               host={false}
+              posicion={[41.683326, -0.889127]}
               fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
               fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
             />
@@ -101,6 +102,7 @@ const Index = () => {
               numero={casa.numero}
               ciudad={casa.ciudad}
               host={false}
+              posicion={[41.683326, -0.889127]}
               fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
               fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
             />

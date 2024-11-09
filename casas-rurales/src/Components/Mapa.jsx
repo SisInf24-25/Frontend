@@ -29,15 +29,16 @@ function LocationMarker({ onMapClick }) {
   ) : null;
 }
 
-function Mapa({ onMapClick }) {
+function Mapa({ onMapClick, posicion }) {
+  console.log("map pos ", posicion)
   return (
     <div style={{ height: 'auto', width: 'auto' }}>
-        <MapContainer center={[41.683326, -0.889127]} zoom={17} style={{ height: "275px", width: "400px" }}>
+        <MapContainer center={posicion} zoom={17} style={{ height: "275px", width: "400px" }}>
         <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <LocationMarker onMapClick={onMapClick} />
+        <Marker position={posicion}></Marker>
         </MapContainer>
     </div>
   );
