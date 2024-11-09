@@ -22,11 +22,11 @@ const BookCalendar = ({ onDateRangeChange, selectable, fechas }) => {
 
   const handleDateChange = (range) => {
     if (!selectable) return;
-    const [start, end] = range;
+    const [fechaIni, fechaFin] = range;
     const hasUnavailableRange = dateFechas.some(({ fechaIni: rangeStart, fechaFin: rangeEnd }) => 
-      (start >= rangeStart && start <= rangeEnd) || 
-      (end >= rangeStart && end <= rangeEnd) || 
-      (start <= rangeStart && end >= rangeEnd)
+      (fechaIni >= rangeStart && fechaIni <= rangeEnd) || 
+      (fechaFin >= rangeStart && fechaFin <= rangeEnd) || 
+      (fechaIni <= rangeStart && fechaFin >= rangeEnd)
     );
 
     if (hasUnavailableRange) {
@@ -41,27 +41,27 @@ const BookCalendar = ({ onDateRangeChange, selectable, fechas }) => {
 
   const isTileDisabled = ({ date, view }) => {
     if (view === 'month') {
-      return dateFechas.some(({ start, end }) => date >= start && date <= end);
+      return dateFechas.some(({ fechaIni, fechaFin }) => date >= fechaIni && date <= fechaFin);
     }
     return false;
   };
 
   const tileClassName = ({ date, view }) => {
     if (view === 'month') {
-      if (dateFechas.some(({ start, end }) => date >= start && date <= end)) {
+      if (dateFechas.some(({ fechaIni, fechaFin }) => date >= fechaIni && date <= fechaFin)) {
         return 'tile-no-disponible';
       }
 
       if (dateRange[0] && dateRange[1]) {
-        const [start, end] = dateRange;
+        const [fechaIni, fechaFin] = dateRange;
 
-        if (date.toDateString() === start.toDateString()) {
+        if (date.toDateString() === fechaIni.toDateString()) {
           return 'highlight-start';
         }
-        if (date.toDateString() === end.toDateString()) {
+        if (date.toDateString() === fechaFin.toDateString()) {
           return 'highlight-end';
         }
-        if (date > start && date < end) {
+        if (date > fechaIni && date < fechaFin) {
           return 'highlight-middle';
         }
       }
