@@ -80,7 +80,7 @@ const BookCalendar = ({ onDateRangeChange, selectable, fechas }) => {
         value={dateRange}
       />
       {dateRange[0] && dateRange[1] && (
-                    <p>Rango seleccionado: {dateRange[0].toLocaleDateString('es-ES')} - {dateRange[1].toLocaleDateString('es-ES')}</p>
+                    <p>Días seleccionados: <b>{dateRange[0].toLocaleDateString('es-ES')}</b> --- <b>{dateRange[1].toLocaleDateString('es-ES')}</b></p>
       )}
     </div>
   );

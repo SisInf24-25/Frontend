@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../Style/Style.css'
 import './House.css'
 import { useLocation } from 'react-router-dom';  // Para acceder al estado pasado
@@ -14,7 +14,7 @@ const House = () => {
   const location = useLocation();  // Hook para obtener el estado enviado
   const navigate = useNavigate();
   const { id, nombre, numero, imgSrc, host, fechaIni, fechaFin } = location.state || {};  // Extraer datos del estado
-  // visibleState es un booleano que guarda el estado de si la casa es o no visible
+
 
   // Función para realizar la acción de eliminar casa
   const handleBotonEliminarClick = () => {

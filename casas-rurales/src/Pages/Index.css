@@ -1,0 +1,17 @@
+
+.index-search-container {
+  margin-top: 20px;
+  display: flex;
+}
+
+.index-search-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 2px solid #f5931b;
+}
+
+.index-calendar{
+  margin-bottom: 30px;
+}
