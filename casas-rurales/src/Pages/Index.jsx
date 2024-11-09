@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'
 import casaImg from '../Images/sample-house.jpg';
 import ElementoCasaExtendida from '../Components/ElementoCasaExtendida';
-import BookCalendar from '../Components/ElementCalendar';
+import ElementoCalendar from '../Components/ElementoCalendar';
 
 const Index = () => {
 
@@ -69,7 +69,7 @@ const Index = () => {
           />
         </div>
         <div className='index-calendar'>
-          <BookCalendar onDateRangeChange={handleCambioFechas} selectable={true} fechas={[]}/>
+          <ElementoCalendar onDateRangeChange={handleCambioFechas} selectable={true} fechas={[]}/>
         </div>
         {/* Mapea las casas filtradas */}
         {searchCity === '' ? (

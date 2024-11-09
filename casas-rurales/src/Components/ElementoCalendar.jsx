@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './ElementCalendar.css';
+import './ElementoCalendar.css';
 
-const BookCalendar = ({ onDateRangeChange, selectable, fechas }) => {
+const ElementoCalendar = ({ onDateRangeChange, selectable, fechas }) => {
 
   const [dateRange, setDateRange] = useState([null, null]);
     // Convertir las fechas de string a Date solo una vez
@@ -94,4 +94,4 @@ const BookCalendar = ({ onDateRangeChange, selectable, fechas }) => {
   );
 };
 
-export default BookCalendar;
+export default ElementoCalendar;

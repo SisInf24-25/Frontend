@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { useLocation } from 'react-router-dom';
 import './Book.css'
-import BookCalendar from '../../Components/ElementCalendar';
+import ElementoCalendar from '../../Components/ElementoCalendar';
 import '../../Style/Style.css'
 
 
@@ -34,7 +34,7 @@ const Book = () => {
           </div>
           <div className='book-info'>
             <div className='book-numero'>Número: {numero}</div>
-            <BookCalendar onDateRangeChange={handleDateRangeChange} selectable={true} fechas={elementos}/>
+            <ElementoCalendar onDateRangeChange={handleDateRangeChange} selectable={true} fechas={elementos}/>
           </div>
         </div>
     </div>

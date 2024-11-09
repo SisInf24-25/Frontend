@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import '../../Style/Style.css'
-import BookCalendar from '../../Components/ElementCalendar'
+import ElementoCalendar from '../../Components/ElementoCalendar'
 
 const HouseCalendar = () => {
   const location = useLocation();  // Hook para obtener el estado enviado
@@ -23,7 +23,7 @@ const HouseCalendar = () => {
         <div className='text'>Calendario de {nombre} </div>
         <div className='underline'></div>
         {/* Mapea la lista de elementos y usa el componente ElementoCasa */}
-        <BookCalendar onDateRangeChange={null} selectable={false} fechas={elementos}/>
+        <ElementoCalendar onDateRangeChange={null} selectable={false} fechas={elementos}/>
       </div>
       <div className="accept">
         <div className="accept-button" onClick={ () => { navigate(-1); }}>Aceptar</div>
