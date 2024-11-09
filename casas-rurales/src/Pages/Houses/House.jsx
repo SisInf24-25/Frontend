@@ -9,6 +9,7 @@ import BotonEditCasa from '../../Components/Botones/BotonEditCasa';
 import BotonCalendar from '../../Components/Botones/BotonCalendar';
 import BotonEliminar from '../../Components/Botones/BotonEliminar';
 import BotonReservar from '../../Components/Botones/BotonReservar';
+import BotonAtras from '../../Components/Botones/BotonVolver';
 
 const House = () => {
   const location = useLocation();  // Hook para obtener el estado enviado
@@ -60,37 +61,54 @@ const House = () => {
 
   return (
     <div className='container'>
+      <div className='house-botonatras'>
+        <BotonAtras direccion={(host ? "/houses" : "/")}/>
+      </div>
       <div className='title'>
         <div className='text'>{nombre}</div>
         <div className='underline'></div>
       </div>
       <div className='infoizq-infodcha'>
-        <div className='infoizq'>
+        <div className='infocentroizq'>
           <img src={imgSrc} alt={`Imagen de ${nombre}`} className="house-foto" />
+          <div className='house-infoizq-info'>
+
             <div className='house-infoizq-elem'><b>Cancelación:</b> Sí</div>
             <div className='house-infoizq-elem'><b>Días de antelación cancelable:</b> 3</div>
             <div className='house-infoizq-elem'><b>Visible:</b> Sí</div>
-          
         
-            {host ? (
+          </div>
+        
+      
+          {host && (
             <div className='house-infoizq-botones'>
-              <BotonCalendar className='house-infoizq-elem' nombre={nombre} id={numero} />
-              <BotonEditCasa className='house-infoizq-elem' nombre={nombre} id={numero} />
-              <BotonEliminar className='house-infoizq-elem' id={id} handleBotonClick={() => handleBotonEliminarClick(id)}></BotonEliminar>
+              <BotonCalendar nombre={nombre} id={numero} />
+              <BotonEditCasa nombre={nombre} id={numero} />
+              <BotonEliminar id={id} handleBotonClick={() => handleBotonEliminarClick(id)}></BotonEliminar>
             </div>
-          ) : (
-            <div className='house-infoizq-botones'>
-              <BotonReservar className='house-infoizq-elem' id={id} fechaIni={fechaIni} fechaFin={fechaFin} handleBotonClick={() => handleBotonReservarClick(id)}></BotonReservar>
-            </div>          
           )}
           
           <ToastContainer />
         </div>
-        <div className='infodcha'>
+        <div className='infocentrocentro'></div>
+
+        <div className='infocentrodcha'>
           <div className='house-info'>
-            <div className='house-numero'>Número: {numero}</div>
+            <div className='house-infodcha-elem'><b>Propietario:</b> {numero}</div>
+            <div className='house-infodcha-elem'><b>Precio por noche (por persona):</b> {numero}€</div>
+            <div className='house-infodcha-elem'><b>Ciudad:</b> {numero}</div>
+            <div className='house-infodcha-elem'><b>Ubicación:</b> {numero}</div>
+            <div className='house-infodcha-elem'><b>Máximo de huéspedes:</b> {numero}</div>
+            <div className='house-infodcha-elem'><b>Habitaciones:</b> {numero}</div>
+            <div className='house-infodcha-elem'><b>Camas individuales:</b> {numero}</div>
+            <div className='house-infodcha-elem'><b>Camas dobles:</b> {numero}</div>
+            <div className='house-infodcha-elem'><b>Baños:</b> {numero}</div>
+            <div className='house-infodcha-elem'><b>Descripción:</b> {"sssssssssssssssss ssssss sssssss ssssssssss sssssssssssssssss sssssssss s s s ss s s  s ss s ssss ssssssssssssssssss ssssssssssssss ssssssssss ssss sssss sssssssssss sssssssssssssss s ssssssssssssssssssss sssssssssssss ssssssss sssssss"}</div>
           </div>
         </div>
+      </div>
+      <div className='house-botonreservar'>
+        <BotonReservar id={id} fechaIni={fechaIni} fechaFin={fechaFin} handleBotonClick={() => handleBotonReservarClick(id)}></BotonReservar>
       </div>
     </div>
   );

@@ -34,8 +34,6 @@ const HouseList = () => {
               nombre={casa.nombre}
               numero={casa.numero}
               host={true}
-              fechaIni={"07/02/2024"} // QUITAR, solo sirve en menu huesped
-              fechaFin={"07/02/2024"} // QUITAR, solo sirve en menu huesped
             />
           ))}
       </div>

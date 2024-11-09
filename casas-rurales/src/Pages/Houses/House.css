@@ -6,23 +6,36 @@
   margin-bottom: 20px;
 }
 
-/* Contenedor del número, centrado a la derecha de la imagen */
-.house-numero {
-  font-size: 1.5em;
-  color: #666;
-  flex-grow: 1; /* Ocupa el espacio sobrante para centrar */
-  text-align: center;
-  margin-bottom: 10px; /* Espacio entre número y botón */
+.house-info {
+  display: flex;         /* Flexbox para alinear los elementos */
+  flex-direction: column;
+  flex-wrap: wrap;       /* Permite que los elementos se acomoden en múltiples líneas */
+  width: 100%;           /* Asegura que el contenedor ocupe todo el ancho disponible */
 }
 
-.house-infoizq {
-  width: 30%;
+.house-info-elem b {
+  margin-right: 7px;
+}
+
+.house-infoizq-elem{
+  font-size: 17px;
+}
+
+.house-infodcha-elem {
+  font-size: 20px;
+  color: #3e3e3e;
+  flex-grow: 1;
+  text-align: start;
+  margin-left: 50px;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: justify;
+}
+
+.house-infoizq-info{
   display: flex;
-  align-items:center;
   flex-direction: column;
-  margin: 0 10px;
-  margin-left: 60px;
-  gap: 5px;
 }
 
 .house-infoizq-botones {
@@ -33,4 +46,17 @@
   margin: 0 10px;
   margin-left: 60px;
   gap: 5px;
+}
+
+.house-botonreservar{
+  display: block;
+  margin: 0 auto;
+}
+
+.house-infoizq-elem b{
+  margin-right: 7px;
+}
+
+.house-infoizq-elem{
+  margin-right: auto;
 }

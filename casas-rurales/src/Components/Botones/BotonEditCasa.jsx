@@ -2,7 +2,7 @@ import React from 'react';
 import './Botones.css'
 import { useNavigate } from 'react-router-dom';
 
-const BotonIDGenerico = ({ nombre, id }) => {
+const BotonEditCasa = ({ nombre, id }) => {
     const navigate = useNavigate(); 
 
   // Función para manejar el click en el nombre
@@ -23,4 +23,4 @@ const BotonIDGenerico = ({ nombre, id }) => {
   );
 };
 
-export default BotonIDGenerico;
+export default BotonEditCasa;

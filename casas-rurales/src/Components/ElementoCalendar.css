@@ -66,4 +66,16 @@
   .react-calendar__tile:enabled:focus {
     background-color: #f0f8ff;
   }
-  
+
+  #calendar-diasnoches{
+    margin-top: 0;
+    font-size: 20px;
+    color: #000000; 
+  }
+
+.react-calendar__month-view__weekdays__weekday {
+  color: black !important; /* Cambia el color del texto de los días de la semana a negro */
+  font-weight: bold; /* Hacer que los días de la semana estén en negrita */
+  text-decoration: none !important;
+  border: none !important;
+}

@@ -78,6 +78,13 @@ const ElementoCalendar = ({ onDateRangeChange, selectable, fechas }) => {
     return null;
   };
 
+  function calcularDiferenciaEnNoches(fecha1, fecha2) {
+    const unDiaEnMilisegundos = 1000 * 60 * 60 * 24;
+    const diferenciaEnMilisegundos = Math.abs(fecha2 - fecha1);
+    return Math.floor(diferenciaEnMilisegundos / unDiaEnMilisegundos);
+  }
+  
+
   return (
     <div className="calendar-container">
       {selectable &&
@@ -91,7 +98,13 @@ const ElementoCalendar = ({ onDateRangeChange, selectable, fechas }) => {
         value={dateRange}
       />
       {dateRange[0] && dateRange[1] && (
-                    <p>Días seleccionados: <b>{dateRange[0].toLocaleDateString('es-ES')}</b> --- <b>{dateRange[1].toLocaleDateString('es-ES')}</b></p>
+        <div>
+          <p>Días seleccionados: <b>{dateRange[0].toLocaleDateString('es-ES')}</b> --- <b>{dateRange[1].toLocaleDateString('es-ES')}</b></p>
+          <p id='calendar-diasnoches'>
+            <b>{1 + calcularDiferenciaEnNoches(dateRange[0], dateRange[1])}</b> {calcularDiferenciaEnNoches(dateRange[0], dateRange[1]) == 0 ? "noche" : "noches"}
+          </p>
+        </div>
+                    
       )}
     </div>
   );

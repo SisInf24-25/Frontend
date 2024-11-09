@@ -37,8 +37,8 @@ const Index = () => {
 
   const handleCambioFechas = (selectedRange) => {
     console.log("Fechas cambiadas: ", selectedRange[0].toLocaleDateString('es-ES'), "--->", selectedRange[1].toLocaleDateString('es-ES'))
+    setSelectedRange(selectedRange)
   }
-  
 
   useEffect(() => {
     if (location.state && location.state.showOKToast && !toastShown) {
@@ -72,7 +72,10 @@ const Index = () => {
           <ElementoCalendar onDateRangeChange={handleCambioFechas} selectable={true} fechas={[]}/>
         </div>
         {/* Mapea las casas filtradas */}
-        {searchCity === '' ? (
+        {/* FALTARÁ METER LA BÚSQUEDA POR RANGOS DE FECHAS */}
+        {selectedRange[0] == null ? (
+          <p></p>
+        ) : searchCity === '' ? (
           // Si no hay búsqueda, muestra todas las casas
           casas.map((casa, i) => (
             <ElementoCasaExtendida
@@ -83,8 +86,8 @@ const Index = () => {
               numero={casa.numero}
               ciudad={casa.ciudad}
               host={false}
-              fechaIni={"07/02/2024"} // QUITAR, solo sirve en menu huesped
-              fechaFin={"08/02/2024"} // QUITAR, solo sirve en menu huesped
+              fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
+              fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
             />
           ))
         ) : filteredCasas.length > 0 ? (
@@ -98,8 +101,8 @@ const Index = () => {
               numero={casa.numero}
               ciudad={casa.ciudad}
               host={false}
-              fechaIni={"07/02/2024"} // QUITAR, solo sirve en menu huesped
-              fechaFin={"08/02/2024"} // QUITAR, solo sirve en menu huesped
+              fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
+              fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
             />
           ))
         ) : (
