@@ -1,11 +1,3 @@
-/* Contenedor de contenido de la casa */
-.house-content {
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-  justify-content: center;
-}
-
 /* Imagen de la casa, ubicada a la izquierda con margen derecho */
 .house-foto {
   width: 200px;
@@ -26,13 +18,19 @@
 .house-infoizq {
   width: 30%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items:center;
   flex-direction: column;
   margin: 0 10px;
+  margin-left: 60px;
   gap: 5px;
 }
 
-.house-infoizq-content{
-  margin: 20px 0px;
+.house-infoizq-botones {
+  width: 30%;
+  display: flex;
+  align-items:center;
+  flex-direction: column;
+  margin: 0 10px;
+  margin-left: 60px;
+  gap: 5px;
 }

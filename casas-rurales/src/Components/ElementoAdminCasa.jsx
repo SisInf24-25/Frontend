@@ -3,7 +3,7 @@ import './ElementoAdminCasa.css'
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import BotonEliminar from './BotonEliminar';
+import BotonEliminar from './Botones/BotonEliminar';
 
 const ElementoAdminCasa = ({ id, nombre, numero, host, imgSrc }) => {
     const navigate = useNavigate();

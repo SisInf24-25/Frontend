@@ -3,7 +3,7 @@ import ElementoCasa from '../../Components/ElementoCasa'
 import casaImg from '../../Images/sample-house.jpg';
 import '../../Style/Style.css'
 import './HouseList.css'
-import BotonIDGenerico from '../../Components/BotonIDGenerico';
+import BotonIDGenerico from '../../Components/Botones/BotonIDGenerico';
 
 const HouseList = () => {
 
@@ -33,13 +33,17 @@ const HouseList = () => {
               imgSrc={elemento.imgSrc}
               nombre={elemento.nombre}
               numero={elemento.numero}
+              host={false}
+              fechaIni={"07/02/2024"} // QUITAR, solo sirve en menu huesped
+              fechaFin={"07/02/2024"} // QUITAR, solo sirve en menu huesped
             />
           ))}
       </div>
-      <div  className='houselist-botonanadir'>
-        <BotonIDGenerico
+      <div className='houselist-botonanadir'>
+        <BotonIDGenerico 
           nombre={'Añadir casa'}
-          id={1} // id del Host
+          idUser={1}
+          idArg={null}
           direccion={`/houses/add`}
         />
       </div>

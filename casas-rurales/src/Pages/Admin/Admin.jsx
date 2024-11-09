@@ -1,7 +1,6 @@
 import React from 'react'
-import BotonIDGenerico from '../../Components/BotonIDGenerico'
+import BotonIDGenerico from '../../Components/Botones/BotonIDGenerico'
 import '../../Style/Style.css'
-import '../../Components/BotonIDGenerico.css'
 import './Admin.css'
 
 const Panel = () => {

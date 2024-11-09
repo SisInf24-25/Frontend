@@ -1,5 +1,5 @@
 import React from 'react';
-import './BotonCalendar.css'
+import './Botones.css'
 import { useNavigate } from 'react-router-dom';
 
 const BotonCalendar = ({ nombre, id }) => {

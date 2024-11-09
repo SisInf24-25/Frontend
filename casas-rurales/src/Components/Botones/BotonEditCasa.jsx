@@ -1,5 +1,5 @@
 import React from 'react';
-import './BotonEditCasa.css'
+import './Botones.css'
 import { useNavigate } from 'react-router-dom';
 
 const BotonIDGenerico = ({ nombre, id }) => {
