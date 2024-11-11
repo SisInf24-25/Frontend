@@ -56,7 +56,6 @@ function App() {
 
         <Route path="/notifs" element={<NotifList />}></Route>
         <Route path="/notifs/element" element={<Notif />}></Route>
-
       </Routes>
     </Router>
   );

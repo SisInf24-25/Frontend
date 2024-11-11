@@ -95,7 +95,7 @@ const HouseAdd = () => {
               
       </div>
       <div className="accept">
-            <div className="accept-button" onClick={ () => { navigate('/houses'); }}>Aceptar</div>
+            <div className="accept-button" onClick={ () => { navigate('/houses'); } }>Aceptar</div>
           </div>
     </div>
   )
