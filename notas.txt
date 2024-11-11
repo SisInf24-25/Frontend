@@ -2,7 +2,8 @@
 react-router-dom
 react-calendar
 leaflet react-leaflet
-
+axios
+cors
 
 ### OBTENER COOKIE Y CONTEXTO
 import React, { useState, useContext, useEffect } from 'react';

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
+import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css'
 import '../Style/Style.css'
+
 
 
 const Auth = () => {
@@ -17,7 +19,47 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [loginData, setLoginData] = useState([]);
+  const [loginError, setLoginError] = useState(null);
 
+  useEffect(() => {
+    if (loginError) {
+      console.log("loginError: ", loginError);
+    }
+  }, [loginError]); 
+
+  const peticionLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/users/login');
+      setLoginData(response.data);
+      setLoginError(null);  // Resetea el error si la solicitud es exitosa
+    } catch (error) {
+      if (error.response) {
+        const status = error.response.status;
+        
+        // Maneja errores específicos
+        switch (status) {
+          case 404:
+            setLoginError("Usuario no encontrado.");
+            break;
+          case 401:
+            setLoginError("Contraseña incorrecta.");
+            break;
+          case 500:
+            setLoginError("Hubo un problema en el servidor.");
+            break;
+          default:
+            setLoginError(`Error ${status}: ${error.response.statusText}`);
+        }
+      } else if (error.request) {
+        // Si no se recibió respuesta del servidor
+        setLoginError("No se recibió respuesta del servidor. Verifica tu conexión.");
+      } else {
+        // Otros errores relacionados con la configuración de la solicitud
+        setLoginError(`Error en la solicitud: ${error.message}`);
+      }
+    }
+  };
   
   const notify = () => toast.error("Las contraseñas deben coincidir", {
     position: "bottom-left",
@@ -44,6 +86,8 @@ const Auth = () => {
   const handleLoginAcceptButtonClick = () => {
     // TODO: CAMBIARLO POR LA PETICIÓN
     console.log("login")
+    peticionLogin()
+    console.log("loginData: ", loginData)
   };
 
   const handleSignupAcceptButtonClick = () => {
