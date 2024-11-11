@@ -35,7 +35,6 @@
     margin-top: 35px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 .input{
@@ -43,9 +42,10 @@
     align-items: center;
     margin: auto;
     width: 480px;
-    height: 70px;
+    height: 60px;
     background-color: rgb(236, 230, 224);
     border-radius: 6px;
+    margin-bottom: 15px;
 }
 
 .input img{
@@ -63,6 +63,11 @@
     font-size: 19px;
     color:rgb(27, 27, 27);
     margin-left: 30px;
+}
+
+#mensaje-error-contraseñas{
+    margin:auto;
+    margin-bottom: 20px;
 }
 
 .user-type-container{
