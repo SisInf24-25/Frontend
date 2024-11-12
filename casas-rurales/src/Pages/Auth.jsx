@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import { useSession } from '../Context/SessionContext'; // Importa el hook de sesión
 import 'react-toastify/dist/ReactToastify.css';
 import '../Style/Style.css';
 
 const Auth = () => {
+  const { setSession, clearSession } = useSession(); // Accede al contexto de sesión
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
@@ -26,14 +28,26 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [loginError, setLoginError] = useState(null);
-  const [signupError, setSignupError] = useState(null);
+
+  // Si la acción es logout, eliminar la cookie y redirigir
+  useEffect(() => {
+    if (action === 'logout') {
+      clearSession(); // Limpia la sesión desde el contexto
+      navigate('/');  // Redirige a la página de inicio
+    }
+  }, [action, navigate, clearSession]);
 
   // Actualiza la acción cuando cambia la URL
   useEffect(() => {
     const newAction = queryParams.get('action') || 'login';
     setAction(newAction);
   }, [location.search]);
+
+  // Cambio de acción
+  const handleActionChange = (newAction) => {
+    setAction(newAction);
+    navigate(`/auth?action=${newAction}`);
+  };
 
   // Notificación de error
   const notify = (message) => toast.error(message, {
@@ -45,49 +59,47 @@ const Auth = () => {
     draggable: true,
   });
 
-  // Manejo de cambio de inputs
-  const handleInputChange = (setter) => (e) => setter(e.target.value);
-
-  // Validación de contraseñas
+  // Verificar si las contraseñas coinciden en tiempo real
   useEffect(() => {
-    if (confirmPassword && password !== confirmPassword) {
-      setPasswordError('Las contraseñas no coinciden');
+    if (password && confirmPassword) {
+      if (password !== confirmPassword) {
+        setPasswordError('Contraseñas no coinciden');
+      } else {
+        setPasswordError('');
+      }
     } else {
       setPasswordError('');
     }
   }, [password, confirmPassword]);
 
+  // Manejo de cambio de inputs
+  const handleInputChange = (setter) => (e) => setter(e.target.value);
+
   // Lógica de login
   const peticionLogin = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/users/login', {
+      const response = await axios.post('http://localhost:8000/users/login', {
         username: username,
         password: password
       });
-      console.log('Login exitoso:', response.data);
-      setLoginError(null);
-    } catch (error) {
-      if (error.response) {
-        // Maneja errores específicos
-        const status = error.response.status;
-        switch (status) {
-          case 404:
-            setLoginError('Usuario no encontrado.');
+
+      const { user_id, username: userUsername, role } = response.data['user'];
+
+      // Guardamos la sesión en el contexto
+      setSession({ user_id, username: userUsername, role });
+
+      if (response.status === 200) {
+        switch (userType) {
+          case GUEST_TYPE:
+            navigate('/');
             break;
-          case 401:
-            setLoginError('Contraseña incorrecta.');
+          case OWNER_TYPE:
+            navigate('/host');
             break;
-          case 500:
-            setLoginError('Hubo un problema en el servidor.');
-            break;
-          default:
-            setLoginError(`Error ${status}: ${error.response.statusText}`);
         }
-      } else if (error.request) {
-        setLoginError('No se recibió respuesta del servidor. Verifica tu conexión.');
-      } else {
-        setLoginError(`Error en la solicitud: ${error.message}`);
       }
+    } catch (error) {
+      notify(error.response.data['error'])
     }
   };
 
@@ -103,48 +115,92 @@ const Auth = () => {
         password: password,
         type: userType
       });
-      console.log('Registro exitoso:', response.data);
-      setSignupError(null);
-    } catch (error) {
-      if (error.response) {
-        // Maneja errores específicos
-        const status = error.response.status;
-        switch (status) {
-          case 404:
-            setLoginError('Usuario no encontrado.');
+
+      const { user_id, username: userUsername, role } = response.data['user'];
+
+      // Guardamos la sesión en el contexto
+      setSession({ user_id, username: userUsername, role });
+
+      if (response.status === 200) {
+        switch (userType) {
+          case GUEST_TYPE:
+            navigate('/');
             break;
-          case 401:
-            setLoginError('Contraseña incorrecta.');
+          case OWNER_TYPE:
+            navigate('/host');
             break;
-          case 500:
-            setLoginError('Hubo un problema en el servidor.');
-            break;
-          default:
-            setLoginError(`Error ${status}: ${error.response.statusText}`);
         }
-      } else if (error.request) {
-        setLoginError('No se recibió respuesta del servidor. Verifica tu conexión.');
-      } else {
-        setLoginError(`Error en la solicitud: ${error.message}`);
       }
+    } catch (error) {
+      notify(error.response.data['error'])
     }
   };
 
   // Manejo del botón de aceptar
   const handleAcceptButtonClick = () => {
+    if (!username) {
+      notify('Nombre de usuario inválido')
+      return;
+    }
+
+    if (username.length > 20) {
+      notify('Nombre de usuario demasiado largo')
+      return;
+    }
+
     if (action === 'login') {
       peticionLogin();
-    } else if (passwordError) {
-      notify('Las contraseñas deben coincidir');
-    } else {
+    }
+    else if (action === 'signup') {
+      if (!name) {
+        notify('Nombre inválido')
+        return;
+      }
+
+      if (name.length > 25) {
+        notify('Nombre demasiado largo')
+        return;
+      }
+
+      if (!lastname) {
+        notify('Apellidos inválidos')
+        return;
+      }
+
+      if (lastname.length > 25) {
+        notify('Apellidos demasiado largos')
+        return;
+      }
+
+      if (!email) {
+        notify('Correo electrónico inválido')
+        return;
+      }
+
+      if (email.length > 50) {
+        notify('Correo electrónico demasiado largo')
+        return;
+      }
+
+      const usernameRegex = /^[a-zA-Z0-9_]+$/;
+      if (!usernameRegex.test(username)) {
+        notify('Nombre de usuario solo puede contener caracteres alfanuméricos y guión bajo (_)')
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        notify('Formato de correo electrónico no válido')
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        notify('Contraseñas no coinciden')
+        return;
+      }
+
       peticionSignup();
     }
-  };
-
-  // Cambio de acción
-  const handleActionChange = (newAction) => {
-    setAction(newAction);
-    navigate(`/auth?action=${newAction}`);
   };
 
   // Nombres de las acciones

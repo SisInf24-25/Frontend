@@ -48,21 +48,41 @@
     margin-bottom: 15px;
 }
 
+.genericinput{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 60px;
+    background-color: rgb(236, 230, 224);
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
 .input img{
     margin-left: 30px;
 }
 
-.input input,
-.genericinput input{
-    height: 50px;
-    width: 400px;
+.input input{
     background: transparent;
     border: none;
     outline: none;
     margin: auto;
+    height: 50px;
+    width: 400px;
     font-size: 19px;
     color:rgb(27, 27, 27);
     margin-left: 30px;
+}
+
+.genericinput textarea{
+    background: transparent;
+    border: none;
+    outline: none;
+    margin: auto;
+    height: 50px;
+    width: 400px;
+    color:rgb(27, 27, 27);
 }
 
 #mensaje-error-contraseñas{
@@ -224,16 +244,6 @@
     flex-direction: column;
     height: 50vh;        /* Hace que la división ocupe toda la altura de la pantalla */
     overflow-y: auto;     
-}
-
-.genericinput{
-    display: flex;
-    margin-right: auto;
-    margin: 10px 40px;
-    width: auto;
-    height: 70px;
-    background-color: rgb(236, 230, 224);
-    border-radius: 6px;
 }
 
 .interruptor-content{
