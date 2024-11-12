@@ -2,15 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './InterruptorGenerico.css';
 
 function InterruptorGenericoPequeño({ onToggle, index }) { // Acepta onToggle como prop
-    const [isOn, setIsOn] = useState(() => {
-        const savedState = localStorage.getItem("interruptorState");
-        return savedState === "true";
-    });
+    const [isOn, setIsOn] = useState(false)
 
     useEffect(() => {
-        localStorage.setItem("interruptorState", isOn);
         if (onToggle) onToggle(index, isOn);  // Llama a la función onToggle si está definida
-    }, [isOn, onToggle]);
+    }, [isOn]);
 
     const handleToggle = () => {
         setIsOn(!isOn);

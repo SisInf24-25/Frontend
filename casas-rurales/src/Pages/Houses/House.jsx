@@ -100,6 +100,7 @@ const House = () => {
 
         <div className='infocentrodcha'>
           <div className='house-info'>
+            <div className='house-infodcha-elem'><b>Nombre de la casa:</b> {numero}</div>
             <div className='house-infodcha-elem'><b>Propietario:</b> {numero}</div>
             <div className='house-infodcha-elem'><b>Precio por noche (por persona):</b> {numero}€</div>
             <div className='house-infodcha-elem'><b>Ciudad:</b> {numero}</div>
