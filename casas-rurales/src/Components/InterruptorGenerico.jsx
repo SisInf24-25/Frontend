@@ -4,7 +4,7 @@ import './InterruptorGenerico.css';
 function InterruptorGenerico({ onToggle }) { // Acepta onToggle como prop
     const [isOn, setIsOn] = useState(() => {
         const savedState = localStorage.getItem("interruptorState");
-        return savedState === "true";
+        return savedState === "false";
     });
 
     useEffect(() => {

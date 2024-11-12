@@ -11,16 +11,12 @@ import BotonEliminar from '../../Components/Botones/BotonEliminar';
 import BotonReservar from '../../Components/Botones/BotonReservar';
 import BotonAtras from '../../Components/Botones/BotonVolver';
 import Mapa from '../../Components/Mapa';
+import InterruptorGenerico from '../../Components/InterruptorGenerico';
 
 const House = () => {
   const location = useLocation();  // Hook para obtener el estado enviado
   const navigate = useNavigate();
-  const { id, nombre, numero, imgSrc, host, posicion, fechaIni, fechaFin } = location.state || {};  // Extraer datos del estado
-
-
-  useEffect(() => {
-    console.log("house pos ", posicion)
-  }); // Este hook se activa cuando hay un estado en la navegación
+  const { id, nombre, numero, imgSrc, lat, long, host, fechaIni, fechaFin } = location.state || {};  // Extraer datos del estado
 
   
   // Función para realizar la acción de eliminar casa
@@ -97,7 +93,9 @@ const House = () => {
           <ToastContainer />
         </div>
         <div className='infocentrocentro'>
-          <Mapa onMapClick={null} posicion={posicion}/>
+          <div className='mapa-condiciones'>
+            <Mapa onMapClick={null} posicion={[lat, long]}/>
+          </div>
         </div>
 
         <div className='infocentrodcha'>
@@ -115,9 +113,11 @@ const House = () => {
           </div>
         </div>
       </div>
+      {!host && (
       <div className='house-botonreservar'>
         <BotonReservar id={id} fechaIni={fechaIni} fechaFin={fechaFin} handleBotonClick={() => handleBotonReservarClick(id)}></BotonReservar>
       </div>
+      )}
     </div>
   );
 }

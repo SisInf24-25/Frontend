@@ -9,15 +9,15 @@ const HouseList = () => {
 
   // Ejemplo de lista de casas con nombre y número
   const [casas, setCasas] = useState([
-    { id: 1, imgSrc: casaImg, nombre: 'Casa A', numero: 10 },
-    { id: 2, imgSrc: casaImg, nombre: 'Casa B', numero: 25 },
-    { id: 3, imgSrc: casaImg, nombre: 'Casa C', numero: 40 },
-    { id: 1, imgSrc: casaImg, nombre: 'Casa A', numero: 10 },
-    { id: 2, imgSrc: casaImg, nombre: 'Casa B', numero: 25 },
-    { id: 3, imgSrc: casaImg, nombre: 'Casa C', numero: 40 },
-    { id: 1, imgSrc: casaImg, nombre: 'Casa A', numero: 10 },
-    { id: 2, imgSrc: casaImg, nombre: 'Casa B', numero: 25 },
-    { id: 3, imgSrc: casaImg, nombre: 'Casa C', numero: 40 },
+    { id: 1, imgSrc: casaImg, nombre: 'Casa A', numero: 10, lat: 41.683326, long: -0.889127 },
+    { id: 2, imgSrc: casaImg, nombre: 'Casa B', numero: 25, lat: 41.683326, long: -0.889127 },
+    { id: 3, imgSrc: casaImg, nombre: 'Casa C', numero: 40, lat: 41.683326, long: -0.889127  },
+    { id: 1, imgSrc: casaImg, nombre: 'Casa A', numero: 10, lat: 41.683326, long: -0.889127  },
+    { id: 2, imgSrc: casaImg, nombre: 'Casa B', numero: 25, lat: 41.683326, long: -0.889127  },
+    { id: 3, imgSrc: casaImg, nombre: 'Casa C', numero: 40, lat: 41.683326, long: -0.889127  },
+    { id: 1, imgSrc: casaImg, nombre: 'Casa A', numero: 10, lat: 41.683326, long: -0.889127  },
+    { id: 2, imgSrc: casaImg, nombre: 'Casa B', numero: 25, lat: 41.683326, long: -0.889127  },
+    { id: 3, imgSrc: casaImg, nombre: 'Casa C', numero: 40, lat: 41.683326, long: -0.889127  },
   ]);
 
   return (
@@ -33,6 +33,8 @@ const HouseList = () => {
               imgSrc={casa.imgSrc}
               nombre={casa.nombre}
               numero={casa.numero}
+              lat={casa.lat}
+              long={casa.long}
               host={true}
             />
           ))}

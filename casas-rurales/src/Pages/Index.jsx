@@ -16,15 +16,15 @@ const Index = () => {
 
 
   const [casas, setCasas] = useState([
-    { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza" },
-    { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid" },
-    { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona" },
-    { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza" },
-    { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid" },
-    { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona" },
-    { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza" },
-    { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid" },
-    { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona" },
+    { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
+    { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
+    { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
+    { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
+    { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
+    { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
+    { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
+    { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
+    { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
   ]);
 
   const handleSearchChange = (e) => {
@@ -86,7 +86,8 @@ const Index = () => {
               numero={casa.numero}
               ciudad={casa.ciudad}
               host={false}
-              posicion={[41.683326, -0.889127]}
+              lat={casa.lat}
+              long={casa.long}
               fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
               fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
             />
@@ -102,7 +103,8 @@ const Index = () => {
               numero={casa.numero}
               ciudad={casa.ciudad}
               host={false}
-              posicion={[41.683326, -0.889127]}
+              lat={casa.lat}
+              long={casa.long}              
               fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
               fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
             />
