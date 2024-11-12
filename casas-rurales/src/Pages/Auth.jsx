@@ -60,7 +60,7 @@ const Auth = () => {
   // Lógica de login
   const peticionLogin = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/users/login', {
+      const response = await axios.post('http://localhost:8000/users/login', {
         username: username,
         password: password
       });
