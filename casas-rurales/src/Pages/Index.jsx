@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import '../Style/Style.css'
 import './Index.css'
 import { useLocation } from 'react-router-dom';
@@ -8,12 +8,10 @@ import ElementoCasaExtendida from '../Components/ElementoCasaExtendida';
 import ElementoCalendar from '../Components/ElementoCalendar';
 
 const Index = () => {
-
   const location = useLocation();
   const [toastShown, setToastShown] = useState(false); // Estado para evitar múltiples toasts
   const [searchCity, setSearchCity] = useState(''); // Estado para almacenar la ciudad buscada
   const [selectedRange, setSelectedRange] = useState([null, null]);
-
 
   const [casas, setCasas] = useState([
     { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
