@@ -233,6 +233,7 @@
     flex-direction: column;
     height: 50vh;        /* Hace que la división ocupe toda la altura de la pantalla */
     overflow-y: auto;
+    overflow-x: unset;
 }
 
 .infocentrodcha {
@@ -251,11 +252,23 @@
     flex-direction: row;
 }
 
+
+.condiciones{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
 .interruptor-texto{
     font-size: 19px;
     margin-right: 10px;
 }
 
+.interruptor-peq-texto{
+    font-size: 15px;
+    margin-left: 8px;
+}
 
 .cancelable-container{
     display: flex;

@@ -2,19 +2,19 @@ import React from 'react';
 import './ElementoCasa.css'
 import { useNavigate } from 'react-router-dom';
 
-const ElementoCasa = ({ id, nombre, numero, imgSrc, host, fechaIni, fechaFin }) => {
+const ElementoCasa = ({ id, nombre, numero, imgSrc, lat, long, host, fechaIni, fechaFin }) => {
     const navigate = useNavigate(); 
 
     
   // Función para manejar el click en el nombre
-  const handleCasaClick = (id, nombre, numero, imgSrc, host) => {
+  const handleCasaClick = () => {
     navigate(`/houses/element?id=${id}`, {
-      state: { id, nombre, numero, imgSrc, host, fechaIni, fechaFin }  // Pasamos el objeto como estado
+      state: { id, nombre, numero, imgSrc, lat, long, host, fechaIni, fechaFin }  // Pasamos el objeto como estado
     });
   };
 
   return (
-    <div className='elementocasa-container' onClick={() => handleCasaClick(id, nombre, numero, imgSrc, host)}>
+    <div className='elementocasa-container' onClick={() => handleCasaClick()}>
       <div className='elementocasa-content'>
         <div className='elementocasa-foto'>
           <img src={imgSrc} alt={`Imagen de ${nombre}`} className='casa-img' />

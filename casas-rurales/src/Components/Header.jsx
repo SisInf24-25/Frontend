@@ -30,8 +30,6 @@ const Header = () => {
     <header className="header">
       <div className="left">
         <Link to="/">Inicio</Link>
-        <Link to="/new-page">Nueva Página</Link>
-        <Link to="/contact">Contacto</Link>
       </div>
 
       {!validSession(userSession) && (

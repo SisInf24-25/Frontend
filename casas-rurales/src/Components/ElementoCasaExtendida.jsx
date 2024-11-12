@@ -2,19 +2,19 @@ import React from 'react';
 import './ElementoCasaExtendida.css'
 import { useNavigate } from 'react-router-dom';
 
-const ElementoCasaExtendida = ({ id, nombre, numero, imgSrc, host, posicion, fechaIni, fechaFin }) => {
+const ElementoCasaExtendida = ({ id, nombre, numero, imgSrc, lat, long, host, fechaIni, fechaFin }) => {
     const navigate = useNavigate(); 
   //MUESTRA: nombre, propietario, precio por noche, max huespedes, ciudad
     
   // Función para manejar el click en el nombre
-  const handleCasaClick = (id, nombre, numero, imgSrc, host, posicion) => {
+  const handleCasaClick = () => {
     navigate(`/houses/element?id=${id}`, {
-      state: { id, nombre, numero, imgSrc, host, posicion, fechaIni, fechaFin }  // Pasamos el objeto como estado
+      state: { id, nombre, numero, imgSrc, lat, long, host, fechaIni, fechaFin }  // Pasamos el objeto como estado
     });
   };
 
   return (
-    <div className='elementocasaext-container' onClick={() => handleCasaClick(id, nombre, numero, imgSrc, host, posicion)}>
+    <div className='elementocasaext-container' onClick={() => handleCasaClick()}>
       <div className='elementocasaext-content'>
         <div className='elementocasaext-foto'>
           <img src={imgSrc} alt={`Imagen de ${nombre}`} className='casa-img' />
