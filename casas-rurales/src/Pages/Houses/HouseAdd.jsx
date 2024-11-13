@@ -41,18 +41,9 @@ const HouseAdd = () => {
   };
 
   const handleConditionChange = (index, isOn) => {
-<<<<<<< HEAD
-    if(isOn){      
-      condiciones[index] = 1;
-    } else {
-      condiciones[index] = 0;
-    }
-    setCodigoCondiciones(calcularDecimal(condiciones));
-=======
     const nuevasCondiciones = [...condiciones]; 
     nuevasCondiciones[index] = isOn ? '1' : '0';
     setCondiciones(nuevasCondiciones)
->>>>>>> 1a3c16a1117e1f2c8fa161dbc17e21544c7d663d
   }
 
   useEffect(() => {
@@ -81,7 +72,6 @@ const HouseAdd = () => {
     setCancelableState(isCancelable);
   };
 
-<<<<<<< HEAD
   // Notificación de error
   const notify = (message) => toast.error(message, {
     position: 'bottom-left',
@@ -182,12 +172,6 @@ const HouseAdd = () => {
 
     peticionCrearCasa();
   }
-=======
-  useEffect(() => {
-    console.log("Estado \"cancelable\":", cancelableState ? "cancelable" : "no-cancelable");
-  }, [cancelableState]
-  );
->>>>>>> 1a3c16a1117e1f2c8fa161dbc17e21544c7d663d
 
   return (
     <div className='container'>
@@ -281,117 +265,18 @@ const HouseAdd = () => {
             </div>
         </div> 
         <div className="infocentrodcha">
-<<<<<<< HEAD
-          <div className="genericinput">
-            <input
-              type="text"
-              placeholder="Título"
-              value={title}
-              onChange={handleInputChange(setTitle)}
-            />
-          </div>
-          
-          <div className="genericinput">
-            <input
-              type="text"
-              placeholder="Precio"
-              value={price}
-              onChange={handleInputChange(setPrice)}
-            />
-          </div>
-
-          <div className="genericinput">
-            <input
-              type="text"
-              placeholder="Número de baños"
-              value={nWc}
-              onChange={handleInputChange(setNWC)}
-            />
-          </div>
-
-          <div className="genericinput">
-            <input
-              type="text"
-              placeholder="Número de habitaciones"
-              value={nRooms}
-              onChange={handleInputChange(setNRooms)}
-            />
-          </div>
-
-          <div className="genericinput">
-            <input
-              type="text"
-              placeholder="Número de camas individuales"
-              value={nSingleBeds}
-              onChange={handleInputChange(setNSingleBeds)}
-            />
-          </div>
-
-          <div className="genericinput">
-            <input
-              type="text"
-              placeholder="Número de camas dobles"
-              value={nDoubleBeds}
-              onChange={handleInputChange(setNDoubleBeds)}
-            />
-          </div>
-
-          <div className="genericinput">
-            <input
-              type="text"
-              placeholder="Máximo de huespedes permitidos"
-              value={maxGuests}
-              onChange={handleInputChange(setMaxGuests)}
-            />
-          </div>
-
-          <div className="genericinput">
-            <input
-              type="text"
-              placeholder="Ciudad"
-              value={city}
-              onChange={handleInputChange(setCity)}
-            />
-          </div>
-          <div className="genericinput">
-            <input
-              type="text"
-              placeholder="Dirección"
-              value={address}
-              onChange={handleInputChange(setAddress)}
-            />
-          </div>
-
-          <div className="genericinput">
-            <input
-              type="text"
-              placeholder="Localización"
-              value={location}
-              onChange={handleInputChange(setLocation)}
-            />
-          </div>
-
-          <div className="genericinput">
-            <input
-              type="text"
-              placeholder="Descripción"
-              value={description}
-              onChange={handleInputChange(setDescription)}
-            />
-=======
           <h2>Introduzca la información:</h2>
           <div className='input-infocasa-container'>
-            <div className="input-infocasa"><input type="text" placeholder="Nombre de la casa" /></div>
-            <div className="input-infocasa"><input type="text" placeholder="Precio por noche (por persona)" /></div>
-            <div className="input-infocasa"><input type="text" placeholder="Ciudad" /></div>
-            <div className="input-infocasa"><input type="text" placeholder="Ubicación" /></div>
-            <div className="input-infocasa"><input type="text" placeholder="Máximo de huéspedes" /></div>
-            <div className="input-infocasa"><input type="text" placeholder="Habitaciones" /></div>
-            <div className="input-infocasa"><input type="text" placeholder="Camas individuales" /></div>
-            <div className="input-infocasa"><input type="text" placeholder="Camas dobles" /></div>
-            <div className="input-infocasa"><input type="text" placeholder="Baños" /></div>
-            <div className="input-infocasa"><input type="text" placeholder="Descripción" /></div>
->>>>>>> 1a3c16a1117e1f2c8fa161dbc17e21544c7d663d
+            <div className="input-infocasa"><input type="text" placeholder="Nombre de la casa" value={title} onChange={handleInputChange(setTitle)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Precio por noche (por persona)" value={price} onChange={handleInputChange(setPrice)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Ciudad" value={city} onChange={handleInputChange(setCity)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Ubicación" value={location} onChange={handleInputChange(setLocation)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Máximo de huéspedes" value={maxGuests} onChange={handleInputChange(setMaxGuests)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Habitaciones" value={nRooms} onChange={handleInputChange(setNRooms)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Camas individuales" value={nSingleBeds} onChange={handleInputChange(setNSingleBeds)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Camas dobles" value={nDoubleBeds} onChange={handleInputChange(setNDoubleBeds)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Baños" value={nWc} onChange={handleInputChange(setNWC)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Descripción" value={description} onChange={handleInputChange(setDescription)}/></div>
           </div>
         </div>
               
