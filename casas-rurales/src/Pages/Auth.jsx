@@ -325,7 +325,7 @@ const Auth = () => {
           <div
             id="auth"
             className="accept-button"
-            onClick={handleAcceptButtonClick}
+            onClick={ handleAcceptButtonClick }
           >
             {actionNames[action]}
           </div>

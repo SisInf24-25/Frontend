@@ -1,16 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
 import casaImg from '../../Images/sample-house.jpg';
 import InterruptorGenerico from '../../Components/InterruptorGenerico';
 import Mapa from '../../Components/Mapa'
 import '../../Style/Style.css'
 import { MapContainer, TileLayer } from 'react-leaflet';
 import InterruptorGenericoPequeño from '../../Components/InterruptorGenericoPequeño';
-
-
+import { useSession } from '../../Context/SessionContext';
 
 const HouseAdd = () => {
   const navigate = useNavigate();
+
+  const { userSession, clearSession } = useSession();
+
+  const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
+  const [nWc, setNWC] = useState('');
+  const [nRooms, setNRooms] = useState('');
+  const [nSingleBeds, setNSingleBeds] = useState('');
+  const [nDoubleBeds, setNDoubleBeds] = useState('');
+  const [maxGuests, setMaxGuests] = useState('');
+  const [city, setCity] = useState('');
+  const [address, setAddress] = useState('');
+  const [location, setLocation] = useState('');
+  const [description, setDescription] = useState('');
 
   const [visibleState, setVisibleState] = useState("visible");
   const [cancelableState, setCancelableState] = useState("cancelable");
@@ -31,9 +46,7 @@ const HouseAdd = () => {
     } else {
       condiciones[index] = 0;
     }
-    console.log(condiciones)
     setCodigoCondiciones(calcularDecimal(condiciones));
-    console.log(codigoCondiciones)
   }
 
   const calcularDecimal = (arrayBinario) => {
@@ -44,16 +57,114 @@ const HouseAdd = () => {
   
   const handleVisibleToggle = (isVisible) => {
     setVisibleState(isVisible);
-    console.log("Estado \"visible\":", isVisible ? "visible" : "no-visible");
   };
 
   const handleCancelableToggle = (isCancelable) => {
     setCancelableState(isCancelable);
-    console.log("Estado \"cancelable\":", isCancelable ? "cancelable" : "no-cancelable");
   };
 
+  // Notificación de error
+  const notify = (message) => toast.error(message, {
+    position: 'bottom-left',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  });
+
+  // Manejo de cambio de inputs
+  const handleInputChange = (setter) => (e) => setter(e.target.value);
+
+  // Lógica de crear casa
+  const peticionCrearCasa = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/houses/create',
+        JSON.stringify({
+          title: title,
+          owner_id: userSession.user_id,
+          price: price,
+          n_wc: nWc,
+          n_rooms: nRooms,
+          n_single_beds: nSingleBeds,
+          n_double_beds: nDoubleBeds,
+          max_guests: maxGuests,
+          city: city, 
+          address: address,
+          lat: 0,
+          long: 0,
+          conditions: codigoCondiciones,
+          description: description,
+          public: visibleState
+        }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true
+        }
+      );
+
+      console.log(response.data)
+    } catch (error) {
+      notify(error.response.data['error'])
+    }
+  };
+
+  // Manejo del botón de aceptar
+  const handleAcceptButtonClick = () => {
+    if (!title) {
+      notify('Título inválido')
+      return;
+    }
+
+    if (!price) {
+      notify('Precio inválido')
+      return;
+    }
+
+    if (!nWc) {
+      notify('Número de baños inválido')
+      return;
+    }
+
+    if (!nRooms) {
+      notify('Número de habitaciones inválido')
+      return;
+    }
+
+    if (!nSingleBeds) {
+      notify('Número de camas individuales inválido')
+      return;
+    }
+
+    if (!nDoubleBeds) {
+      notify('Número de camas dobles inválido')
+      return;
+    }
+
+    if (!maxGuests) {
+      notify('Máximo de huéspedes inválido')
+      return;
+    }
+
+    if (!city) {
+      notify('Ciudad inválida')
+      return;
+    }
+
+    if (!address) {
+      notify('Dirección inválida')
+      return;
+    }
+  
+    if (!location) {
+      notify('Localización inválida')
+      return;
+    }
+
+    peticionCrearCasa();
+  }
+
   return (
-    
     <div className='container'>
       <div className='title'>
         <div className='text'>Añadir Casa</div>
@@ -145,27 +256,107 @@ const HouseAdd = () => {
         </div>  
         <div className="infocentrodcha">
           <div className="genericinput">
-            <input type="text" placeholder="Nombre de la casa" />
+            <input
+              type="text"
+              placeholder="Título"
+              value={title}
+              onChange={handleInputChange(setTitle)}
+            />
           </div>
           
           <div className="genericinput">
-            <input type="text" placeholder="Campo 2" />
+            <input
+              type="text"
+              placeholder="Precio"
+              value={price}
+              onChange={handleInputChange(setPrice)}
+            />
           </div>
-        
+
           <div className="genericinput">
-            <input type="text" placeholder="Campo 3" />
+            <input
+              type="text"
+              placeholder="Número de baños"
+              value={nWc}
+              onChange={handleInputChange(setNWC)}
+            />
+          </div>
+
+          <div className="genericinput">
+            <input
+              type="text"
+              placeholder="Número de habitaciones"
+              value={nRooms}
+              onChange={handleInputChange(setNRooms)}
+            />
+          </div>
+
+          <div className="genericinput">
+            <input
+              type="text"
+              placeholder="Número de camas individuales"
+              value={nSingleBeds}
+              onChange={handleInputChange(setNSingleBeds)}
+            />
+          </div>
+
+          <div className="genericinput">
+            <input
+              type="text"
+              placeholder="Número de camas dobles"
+              value={nDoubleBeds}
+              onChange={handleInputChange(setNDoubleBeds)}
+            />
+          </div>
+
+          <div className="genericinput">
+            <input
+              type="text"
+              placeholder="Máximo de huespedes permitidos"
+              value={maxGuests}
+              onChange={handleInputChange(setMaxGuests)}
+            />
+          </div>
+
+          <div className="genericinput">
+            <input
+              type="text"
+              placeholder="Ciudad"
+              value={city}
+              onChange={handleInputChange(setCity)}
+            />
           </div>
           <div className="genericinput">
-            <input type="text" placeholder="Campo 4" />
+            <input
+              type="text"
+              placeholder="Dirección"
+              value={address}
+              onChange={handleInputChange(setAddress)}
+            />
           </div>
+
           <div className="genericinput">
-            <input type="text" placeholder="Campo 5" />
+            <input
+              type="text"
+              placeholder="Localización"
+              value={location}
+              onChange={handleInputChange(setLocation)}
+            />
+          </div>
+
+          <div className="genericinput">
+            <input
+              type="text"
+              placeholder="Descripción"
+              value={description}
+              onChange={handleInputChange(setDescription)}
+            />
           </div>
         </div>
               
       </div>
       <div className="accept">
-            <div className="accept-button" onClick={ () => { navigate('/houses'); } }>Aceptar</div>
+            <div className="accept-button" onClick={ handleAcceptButtonClick }>Aceptar</div>
           </div>
     </div>
   )
