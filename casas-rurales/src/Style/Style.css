@@ -212,7 +212,7 @@
     margin-top: 60px;
     display: flex;
     flex-direction: column;
-    height: 50vh;        /* Hace que la división ocupe toda la altura de la pantalla */
+    height: 50vh;
     overflow-y: auto;     
 }
 
@@ -236,6 +236,10 @@
     overflow-x: unset;
 }
 
+.infocentrodcha h2{
+    margin-top: 0px;
+}
+
 .infocentrodcha {
     width: 50%;
     margin: 20px 0px;
@@ -243,7 +247,7 @@
     margin-left: 30px;
     display: flex;
     flex-direction: column;
-    height: 50vh;        /* Hace que la división ocupe toda la altura de la pantalla */
+    height: 60vh;        /* Hace que la división ocupe toda la altura de la pantalla */
     overflow-y: auto;     
 }
 

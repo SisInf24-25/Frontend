@@ -30,7 +30,6 @@ function LocationMarker({ onMapClick }) {
 }
 
 function Mapa({ onMapClick, posicion }) {
-  console.log("map pos ", posicion)
   return (
     <div style={{ height: 'auto', width: 'auto' }}>
         <MapContainer center={posicion} zoom={17} style={{ height: "275px", width: "400px" }}>
