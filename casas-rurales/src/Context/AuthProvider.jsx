@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import io from 'socket.io-client';
+//import io from 'socket.io-client';
 
 const AuthContext = createContext({});
 
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return(
-        <AuthContext.Provider value={{ auth, setAuth, socket, refreshFriends, setRefreshFriends, updateUsername, updateMail}}>
+        <AuthContext.Provider value={{ auth, setAuth, socket, updateUsername, updateMail}}>
             {children}
         </AuthContext.Provider>
     )

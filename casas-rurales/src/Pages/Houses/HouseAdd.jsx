@@ -35,6 +35,8 @@ const HouseAdd = () => {
   const [longitude, setLongitude] = useState(null);
   const [condiciones, setCondiciones] = useState(['0','0','0','0','0','0','0','0','0','0','0','0'])
 
+
+
   const handleMapClick = (lat, lng) => {
     setLatitude(lat);
     setLongitude(lng);
@@ -102,7 +104,7 @@ const HouseAdd = () => {
           address: address,
           lat: 0,
           long: 0,
-          conditions: codigoCondiciones,
+          conditions: parseInt(condiciones.join(''), 2),
           description: description,
           public: visibleState
         }),
