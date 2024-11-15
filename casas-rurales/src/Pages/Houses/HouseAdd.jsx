@@ -10,6 +10,8 @@ import './House.css'
 import { MapContainer, TileLayer } from 'react-leaflet';
 import InterruptorGenericoPequeño from '../../Components/InterruptorGenericoPequeño';
 import { useSession } from '../../Context/SessionContext';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const HouseAdd = () => {
   const navigate = useNavigate();
@@ -34,8 +36,6 @@ const HouseAdd = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [condiciones, setCondiciones] = useState(['0','0','0','0','0','0','0','0','0','0','0','0'])
-
-
 
   const handleMapClick = (lat, lng) => {
     setLatitude(lat);
@@ -89,6 +89,7 @@ const HouseAdd = () => {
 
   // Lógica de crear casa
   const peticionCrearCasa = async () => {
+    console.log(title, userSession.user_id, price, nWc);
     try {
       const response = await axios.post('http://localhost:8000/houses/create',
         JSON.stringify({
@@ -122,6 +123,7 @@ const HouseAdd = () => {
 
   // Manejo del botón de aceptar
   const handleAcceptButtonClick = () => {
+    console.log("boton click")
     if (!title) {
       notify('Título inválido')
       return;
@@ -284,8 +286,9 @@ const HouseAdd = () => {
               
       </div>
       <div className="accept">
-            <div className="accept-button" onClick={ handleAcceptButtonClick }>Aceptar</div>
-          </div>
+          <div className="accept-button" onClick={ handleAcceptButtonClick }>Aceptar</div>
+      </div>
+      <ToastContainer/>
     </div>
   )
 }
