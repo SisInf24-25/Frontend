@@ -20,6 +20,7 @@ function LocationMarker({ onMapClick }) {
       setPosition(e.latlng);
       if (onMapClick) {
         onMapClick(lat, lng); // Llama al callback con lat y lng
+        console.log(lat, lng)
       }
     },
   });
@@ -37,7 +38,7 @@ function Mapa({ onMapClick, posicion }) {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <Marker position={posicion}></Marker>
+        <LocationMarker onMapClick={onMapClick} />
         </MapContainer>
     </div>
   );

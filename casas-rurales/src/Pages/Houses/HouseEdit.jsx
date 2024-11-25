@@ -1,38 +1,187 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import casaImg from '../../Images/sample-house.jpg';
+import InterruptorGenericoPequeño from '../../Components/InterruptorGenericoPequeño';
+import Mapa from '../../Components/Mapa'
 import InterruptorGenerico from '../../Components/InterruptorGenerico';
 import '../../Style/Style.css'
+import 'react-toastify/dist/ReactToastify.css';
+import AuthContext from '../../Context/AuthProvider'
 
 const HouseEdit = () => {
-  const location = useLocation();  // Hook para obtener el estado enviado
   const navigate = useNavigate();
-  const { id, nombre } = location.state || {};  // Extraer datos del estado
+
+  const { auth } = useContext(AuthContext);
+  const { username } = auth;
+  const { user_id } = auth;
+  const { role } = auth;
+
+  const [houseId, setHouseId] = useState('');
+  const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
+  const [nWc, setNWC] = useState('');
+  const [nRooms, setNRooms] = useState('');
+  const [nSingleBeds, setNSingleBeds] = useState('');
+  const [nDoubleBeds, setNDoubleBeds] = useState('');
+  const [maxGuests, setMaxGuests] = useState('');
+  const [city, setCity] = useState('');
+  const [address, setAddress] = useState('');
+  const [description, setDescription] = useState('');
 
   const [visibleState, setVisibleState] = useState("visible");
   const [cancelableState, setCancelableState] = useState("cancelable");
   const [cancelableNumber, setCancelableNumber] = useState('1'); // cancelableNumber almacena el valor del input de número
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [condiciones, setCondiciones] = useState(['0','0','0','0','0','0','0','0','0','0','0','0'])
 
+  const handleMapClick = (lat, lng) => {
+    setLatitude(lat);
+    setLongitude(lng);
+  };
+
+  const handleConditionChange = (index, isOn) => {
+    const nuevasCondiciones = [...condiciones]; 
+    nuevasCondiciones[index] = isOn ? '1' : '0';
+    setCondiciones(nuevasCondiciones)
+  }
+
+  useEffect(() => {
+    console.log("Condiciones: ", condiciones);
+  }, [condiciones]
+  );
+
+  const juntarBits = (arrayBinario) => {
+    return arrayBinario.join('');
+  };
+
+  const separarBits = (stringBinario) => {
+    return stringBinario.split('');
+  };
+   
   const handleVisibleToggle = (isVisible) => {
     setVisibleState(isVisible);
-    console.log("Estado \"visible\":", isVisible ? "visible" : "no-visible");
   };
+
+  useEffect(() => {
+    console.log("Estado \"visible\":", visibleState ? "visible" : "no-visible");
+  }, [visibleState]
+  );
 
   const handleCancelableToggle = (isCancelable) => {
     setCancelableState(isCancelable);
-    console.log("Estado \"cancelable\":", isCancelable ? "cancelable" : "no-cancelable");
   };
 
+  // Notificación de error
+  const notify = (message) => toast.error(message, {
+    position: 'bottom-left',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  });
+
+  // Manejo de cambio de inputs
+  const handleInputChange = (setter) => (e) => setter(e.target.value);
+
+  // Lógica de crear casa
+  const peticionCrearCasa = async () => {
+    console.log(title, user_id, price, nWc);
+    try {
+      const response = await axios.post('http://localhost:8000/houses/modify',
+        JSON.stringify({
+          house_id: houseId,
+          title: title,
+          owner_id: user_id,
+          price: price,
+          n_wc: nWc,
+          n_rooms: nRooms,
+          n_single_beds: nSingleBeds,
+          n_double_beds: nDoubleBeds,
+          max_guests: maxGuests,
+          city: city, 
+          address: address,
+          lat: 0,
+          long: 0,
+          conditions: parseInt(condiciones.join(''), 2),
+          description: description,
+          public: visibleState
+        }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true
+        }
+      );
+
+      console.log(response.data)
+    } catch (error) {
+      notify(error.response.status + ", " + error.response.data['error'])
+    }
+  };
+
+  // Manejo del botón de aceptar
+  const handleAcceptButtonClick = () => {
+    console.log("boton click")
+    if (!title) {
+      notify('Título inválido')
+      return;
+    }
+
+    if (!price) {
+      notify('Precio inválido')
+      return;
+    }
+
+    if (!nWc) {
+      notify('Número de baños inválido')
+      return;
+    }
+
+    if (!nRooms) {
+      notify('Número de habitaciones inválido')
+      return;
+    }
+
+    if (!nSingleBeds) {
+      notify('Número de camas individuales inválido')
+      return;
+    }
+
+    if (!nDoubleBeds) {
+      notify('Número de camas dobles inválido')
+      return;
+    }
+
+    if (!maxGuests) {
+      notify('Máximo de huéspedes inválido')
+      return;
+    }
+
+    if (!city) {
+      notify('Ciudad inválida')
+      return;
+    }
+
+    if (!address) {
+      notify('Dirección inválida')
+      return;
+    }
+
+    peticionCrearCasa();
+  }
+
   return (
-    
     <div className='container'>
       <div className='title'>
         <div className='text'>Editar Casa</div>
         <div className='underline'></div>
       </div>
       <div className='infoizq-infodcha'>
-        <div className='infoizq'>
+        <div className='infocentroizq'>
           <img src={casaImg} alt={`Imagen`} className="house-foto" />
           <div className='interruptor-content'>
             <div className='interruptor-texto'>¿Cancelable?</div>
@@ -61,28 +210,82 @@ const HouseEdit = () => {
             <InterruptorGenerico onToggle={handleVisibleToggle} />
           </div>
         </div>
-        <div className="infodcha">
-          <div className="genericinput">
-            <input type="text" placeholder="Nombre de la casa" />
+        <div className='infodcentrocentro'>
+          <h2>Seleccione la ubicación:</h2>
+          <Mapa onMapClick={handleMapClick} posicion={[41.683326, -0.889127]}/>
+          <h2>Seleccione las condiciones:</h2>
+          <div className='condiciones'>
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={0} />
+                <div className='interruptor-peq-texto'>WIFI</div>
+              </div>
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={1}/>
+                <div className='interruptor-peq-texto'>Mascotas</div>
+              </div>
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={2} />
+                <div className='interruptor-peq-texto'>Fumar</div>
+              </div> 
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={3} />
+                <div className='interruptor-peq-texto'>Lavadora</div>
+              </div> 
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={4} />
+                <div className='interruptor-peq-texto'>Aire acondicionado</div>
+              </div> 
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={5} />
+                <div className='interruptor-peq-texto'>Calefacción</div>
+              </div> 
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={6}/>
+                <div className='interruptor-peq-texto'>Lavavajillas</div>
+              </div> 
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={7} />
+                <div className='interruptor-peq-texto'>Horno</div>
+              </div> 
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={8} />
+                <div className='interruptor-peq-texto'>Televisión</div>
+              </div>
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={9} />
+                <div className='interruptor-peq-texto'>Ropa de cama</div>
+              </div>
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={10} />
+                <div className='interruptor-peq-texto'>Jardín/Terraza</div>
+              </div> 
+              <div className='interruptor-content'>
+                <InterruptorGenericoPequeño onToggle={handleConditionChange} index={11}/>
+                <div className='interruptor-peq-texto'>Barbacoa</div>
+              </div> 
+            </div>
+        </div> 
+        <div className="infocentrodcha">
+          <h2>Introduzca la información:</h2>
+          <div className='input-infocasa-container'>
+            <div className="input-infocasa"><input type="text" placeholder="Nombre de la casa" value={title} onChange={handleInputChange(setTitle)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Precio por noche (por persona)" value={price} onChange={handleInputChange(setPrice)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Ciudad" value={city} onChange={handleInputChange(setCity)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Ubicación" value={address} onChange={handleInputChange(setAddress)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Máximo de huéspedes" value={maxGuests} onChange={handleInputChange(setMaxGuests)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Habitaciones" value={nRooms} onChange={handleInputChange(setNRooms)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Camas individuales" value={nSingleBeds} onChange={handleInputChange(setNSingleBeds)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Camas dobles" value={nDoubleBeds} onChange={handleInputChange(setNDoubleBeds)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Baños" value={nWc} onChange={handleInputChange(setNWC)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Descripción" value={description} onChange={handleInputChange(setDescription)}/></div>
           </div>
-
-          <div className="genericinput">
-            <input type="text" placeholder="Campo 2" />
-          </div>
-          <div className="genericinput">
-            <input type="text" placeholder="Campo 3" />
-          </div>
-          <div className="genericinput">
-            <input type="text" placeholder="Campo 4" />
-          </div>
-          <div className="genericinput">
-            <input type="text" placeholder="Campo 5" />
-          </div>
-        </div>        
+        </div>
+              
       </div>
       <div className="accept">
-        <div className="accept-button" onClick={ () => { navigate(-1); }}>Aceptar</div>
+          <div className="accept-button" onClick={ handleAcceptButtonClick }>Aceptar</div>
       </div>
+      <ToastContainer/>
     </div>
   )
 }

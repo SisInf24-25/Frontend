@@ -1,25 +1,76 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import '../Style/Style.css';
-import { useSession } from '../Context/SessionContext';
+import AuthContext from '../Context/AuthProvider';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Header = () => {
-  const { userSession, clearSession } = useSession();
 
-  const validSession = (userSession) => {
-    if (!userSession) {
+  const { auth, setAuth } = useContext(AuthContext);
+  const { username } = auth;
+  const { user_id } = auth;
+  const { role } = auth;
+
+  // Notificación de error
+  const notifyError = (message) => toast.error(message, {
+    position: 'bottom-left',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  });
+
+  const peticionLogout = async () => {
+    try {
+      console.log("peticion logout ANTES")
+      const response = await axios.post('http://localhost:8000/users/logout', null, 
+      {
+        withCredentials: true
+      });
+      console.log("peticion logout DESPUES")
+
+      if (response.status === 200) {
+        console.log("logout")
+
+      } else {
+        console.error("ERROR LOGOUT:", response.status, response.message)
+      }
+
+    } catch (error) {
+      console.log("CATCH ERROR")
+      // Check if `error.response` is defined before accessing `data`
+      if (error.response) {
+        // Handle the case where response exists
+        console.log(error.response);
+        console.log(error.response.data?.error || 'Error desconocido');
+      } else if (error.request) {
+        // Handle the case where the request was made but no response was received
+        console.log('No se recibió respuesta del servidor');
+      } else {
+        // Handle other errors such as setting up the request
+        console.log(`Error al intentar iniciar sesión: ${error.message}`);
+      }
+    }
+  };
+
+  const validSession = () => {
+    if (!auth) {
       return false;
     }
 
-    if (!userSession.user_id || userSession.user_id <= 0) {
+    if (!user_id || user_id <= 0) {
       return false;
     }
 
-    if (!userSession.username) {
+    if (!username) {
       return false;
     }
 
-    if (!(userSession.role === 'guest' || userSession.role === 'owner')) {
+    if (!(role === 'guest' || role === 'owner')) {
       return false;
     }
 
@@ -32,19 +83,19 @@ const Header = () => {
         <Link to="/">Inicio</Link>
       </div>
 
-      {!validSession(userSession) && (
+      {!validSession() && (
         <div className="right">
           <Link to="/auth?action=login">Iniciar sesión</Link>
           <Link to="/auth?action=signup">Registrarse</Link>
         </div>
       )}
 
-      {validSession(userSession) && (
+      {validSession() && (
         <div className="right">
           <Link
             to="/"
             onClick={() => {
-              clearSession();
+              peticionLogout();
             }}
           >
             Cerrar sesión

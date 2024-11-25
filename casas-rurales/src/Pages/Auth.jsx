@@ -1,21 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { useSession } from '../Context/SessionContext'; // Importa el hook de sesión
+import AuthContext from '../Context/AuthProvider';
 import 'react-toastify/dist/ReactToastify.css';
 import '../Style/Style.css';
 
 const Auth = () => {
-  const { setSession, clearSession } = useSession(); // Accede al contexto de sesión
+  const { auth, setAuth } = useContext(AuthContext);
+  //console.log(auth); // Check the current auth state
+  //console.log(setAuth); // Should log the function
+  
+  const [success, setSuccess] = useState(false);
+  const [errMsg, setErrMsg] = useState('');
+
+  useEffect(() => {
+    if (auth && typeof auth === 'object' && Object.keys(auth).length !== 0) {
+      setSuccess(true);
+    }
+  }, [auth]);
+
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const initialAction = queryParams.get('action') || 'login';
 
   // Tipos
-  const GUEST_TYPE = 1;
-  const OWNER_TYPE = 2;
+  const OWNER_TYPE = 1;
+  const GUEST_TYPE = 2;
 
   // Estados
   const [action, setAction] = useState(initialAction);
@@ -29,13 +41,15 @@ const Auth = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+ 
+
+
   // Si la acción es logout, eliminar la cookie y redirigir
   useEffect(() => {
     if (action === 'logout') {
-      clearSession(); // Limpia la sesión desde el contexto
       navigate('/');  // Redirige a la página de inicio
     }
-  }, [action, navigate, clearSession]);
+  }, [action]);
 
   // Actualiza la acción cuando cambia la URL
   useEffect(() => {
@@ -49,8 +63,18 @@ const Auth = () => {
     navigate(`/auth?action=${newAction}`);
   };
 
+  // Notificación OK
+  const notifyOK = (message) => toast.success(message, {
+    position: 'bottom-left',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  });
+
   // Notificación de error
-  const notify = (message) => toast.error(message, {
+  const notifyError = (message) => toast.error(message, {
     position: 'bottom-left',
     autoClose: 5000,
     hideProgressBar: false,
@@ -78,33 +102,60 @@ const Auth = () => {
   // Lógica de login
   const peticionLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/users/login', {
+      const response = await axios.post('http://localhost:8000/users/login',{
         username: username,
-        password: password
+        password: password,
+      }, 
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
       });
 
-      const { user_id, username: userUsername, role } = response.data['user'];
+      //const { user_id, username: userUsername, role } = response.data['user'];
 
       // Guardamos la sesión en el contexto
-      setSession({ user_id, username: userUsername, role });
+      //setSession({ user_id, username: userUsername, role });
 
       if (response.status === 200) {
-        switch (userType) {
-          case GUEST_TYPE:
+        console.log(username)
+        console.log(response); /* Solo desarrollo */
+        const user_id = response?.data?.user?.user_id;
+        const role = response?.data?.user?.role;
+        setAuth({ username, user_id, role });
+
+        setUsername('');
+        setPassword('');
+
+        notifyOK("Inicio de sesión exitoso")
+        switch (role) {
+          case "guest":
+            notifyOK("Huesped", userType)
             navigate('/');
             break;
-          case OWNER_TYPE:
+          case "owner":
+            notifyOK("Propietario", userType)
             navigate('/host');
             break;
         }
       }
     } catch (error) {
-      notify(error.response.data['error'])
+      // Check if `error.response` is defined before accessing `data`
+      if (error.response) {
+        // Handle the case where response exists
+        notifyError(error.response.data?.error || 'Error desconocido');
+      } else if (error.request) {
+        // Handle the case where the request was made but no response was received
+        notifyError('No se recibió respuesta del servidor');
+      } else {
+        // Handle other errors such as setting up the request
+        notifyError(`Error al intentar iniciar sesión: ${error.message}`);
+      }
     }
   };
 
   // Lógica de signup (si es necesario agregar más tarde)
   const peticionSignup = async () => {
+  
     try {
       const response = await axios.post('http://localhost:8000/users/registerUser', {
         username: username,
@@ -116,12 +167,15 @@ const Auth = () => {
         type: userType
       });
 
-      const { user_id, username: userUsername, role } = response.data['user'];
-
-      // Guardamos la sesión en el contexto
-      setSession({ user_id, username: userUsername, role });
 
       if (response.status === 200) {
+        notifyOK("Registro exitoso")
+
+        /*
+        const { user_id, username: userUsername, role } = response.data['user'];
+
+        // Guardamos la sesión en el contexto
+        setSession({ user_id, username: userUsername, role });
         switch (userType) {
           case GUEST_TYPE:
             navigate('/');
@@ -130,21 +184,24 @@ const Auth = () => {
             navigate('/host');
             break;
         }
+        */
       }
+        
     } catch (error) {
-      notify(error.response.data['error'])
+      notifyError(error.response.data['error'])
     }
+    
   };
 
   // Manejo del botón de aceptar
   const handleAcceptButtonClick = () => {
     if (!username) {
-      notify('Nombre de usuario inválido')
+      notifyError('Nombre de usuario inválido')
       return;
     }
 
     if (username.length > 20) {
-      notify('Nombre de usuario demasiado largo')
+      notifyError('Nombre de usuario demasiado largo')
       return;
     }
 
@@ -153,49 +210,49 @@ const Auth = () => {
     }
     else if (action === 'signup') {
       if (!name) {
-        notify('Nombre inválido')
+        notifyError('Nombre inválido')
         return;
       }
 
       if (name.length > 25) {
-        notify('Nombre demasiado largo')
+        notifyError('Nombre demasiado largo')
         return;
       }
 
       if (!lastname) {
-        notify('Apellidos inválidos')
+        notifyError('Apellidos inválidos')
         return;
       }
 
       if (lastname.length > 25) {
-        notify('Apellidos demasiado largos')
+        notifyError('Apellidos demasiado largos')
         return;
       }
 
       if (!email) {
-        notify('Correo electrónico inválido')
+        notifyError('Correo electrónico inválido')
         return;
       }
 
       if (email.length > 50) {
-        notify('Correo electrónico demasiado largo')
+        notifyError('Correo electrónico demasiado largo')
         return;
       }
 
       const usernameRegex = /^[a-zA-Z0-9_]+$/;
       if (!usernameRegex.test(username)) {
-        notify('Nombre de usuario solo puede contener caracteres alfanuméricos y guión bajo (_)')
+        notifyError('Nombre de usuario solo puede contener caracteres alfanuméricos y guión bajo (_)')
         return;
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        notify('Formato de correo electrónico no válido')
+        notifyError('Formato de correo electrónico no válido')
         return;
       }
 
       if (password !== confirmPassword) {
-        notify('Contraseñas no coinciden')
+        notifyError('Contraseñas no coinciden')
         return;
       }
 

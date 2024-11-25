@@ -23,6 +23,7 @@ export const SessionProvider = ({ children }) => {
 
   // Función para actualizar la sesión
   const setSession = (data) => {
+    console.log(setSession, data);
     Cookies.set('session', JSON.stringify(data), { expires: 7, secure: true, sameSite: 'strict' });
     setUserSession(data);
   };

@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
         // Inicializar el estado 'auth' con el valor guardado en el localStorage si existe,
         // de lo contrario, inicializarlo como un objeto vacío.
         const savedAuth = localStorage.getItem('auth');
+        console.log("savedAuth:", savedAuth); // Check if there's any saved auth in localStorage
         return savedAuth ? JSON.parse(savedAuth) : {};
     });
 

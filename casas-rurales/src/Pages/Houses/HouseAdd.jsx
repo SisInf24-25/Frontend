@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
@@ -9,14 +9,16 @@ import '../../Style/Style.css'
 import './House.css'
 import { MapContainer, TileLayer } from 'react-leaflet';
 import InterruptorGenericoPequeño from '../../Components/InterruptorGenericoPequeño';
-import { useSession } from '../../Context/SessionContext';
 import 'react-toastify/dist/ReactToastify.css';
-
+import AuthContext from '../../Context/AuthProvider'
 
 const HouseAdd = () => {
   const navigate = useNavigate();
 
-  const { userSession, clearSession } = useSession();
+  const { auth } = useContext(AuthContext);
+  const { username } = auth;
+  const { user_id } = auth;
+  const { role } = auth;
 
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
@@ -27,7 +29,6 @@ const HouseAdd = () => {
   const [maxGuests, setMaxGuests] = useState('');
   const [city, setCity] = useState('');
   const [address, setAddress] = useState('');
-  const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
 
   const [visibleState, setVisibleState] = useState("visible");
@@ -89,12 +90,11 @@ const HouseAdd = () => {
 
   // Lógica de crear casa
   const peticionCrearCasa = async () => {
-    console.log(title, userSession.user_id, price, nWc);
+    console.log(title, price, nWc);
     try {
       const response = await axios.post('http://localhost:8000/houses/create',
         JSON.stringify({
           title: title,
-          owner_id: userSession.user_id,
           price: price,
           n_wc: nWc,
           n_rooms: nRooms,
@@ -103,11 +103,11 @@ const HouseAdd = () => {
           max_guests: maxGuests,
           city: city, 
           address: address,
-          lat: 0,
-          long: 0,
+          lat: 10,
+          long: 10,
           conditions: parseInt(condiciones.join(''), 2),
           description: description,
-          public: visibleState
+          is_public: visibleState
         }),
         {
           headers: { 'Content-Type': 'application/json' },
@@ -117,7 +117,7 @@ const HouseAdd = () => {
 
       console.log(response.data)
     } catch (error) {
-      notify(error.response.data['error'])
+      notify(error.response.status + ", " + error.response.data['error'])
     }
   };
 
@@ -166,11 +166,6 @@ const HouseAdd = () => {
 
     if (!address) {
       notify('Dirección inválida')
-      return;
-    }
-  
-    if (!location) {
-      notify('Localización inválida')
       return;
     }
 
@@ -274,7 +269,7 @@ const HouseAdd = () => {
             <div className="input-infocasa"><input type="text" placeholder="Nombre de la casa" value={title} onChange={handleInputChange(setTitle)}/></div>
             <div className="input-infocasa"><input type="text" placeholder="Precio por noche (por persona)" value={price} onChange={handleInputChange(setPrice)}/></div>
             <div className="input-infocasa"><input type="text" placeholder="Ciudad" value={city} onChange={handleInputChange(setCity)}/></div>
-            <div className="input-infocasa"><input type="text" placeholder="Ubicación" value={location} onChange={handleInputChange(setLocation)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Ubicación" value={address} onChange={handleInputChange(setAddress)}/></div>
             <div className="input-infocasa"><input type="text" placeholder="Máximo de huéspedes" value={maxGuests} onChange={handleInputChange(setMaxGuests)}/></div>
             <div className="input-infocasa"><input type="text" placeholder="Habitaciones" value={nRooms} onChange={handleInputChange(setNRooms)}/></div>
             <div className="input-infocasa"><input type="text" placeholder="Camas individuales" value={nSingleBeds} onChange={handleInputChange(setNSingleBeds)}/></div>
