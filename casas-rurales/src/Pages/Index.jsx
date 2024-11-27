@@ -15,8 +15,7 @@ const Index = () => {
   const [selectedRange, setSelectedRange] = useState([null, null]);
 
   const [casas, setCasas] = useState([
-    // { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
-    // { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
+    { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
     // { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
     // { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
     // { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
@@ -135,21 +134,21 @@ const Index = () => {
         <ToastContainer/>
       </div>
       <div>
-        {filteredCasas.map((casa, i) => (
-          <ElementoCasaExtendida
-            key={i}
-            id={casa.id}
-            imgSrc={casa.imgSrc}
-            nombre={casa.nombre}
-            numero={casa.numero}
-            ciudad={casa.ciudad}
-            host={false}
-            lat={casa.lat}
-            long={casa.long}              
-            fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
-            fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
-          />
-        ))}
+        <ElementoCasaExtendida
+          key={1}
+          id={1}
+          imgSrc={casaImg}
+          nombre={"Nombre Casa"}
+          numero={"Numero Casa"}
+          ciudad={"Ciudad Casa"}
+          host={false}
+          lat={10.0}
+          long={10.0}              
+          // fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
+          // fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
+          fechaIni={"Ini"}
+          fechaFin={"Fin"}
+        />
       </div>
     </div>
   )
