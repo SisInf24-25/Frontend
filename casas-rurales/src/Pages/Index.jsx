@@ -3,6 +3,7 @@ import '../Style/Style.css'
 import './Index.css'
 import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'
+import axios from 'axios';
 import casaImg from '../Images/sample-house.jpg';
 import ElementoCasaExtendida from '../Components/ElementoCasaExtendida';
 import ElementoCalendar from '../Components/ElementoCalendar';
@@ -14,15 +15,15 @@ const Index = () => {
   const [selectedRange, setSelectedRange] = useState([null, null]);
 
   const [casas, setCasas] = useState([
-    { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
-    { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
-    { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
-    { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
-    { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
-    { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
-    { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
-    { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
-    { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
+    // { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
+    // { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
+    // { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
+    // { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
+    // { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
+    // { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
+    // { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
+    // { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
+    // { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
   ]);
 
   const handleSearchChange = (e) => {
@@ -51,6 +52,26 @@ const Index = () => {
       setToastShown(true); // Actualiza el estado para evitar múltiples toasts
     }
   }, [location.state]); // Este hook se activa cuando hay un estado en la navegación
+
+  // Lógica para obtener datos de casas
+  const peticionCasas = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/houses/all', {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.status === 200) {
+        // Procesar datos aquí si es necesario
+        console.log("Datos recibidos:", response.data.house);
+      }
+    } catch (error) {
+      console.error("Error al obtener las casas:", error);
+    }
+  };
+
+  useEffect(() => {
+    peticionCasas();
+  }, []);
 
   return (
     <div className='container'>
@@ -112,6 +133,23 @@ const Index = () => {
           <p>No hay casas en esa ciudad</p>
         )}
         <ToastContainer/>
+      </div>
+      <div>
+        {filteredCasas.map((casa, i) => (
+          <ElementoCasaExtendida
+            key={i}
+            id={casa.id}
+            imgSrc={casa.imgSrc}
+            nombre={casa.nombre}
+            numero={casa.numero}
+            ciudad={casa.ciudad}
+            host={false}
+            lat={casa.lat}
+            long={casa.long}              
+            fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
+            fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
+          />
+        ))}
       </div>
     </div>
   )
