@@ -11,6 +11,7 @@ import BotonEliminar from '../../Components/Botones/BotonEliminar';
 import BotonReservar from '../../Components/Botones/BotonReservar';
 import BotonAtras from '../../Components/Botones/BotonVolver';
 import Mapa from '../../Components/Mapa';
+import axios from 'axios';
 import InterruptorGenerico from '../../Components/InterruptorGenerico';
 
 const House = () => {
@@ -18,21 +19,91 @@ const House = () => {
   const navigate = useNavigate();
   const { id, nombre, numero, imgSrc, lat, long, host, fechaIni, fechaFin } = location.state || {};  // Extraer datos del estado
 
-  
+   // Notificación de error
+   const notifyError = (message) => toast.error(message, {
+    position: 'bottom-left',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  });
+
   // Función para realizar la acción de eliminar casa
   const handleBotonEliminarClick = () => {
     toast.warn(
       ({ closeToast }) => (
         <div>
-          <p style={{ fontSize: '25px', textAlign: 'center' }}>¿Estás seguro de que deseas <b>ELIMINAR</b> esta casa?</p>
+          <p style={{ fontSize: '25px', textAlign: 'center' }}>
+            ¿Estás seguro de que deseas <b>ELIMINAR</b> esta casa?
+          </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-            <button onClick={closeToast} style={{ width: '100px', padding: '5px 10px', backgroundColor: 'gray', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '17px' }}>Cancelar</button>
-            <button onClick={() => { closeToast(); navigate("/", { state: { showOKToast: true } });
-                                      }} style={{ width: '100px', padding: '5px 10px', backgroundColor: 'red', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '17px' }}>Aceptar</button>
+            <button
+              onClick={closeToast}
+              style={{
+                width: '100px',
+                padding: '5px 10px',
+                backgroundColor: 'gray',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                fontSize: '17px',
+              }}
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={async () => {
+                try {
+                  const response = await axios.post('http://localhost:8000/houses/delete',{
+                    house_id: 6
+                  }, 
+                  {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                  });
+                  
+                  navigate("/host", { state: { showOKToast: true }});
+                } catch (error) {
+                  // Check if `error.response` is defined before accessing `data`
+                  if (error.response) {
+                    // Handle the case where response exists
+                    notifyError(error.response.data?.error || 'Error desconocido');
+                  } else if (error.request) {
+                    // Handle the case where the request was made but no response was received
+                    notifyError('No se recibió respuesta del servidor');
+                  } else {
+                    // Handle other errors such as setting up the request
+                    notifyError(`Error al intentar eliminar casa: ${error.message}`);
+                  }
+                }
+              }}
+              style={{
+                width: '100px',
+                padding: '5px 10px',
+                backgroundColor: 'red',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                fontSize: '17px',
+              }}
+            >
+              Aceptar
+            </button>
           </div>
         </div>
       ),
-      { position: "top-center", autoClose: false, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined }
+      {
+        position: "top-center",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
     );
   };
 

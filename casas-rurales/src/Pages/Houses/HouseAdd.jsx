@@ -105,7 +105,7 @@ const HouseAdd = () => {
           address: address,
           lat: 10,
           long: 10,
-          conditions: parseInt(condiciones.join(''), 2),
+          conditions: condiciones.join(''),
           description: description,
           is_public: visibleState
         }),
@@ -114,8 +114,9 @@ const HouseAdd = () => {
           withCredentials: true
         }
       );
-
+      
       console.log(response.data)
+      navigate("/host", { state: { showOKToast: true }});
     } catch (error) {
       notify(error.response.status + ", " + error.response.data['error'])
     }

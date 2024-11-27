@@ -89,9 +89,10 @@ const HouseEdit = () => {
   const handleInputChange = (setter) => (e) => setter(e.target.value);
 
   // Lógica de crear casa
-  const peticionCrearCasa = async () => {
+  const peticionModificarCasa = async () => {
     console.log(title, user_id, price, nWc);
     try {
+      /*
       const response = await axios.post('http://localhost:8000/houses/modify',
         JSON.stringify({
           house_id: houseId,
@@ -116,7 +117,33 @@ const HouseEdit = () => {
           withCredentials: true
         }
       );
+      
+      */
 
+      const response = await axios.post('http://localhost:8000/houses/modify',
+        JSON.stringify({
+          house_id: 6,
+          title: "casaCAMBIADA",
+          price: 3,
+          n_wc: 10,
+          n_rooms: 20,
+          n_single_beds: 30,
+          n_double_beds: 40,
+          max_guests: 14,
+          city: "city", 
+          address: "address",
+          lat: 1,
+          long: 1,
+          conditions: "000000000000",
+          description: "DESCRIPCION CAMBIADA",
+          is_public: false
+        }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true
+        }
+      );
+      navigate("/host", { state: { showOKToast: true }});
       console.log(response.data)
     } catch (error) {
       notify(error.response.status + ", " + error.response.data['error'])
@@ -171,7 +198,6 @@ const HouseEdit = () => {
       return;
     }
 
-    peticionCrearCasa();
   }
 
   return (
@@ -283,7 +309,7 @@ const HouseEdit = () => {
               
       </div>
       <div className="accept">
-          <div className="accept-button" onClick={ handleAcceptButtonClick }>Aceptar</div>
+          <div className="accept-button" onClick={ peticionModificarCasa }>Aceptar</div>
       </div>
       <ToastContainer/>
     </div>
