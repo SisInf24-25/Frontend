@@ -24,6 +24,7 @@ const Header = () => {
     draggable: true,
   });
 
+
   const peticionLogout = async () => {
     try {
       console.log("peticion logout ANTES")
@@ -31,14 +32,8 @@ const Header = () => {
       {
         withCredentials: true
       });
-      console.log("peticion logout DESPUES")
-
-      if (response.status === 200) {
-        console.log("logout")
-
-      } else {
-        console.error("ERROR LOGOUT:", response.status, response.message)
-      }
+      console.log("logout exitoso")
+      setAuth({});
 
     } catch (error) {
       console.log("CATCH ERROR")
@@ -54,6 +49,7 @@ const Header = () => {
         // Handle other errors such as setting up the request
         console.log(`Error al intentar iniciar sesión: ${error.message}`);
       }
+      setAuth({});
     }
   };
 
@@ -79,9 +75,17 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="left">
-        <Link to="/">Inicio</Link>
-      </div>
+      
+
+      {role === "guest" ? (
+        <div className="left">
+          <Link to="/">Inicio</Link>
+        </div>
+      ) :
+        <div className="left">
+          <Link to="/host">Inicio</Link>
+        </div>
+      }
 
       {!validSession() && (
         <div className="right">
