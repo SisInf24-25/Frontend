@@ -15,7 +15,7 @@ const Index = () => {
   const [selectedRange, setSelectedRange] = useState([null, null]);
 
   const [casas, setCasas] = useState([
-    { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
+    { id: 0, imgSrc: casaImg, nombre: '', numero: 0, ciudad: "", lat: 0, long: 0 },
     // { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
     // { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
     // { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
@@ -30,7 +30,13 @@ const Index = () => {
   };
 
   const filteredCasas = casas.filter((casa) => 
-    casa.ciudad.toLowerCase().includes(searchCity.toLowerCase()) // Filtra las casas por ciudad
+    {
+      if(casa.ciudad) {
+        return casa.ciudad.toLowerCase().includes(searchCity.toLowerCase()) // Filtra las casas por ciudad
+      } else {
+        return false
+      }
+    }
   );
 
   const handleCambioFechas = (selectedRange) => {
@@ -61,7 +67,8 @@ const Index = () => {
 
       if (response.status === 200) {
         // Procesar datos aquí si es necesario
-        console.log("Datos recibidos:", response.data.house);
+        console.log("Datos recibidos:", response.data.houses);
+        setCasas(response.data.houses);
       }
     } catch (error) {
       console.error("Error al obtener las casas:", error);
