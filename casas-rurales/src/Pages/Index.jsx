@@ -15,7 +15,7 @@ const Index = () => {
   const [searchCity, setSearchCity] = useState(''); // Estado para almacenar la ciudad buscada
   const [selectedRange, setSelectedRange] = useState([null, null]);
 
-  const { auth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
   const { username } = auth;
   const { user_id } = auth;
   const { role } = auth;

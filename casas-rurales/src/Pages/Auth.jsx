@@ -67,6 +67,7 @@ const Auth = () => {
     setLastname('');
     setEmail('');
     setPassword('');
+    setNumber('');
     setConfirmPassword('');
   };
 

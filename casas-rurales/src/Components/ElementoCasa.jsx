@@ -24,7 +24,7 @@ const ElementoCasa = ({ id, imgSrc, title, owner_id, price, n_wc, n_rooms, n_sin
         </div>
         <div className='elementocasa-numero'>
           <p>Ciudad: {city}</p>
-          <p>Precio por noche: {price}</p>
+          <p>Precio por noche: {price}€</p>
         </div>
       </div>
     </div>
