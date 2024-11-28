@@ -71,7 +71,7 @@
   align-items: center;
   margin: auto;
   width: 40vw;
-  height: 4vh;
+  height: 6vh;
   background-color: rgb(236, 230, 224);
   border-radius: 6px;
   margin-bottom: 10px;
@@ -79,8 +79,8 @@
 }
 
 .input-infocasa input{
-  height: 50px;
-  width: 300px;
+  height: 5vh;
+  width: 35vw;
   background: transparent;
   border: none;
   outline: none;

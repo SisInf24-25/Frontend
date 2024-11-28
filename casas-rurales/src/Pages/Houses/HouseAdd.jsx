@@ -31,11 +31,9 @@ const HouseAdd = () => {
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
 
-  const [visibleState, setVisibleState] = useState("visible");
-  const [cancelableState, setCancelableState] = useState("cancelable");
-  const [cancelableNumber, setCancelableNumber] = useState('1'); // cancelableNumber almacena el valor del input de número
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+  const [visibleState, setVisibleState] = useState(true);
+  const [latitude, setLatitude] = useState(41.683326);
+  const [longitude, setLongitude] = useState(-0.889127);
   const [condiciones, setCondiciones] = useState(['0','0','0','0','0','0','0','0','0','0','0','0'])
 
   const handleMapClick = (lat, lng) => {
@@ -71,10 +69,6 @@ const HouseAdd = () => {
   }, [visibleState]
   );
 
-  const handleCancelableToggle = (isCancelable) => {
-    setCancelableState(isCancelable);
-  };
-
   // Notificación de error
   const notify = (message) => toast.error(message, {
     position: 'bottom-left',
@@ -103,8 +97,8 @@ const HouseAdd = () => {
           max_guests: maxGuests,
           city: city, 
           address: address,
-          lat: 10,
-          long: 10,
+          lat: latitude,
+          long: longitude,
           conditions: condiciones.join(''),
           description: description,
           is_public: visibleState
@@ -170,6 +164,11 @@ const HouseAdd = () => {
       return;
     }
 
+    if (!latitude | !longitude) {
+      notify('Ubicación inválida')
+      return;
+    }
+
     peticionCrearCasa();
   }
 
@@ -182,28 +181,6 @@ const HouseAdd = () => {
       <div className='infoizq-infodcha'>
         <div className='infocentroizq'>
           <img src={casaImg} alt={`Imagen`} className="house-foto" />
-          <div className='interruptor-content'>
-            <div className='interruptor-texto'>¿Cancelable?</div>
-            <InterruptorGenerico onToggle={handleCancelableToggle} />
-          </div>
-          {cancelableState && (
-              <div className="cancelable-container">
-                <div className="cancelable-texto">¿Cancelable con cuántos días de antelación?</div>
-                <input 
-                  type="number" 
-                  placeholder="Número" 
-                  value={cancelableNumber}
-                  onChange={(e) => setCancelableNumber(e.target.value)}
-                  className="cancelable-input"
-                  min='1'
-                  onBlur={() => {
-                    if (cancelableNumber < 1) {
-                      setCancelableNumber('1');
-                    }
-                  }}
-                />
-              </div>
-            )}
           <div className='interruptor-content'>
             <div className='interruptor-texto'>¿Visible?</div>
             <InterruptorGenerico onToggle={handleVisibleToggle} />
@@ -270,7 +247,7 @@ const HouseAdd = () => {
             <div className="input-infocasa"><input type="text" placeholder="Nombre de la casa" value={title} onChange={handleInputChange(setTitle)}/></div>
             <div className="input-infocasa"><input type="text" placeholder="Precio por noche (por persona)" value={price} onChange={handleInputChange(setPrice)}/></div>
             <div className="input-infocasa"><input type="text" placeholder="Ciudad" value={city} onChange={handleInputChange(setCity)}/></div>
-            <div className="input-infocasa"><input type="text" placeholder="Ubicación" value={address} onChange={handleInputChange(setAddress)}/></div>
+            <div className="input-infocasa"><input type="text" placeholder="Dirección" value={address} onChange={handleInputChange(setAddress)}/></div>
             <div className="input-infocasa"><input type="text" placeholder="Máximo de huéspedes" value={maxGuests} onChange={handleInputChange(setMaxGuests)}/></div>
             <div className="input-infocasa"><input type="text" placeholder="Habitaciones" value={nRooms} onChange={handleInputChange(setNRooms)}/></div>
             <div className="input-infocasa"><input type="text" placeholder="Camas individuales" value={nSingleBeds} onChange={handleInputChange(setNSingleBeds)}/></div>

@@ -77,15 +77,27 @@ const Header = () => {
     <header className="header">
       
 
-      {role === "guest" ? (
+      {role === "owner" && (
+        <div className="left">
+          <Link to="/host">Inicio</Link>
+          <Link to="/profile">Mi perfil</Link>
+        </div>
+      )}
+
+      {role === "guest" && (
+        <div className="left">
+          <Link to="/">Inicio</Link>
+          <Link to="/profile">Mi perfil</Link>
+        </div>
+      )}
+
+      {role !== "guest" && role !== "owner" && (
         <div className="left">
           <Link to="/">Inicio</Link>
         </div>
-      ) :
-        <div className="left">
-          <Link to="/host">Inicio</Link>
-        </div>
-      }
+      )}
+        
+      
 
       {!validSession() && (
         <div className="right">

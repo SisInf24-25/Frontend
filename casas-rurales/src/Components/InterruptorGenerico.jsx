@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './InterruptorGenerico.css';
 
-function InterruptorGenerico({ onToggle }) { // Acepta onToggle como prop
-    const [isOn, setIsOn] = useState(true)
+function InterruptorGenerico({ onToggle, isOnInicial=true }) { // Acepta onToggle como prop
+    const [isOn, setIsOn] = useState(isOnInicial)
 
     useEffect(() => {
         if (onToggle) onToggle(isOn);  // Llama a la función onToggle si está definida

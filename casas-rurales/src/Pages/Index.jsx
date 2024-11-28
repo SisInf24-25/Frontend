@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import '../Style/Style.css'
 import './Index.css'
 import { useLocation } from 'react-router-dom';
@@ -7,6 +7,7 @@ import axios from 'axios';
 import casaImg from '../Images/sample-house.jpg';
 import ElementoCasaExtendida from '../Components/ElementoCasaExtendida';
 import ElementoCalendar from '../Components/ElementoCalendar';
+import AuthContext from '../Context/AuthProvider'
 
 const Index = () => {
   const location = useLocation();
@@ -14,16 +15,12 @@ const Index = () => {
   const [searchCity, setSearchCity] = useState(''); // Estado para almacenar la ciudad buscada
   const [selectedRange, setSelectedRange] = useState([null, null]);
 
-  const [casas, setCasas] = useState([
-    { id: 0, imgSrc: casaImg, nombre: '', numero: 0, ciudad: "", lat: 0, long: 0 },
-    // { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
-    // { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
-    // { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
-    // { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
-    // { id: 1, imgSrc: casaImg, nombre: 'Zaragoza', numero: 10, ciudad: "Zaragoza", lat: 41.683326, long: -0.889127  },
-    // { id: 2, imgSrc: casaImg, nombre: 'Madrid', numero: 25, ciudad: "Madrid", lat: 41.683326, long: -0.889127  },
-    // { id: 3, imgSrc: casaImg, nombre: 'Barcelona', numero: 40, ciudad: "Barcelona", lat: 41.683326, long: -0.889127  },
-  ]);
+  const { auth } = useContext(AuthContext);
+  const { username } = auth;
+  const { user_id } = auth;
+  const { role } = auth;
+
+  const [casas, setCasas] = useState([]);
 
   const handleSearchChange = (e) => {
     setSearchCity(e.target.value); // Actualiza el estado del buscador con el texto ingresado
@@ -31,8 +28,8 @@ const Index = () => {
 
   const filteredCasas = casas.filter((casa) => 
     {
-      if(casa.ciudad) {
-        return casa.ciudad.toLowerCase().includes(searchCity.toLowerCase()) // Filtra las casas por ciudad
+      if(casa.city) {
+        return casa.city.toLowerCase().includes(searchCity.toLowerCase()) // Filtra las casas por ciudad
       } else {
         return false
       }
@@ -82,7 +79,8 @@ const Index = () => {
   return (
     <div className='container'>
       <div className='title'>
-        <div className='text'>Casas Rurales</div>
+        {username ? <div className='text'>Bienvenido a Casas Rurales, {username}</div> : <div className='text'>Casas Rurales</div>}
+        
         <div className='underline'></div>
         <div className="index-search-container">
           <input
@@ -106,13 +104,26 @@ const Index = () => {
             <ElementoCasaExtendida
               key={i}
               id={casa.id}
-              imgSrc={casa.imgSrc}
-              nombre={casa.nombre}
-              numero={casa.numero}
-              ciudad={casa.ciudad}
-              host={false}
+              imgSrc={casaImg}
+              title={casa.title} 
+              owner_id={casa.owner_id}
+              price={casa.price}
+              n_wc={casa.n_wc}
+              n_rooms={casa.n_rooms}
+              n_single_beds={casa.n_single_beds}
+              n_double_beds={casa.n_double_beds}
+              max_guests={casa.max_guests}
+              city={casa.city}
+              address={casa.address}
               lat={casa.lat}
               long={casa.long}
+              conditions={casa.conditions}
+              description={casa.description}
+              is_public={casa.public}
+              is_active={casa.active}
+              owner_username={casa.owner_username}
+              reservations={casa.reservations}
+              host={false}
               fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
               fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
             />
@@ -123,13 +134,26 @@ const Index = () => {
             <ElementoCasaExtendida
               key={i}
               id={casa.id}
-              imgSrc={casa.imgSrc}
-              nombre={casa.nombre}
-              numero={casa.numero}
-              ciudad={casa.ciudad}
-              host={false}
+              imgSrc={casaImg}
+              title={casa.title} 
+              owner_id={casa.owner_id}
+              price={casa.price}
+              n_wc={casa.n_wc}
+              n_rooms={casa.n_rooms}
+              n_single_beds={casa.n_single_beds}
+              n_double_beds={casa.n_double_beds}
+              max_guests={casa.max_guests}
+              city={casa.city}
+              address={casa.address}
               lat={casa.lat}
-              long={casa.long}              
+              long={casa.long}
+              conditions={casa.conditions}
+              description={casa.description}
+              is_public={casa.public}
+              is_active={casa.active}
+              owner_username={casa.owner_username}
+              reservations={casa.reservations}
+              host={false}
               fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
               fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
             />
@@ -139,23 +163,6 @@ const Index = () => {
           <p>No hay casas en esa ciudad</p>
         )}
         <ToastContainer/>
-      </div>
-      <div>
-        <ElementoCasaExtendida
-          key={1}
-          id={1}
-          imgSrc={casaImg}
-          nombre={"Nombre Casa"}
-          numero={"Numero Casa"}
-          ciudad={"Ciudad Casa"}
-          host={false}
-          lat={10.0}
-          long={10.0}              
-          // fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
-          // fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
-          fechaIni={"Ini"}
-          fechaFin={"Fin"}
-        />
       </div>
     </div>
   )

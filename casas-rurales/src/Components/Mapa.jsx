@@ -11,14 +11,24 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
+const customIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png', // URL del ícono rojo
+  iconSize: [25, 41], // Tamaño del ícono
+  iconAnchor: [12, 41], // Punto de anclaje del ícono
+  popupAnchor: [1, -34], // Posición del popup
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png', // Sombra del ícono
+  shadowSize: [41, 41], // Tamaño de la sombra
+});
+
+
 function LocationMarker({ onMapClick }) {
   const [position, setPosition] = useState(null);
 
   useMapEvents({
     click(e) {
-      const { lat, lng } = e.latlng;
-      setPosition(e.latlng);
       if (onMapClick) {
+        const { lat, lng } = e.latlng;
+        setPosition(e.latlng);
         onMapClick(lat, lng); // Llama al callback con lat y lng
         console.log(lat, lng)
       }
@@ -26,7 +36,7 @@ function LocationMarker({ onMapClick }) {
   });
 
   return position ? (
-    <Marker position={position} />
+    <Marker position={position} icon={customIcon}/>
   ) : null;
 }
 
@@ -39,6 +49,7 @@ function Mapa({ onMapClick, posicion }) {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <LocationMarker onMapClick={onMapClick} />
+        <Marker position={posicion} ></Marker>
         </MapContainer>
     </div>
   );

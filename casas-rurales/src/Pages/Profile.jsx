@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import '../Style/Style.css'
 import './Profile.css'
 import profileImg from '../Images/sample-profile.jpg'
 import InfoGenerica from '../Components/InfoGenerica'
+import AuthContext from '../Context/AuthProvider'
 
 
 const Profile = () => {
+
+  const { auth } = useContext(AuthContext);
+  const { username } = auth;
+  const { user_id } = auth;
+  const { role } = auth;
+
   return (
     <div className='container'>
       <div className='title'>
@@ -20,15 +27,11 @@ const Profile = () => {
           <div className='profile-infodcha'>
           <InfoGenerica
               campo={"Nombre"}
-              texto={"Manu"}
+              texto={username}
             />
             <InfoGenerica
-              campo={"Edad"}
-              texto={"21"}
-            />
-            <InfoGenerica
-              campo={"Email"}
-              texto={"839304@unizar.es"}
+              campo={"Rol"}
+              texto={role==="owner" ? "Propietario" : "Huésped"}
             />
           </div>
         </div>

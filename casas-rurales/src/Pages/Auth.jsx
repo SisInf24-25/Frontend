@@ -61,6 +61,13 @@ const Auth = () => {
   const handleActionChange = (newAction) => {
     setAction(newAction);
     navigate(`/auth?action=${newAction}`);
+    setUsername('');
+    setName('');
+    setUsername('');
+    setLastname('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
   };
 
   // Notificación OK
@@ -169,8 +176,8 @@ const Auth = () => {
 
 
       if (response.status === 200) {
-        notifyOK("Registro exitoso")
-
+        notifyOK("Registro exitoso");
+        handleActionChange('login');
         /*
         const { user_id, username: userUsername, role } = response.data['user'];
 
