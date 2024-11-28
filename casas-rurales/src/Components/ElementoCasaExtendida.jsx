@@ -24,7 +24,7 @@ const ElementoCasaExtendida = ({ id, imgSrc, title, owner_id, price, n_wc, n_roo
         </div>
         <div className='elementocasaext-info'>
           <p>Propietario: <b>{owner_username}</b></p>
-          <p>Precio por noche: <b>{price}</b></p>
+          <p>Precio por noche: <b>{price}€</b></p>
           <p>Huéspedes máximos: <b>{max_guests}</b></p>
           <p>Ciudad: <b>{city}</b></p>
         </div>
