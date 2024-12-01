@@ -40,7 +40,7 @@ const House = () => {
 const peticionReservar = async () => {
   console.log("Reservando...")
   try {
-    const response = await axios.post('http://localhost:8000/book/create',
+    const response = await axios.post('http://localhost:8000/books/create',
       JSON.stringify({
         guests_number: guestCount,
         house_id: id,
