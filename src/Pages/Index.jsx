@@ -15,12 +15,28 @@ const Index = () => {
   const [searchCity, setSearchCity] = useState(''); // Estado para almacenar la ciudad buscada
   const [selectedRange, setSelectedRange] = useState([null, null]);
   const [noches, setNoches] = useState(0); // Nuevo estado para el número de noches
-  const [guestCount, setGuestCount] = useState(''); // Nuevo estado para el número de huéspedes
+  const [guestCount, setGuestCount] = useState(1); // Nuevo estado para el número de huéspedes
 
   const { auth } = useContext(AuthContext);
   const { username } = auth;
 
   const [casas, setCasas] = useState([]);
+
+
+  useEffect(() => {
+    if (location.state && location.state.showOKToast && !toastShown) {
+      toast.success(
+        ({ closeToast }) => (
+          <div>
+            <p style={{ fontSize: '25px', textAlign: 'center' }}>
+            <b>Reserva realizada</b>
+            </p>
+          </div>), {position: "top-center", autoClose: 1000, onClose: () => setToastShown(false), hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined,
+      });
+      setToastShown(true); // Actualiza el estado para evitar múltiples toasts
+    }
+  }, [location.state]); // Este hook se activa cuando hay un estado en la navegación
+
 
   const handleSearchChange = (e) => {
     setSearchCity(e.target.value); // Actualiza el estado del buscador con el texto ingresado
@@ -28,15 +44,21 @@ const Index = () => {
 
   const handleGuestChange = (e) => {
     const value = e.target.value;
-    if (!isNaN(value) && Number(value) >= 0) {
-      setGuestCount(value); // Actualiza el estado del número de huéspedes
-      console.log('guestCount:', guestCount);
+    // Convertir a número
+    const numValue = Number(value);
+  
+    // Si es un valor válido, actualizamos el estado
+    if (!isNaN(numValue) && numValue >= 1) {
+      setGuestCount(numValue);
+    } else {
+      setGuestCount(1);
     }
+    console.log('guestCount:', guestCount);
   };
 
   const filteredCasas = casas.filter((casa) => {
     const cityMatches = searchCity === '' || (casa.city && casa.city.toLowerCase().includes(searchCity.toLowerCase()));
-    const guestMatches = guestCount === '' || (casa.max_guests && casa.max_guests >= guestCount);
+    const guestMatches = guestCount === 0 || (casa.max_guests && casa.max_guests >= guestCount);
   
     return cityMatches && guestMatches;
   });
@@ -163,8 +185,8 @@ const Index = () => {
               owner_username={casa.owner_username}
               reservations={casa.reservations}
               host={false}
-              fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
-              fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
+              fechaIni={selectedRange[0].toISOString().split('T')[0]}
+              fechaFin={selectedRange[1].toISOString().split('T')[0]}
               guestCount={guestCount}
               noches={noches}
             />
@@ -195,8 +217,8 @@ const Index = () => {
               owner_username={casa.owner_username}
               reservations={casa.reservations}
               host={false}
-              fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
-              fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
+              fechaIni={selectedRange[0].toISOString().split('T')[0]}
+              fechaFin={selectedRange[1].toISOString().split('T')[0]}
               guestCount={guestCount}
               noches={noches}
             />

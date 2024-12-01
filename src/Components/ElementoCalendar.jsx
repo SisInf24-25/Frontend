@@ -24,6 +24,7 @@ const ElementoCalendar = ({ onDateRangeChange, selectable, fechas }) => {
   };
 
   const handleDateChange = (range) => {
+    console.log("range:", range);
     if (!selectable) return;
 
     const [fechaIni, fechaFin] = range;

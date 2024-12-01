@@ -21,6 +21,11 @@ const House = () => {
   const navigate = useNavigate();
   const { id, imgSrc, title, owner_id, price, n_wc, n_rooms, n_single_beds, n_double_beds, max_guests, city, address, lat, long, conditions, description, is_public, is_active, owner_username, reservations, host, fechaIni, fechaFin, guestCount, noches } = location.state || {};  // Extraer datos del estado
   
+  const fechaIniDate = new Date(fechaIni);
+  const fechaFinDate = new Date(fechaFin);
+
+  console.log("fechas en house:", fechaIni, fechaFin)
+
   const { auth } = useContext(AuthContext);
   const { username } = auth;
   const { user_id } = auth;
@@ -32,8 +37,47 @@ const House = () => {
   console.log('noches:', noches);
   console.log(location.state);
 
-   // Notificación de error
-   const notifyError = (message) => toast.error(message, {
+const peticionReservar = async () => {
+  console.log("Reservando...")
+  try {
+    const response = await axios.post('http://localhost:8000/book/create',
+      JSON.stringify({
+        guests_number: guestCount,
+        house_id: id,
+        date_in: fechaIni,
+        date_out: fechaFin
+      }),
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      }
+    );
+    console.log("Reserva OK...")
+    setTimeout(() => {
+      navigate("/", { state: { showOKToast: true } }); // Navega después de un retraso
+    }, 1000);
+
+  } catch (error) {
+    console.log("CATCH ERROR")
+    // Check if `error.response` is defined before accessing `data`
+    if (error.response) {
+      // Handle the case where response exists
+      console.log(error.response);
+      console.log(error.response.data?.error || 'Error desconocido');
+    } else if (error.request) {
+      // Handle the case where the request was made but no response was received
+      console.log('No se recibió respuesta del servidor');
+    } else {
+      // Handle other errors such as setting up the request
+      console.log(`Error al intentar reservar: ${error.message}`);
+    }
+  }
+};
+  
+
+
+  // Notificación de error
+  const notifyError = (message) => toast.error(message, {
     position: 'bottom-left',
     autoClose: 5000,
     hideProgressBar: false,
@@ -152,9 +196,7 @@ const House = () => {
               <button 
                 onClick={() => { 
                   closeToast(); // Cierra el toast inmediatamente
-                  setTimeout(() => {
-                    navigate("/", { state: { showOKToast: true } }); // Navega después de un retraso
-                  }, 1000);
+                  peticionReservar();
                 }} 
                 style={{ 
                   width: '100px', padding: '5px 10px', backgroundColor: 'green', 

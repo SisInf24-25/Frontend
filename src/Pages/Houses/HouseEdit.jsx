@@ -91,34 +91,6 @@ const HouseEdit = () => {
   const peticionModificarCasa = async () => {
     console.log(inputTitle, user_id, inputPrice, inputNWC);
     try {
-      /*
-      const response = await axios.post('http://localhost:8000/houses/modify',
-        JSON.stringify({
-          house_id: inputHouseId,
-          title: inputTitle,
-          owner_id: user_id,
-          price: inputPrice,
-          n_wc: inputNWC,
-          n_rooms: inputNRooms,
-          n_single_beds: inputNSingleBeds,
-          n_double_beds: inputNDoubleBeds,
-          max_guests: inputMaxGuests,
-          city: inputCity, 
-          address: inputAddress,
-          lat: 0,
-          long: 0,
-          conditions: parseInt(condiciones.join(''), 2),
-          description: inputDescription,
-          public: visibleState
-        }),
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true
-        }
-      );
-      
-      */
-
       const response = await axios.post('http://localhost:8000/houses/modify',
         JSON.stringify({
           house_id: id,
