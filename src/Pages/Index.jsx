@@ -29,7 +29,7 @@ const Index = () => {
         ({ closeToast }) => (
           <div>
             <p style={{ fontSize: '25px', textAlign: 'center' }}>
-            <b>Reserva realizada</b>
+            <b>Reserva realizada correctamente</b>
             </p>
           </div>), {position: "top-center", autoClose: 1000, onClose: () => setToastShown(false), hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined,
       });
@@ -59,8 +59,25 @@ const Index = () => {
   const filteredCasas = casas.filter((casa) => {
     const cityMatches = searchCity === '' || (casa.city && casa.city.toLowerCase().includes(searchCity.toLowerCase()));
     const guestMatches = guestCount === 0 || (casa.max_guests && casa.max_guests >= guestCount);
-  
-    return cityMatches && guestMatches;
+
+    const dateMatches = !casa.reservations.some((reservation) => {
+      console.log("Comparando reserva:", reservation);
+      const reservationStart = new Date(reservation.date_in);
+      const reservationEnd = new Date(reservation.date_out);
+ 
+      if(selectedRange[0] && selectedRange[1] && reservationStart && reservationEnd){
+        console.log(selectedRange[1].toLocaleDateString('es-ES'),">",reservationStart.toLocaleDateString('es-ES'));
+        console.log(selectedRange[0].toLocaleDateString('es-ES'),"<",reservationEnd.toLocaleDateString('es-ES'));
+      }
+      
+      const isBooked = selectedRange[1] > reservationStart && selectedRange[0] < reservationEnd;
+      console.log("isBooked reserva:", isBooked);
+      return isBooked;
+    });
+
+    console.log("dateMatches casa", casa.title, "(id=", casa.id, "):", dateMatches);
+
+    return cityMatches && guestMatches && dateMatches;
   });
 
   const handleCambioFechas = (selectedRange, noches) => {
@@ -73,31 +90,6 @@ const Index = () => {
     setSelectedRange(selectedRange);
     setNoches(noches); // Guardar el número de noches
   };
-
-  useEffect(() => {
-    if (location.state && location.state.showOKToast && !toastShown) {
-      toast.success(
-        ({ closeToast }) => (
-          <div>
-            <p style={{ fontSize: '25px', textAlign: 'center' }}>
-              <b>Reserva realizada correctamente</b>
-            </p>
-          </div>
-        ),
-        {
-          position: 'top-center',
-          autoClose: 5000,
-          onClose: () => setToastShown(false),
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        }
-      );
-      setToastShown(true); // Actualiza el estado para evitar múltiples toasts
-    }
-  }, [location.state]); // Este hook se activa cuando hay un estado en la navegación
 
   // Lógica para obtener datos de casas
   const peticionCasas = async () => {
@@ -159,38 +151,6 @@ const Index = () => {
         {/* Renderizado de casas (pendiente lógica para huéspedes y fechas) */}
         {selectedRange[0] == null ? (
           <p></p>
-        ) : searchCity === '' ? (
-          // Si no hay búsqueda, muestra todas las casas
-          casas.map((casa, i) => (
-            <ElementoCasaExtendida
-              key={i}
-              id={casa.id}
-              imgSrc={casaImg}
-              title={casa.title}
-              owner_id={casa.owner_id}
-              price={casa.price}
-              n_wc={casa.n_wc}
-              n_rooms={casa.n_rooms}
-              n_single_beds={casa.n_single_beds}
-              n_double_beds={casa.n_double_beds}
-              max_guests={casa.max_guests}
-              city={casa.city}
-              address={casa.address}
-              lat={casa.lat}
-              long={casa.long}
-              conditions={casa.conditions}
-              description={casa.description}
-              is_public={casa.public}
-              is_active={casa.active}
-              owner_username={casa.owner_username}
-              reservations={casa.reservations}
-              host={false}
-              fechaIni={selectedRange[0].toISOString().split('T')[0]}
-              fechaFin={selectedRange[1].toISOString().split('T')[0]}
-              guestCount={guestCount}
-              noches={noches}
-            />
-          ))
         ) : filteredCasas.length > 0 ? (
           // Si hay una búsqueda y hay casas que coinciden
           filteredCasas.map((casa, i) => (
@@ -225,7 +185,7 @@ const Index = () => {
           ))
         ) : (
           // Si no hay casas que coincidan con la búsqueda
-          <p>No hay casas en esa ciudad</p>
+          <p>No hay casas que cumplan con esos criterios</p>
         )}
         <ToastContainer />
       </div>
