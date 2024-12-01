@@ -1,6 +1,7 @@
 import React,  { useState } from 'react'
 import '../../Style/Style.css'
 import ElementoNotif from '../../Components/ElementoNotif';
+import BotonAtras from '../../Components/Botones/BotonVolver';
 
 const NotifList = () => {
 
@@ -21,6 +22,9 @@ const NotifList = () => {
 
   return (
     <div className='container'>
+      <div className='house-botonatras'>
+        <BotonAtras direccion={"/host"}/>
+      </div>
       <div className='title'>
         <div className='text'>Notificaciones</div>
         <div className='underline'></div>

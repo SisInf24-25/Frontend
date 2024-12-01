@@ -15,8 +15,6 @@ const Host = () => {
   const { username } = auth;
   const { user_id } = auth;
   const { role } = auth;
-
-
   
   useEffect(() => {
     if (location.state && location.state.showOKToast && !toastShown) {

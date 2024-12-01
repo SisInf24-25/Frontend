@@ -6,6 +6,8 @@ import './HouseList.css'
 import BotonIDGenerico from '../../Components/Botones/BotonIDGenerico';
 import axios from 'axios';
 import AuthContext from '../../Context/AuthProvider'
+import BotonAtras from '../../Components/Botones/BotonVolver';
+
 
 const HouseList = () => {
 
@@ -53,6 +55,9 @@ const HouseList = () => {
 
   return (
     <div className='container'>
+      <div className='house-botonatras'>
+        <BotonAtras direccion={"/host"}/>
+      </div>
       <div className='title'>
         <div className='text'>Lista de Casas</div>
         <div className='underline'></div>

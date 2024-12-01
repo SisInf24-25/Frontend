@@ -3,40 +3,46 @@ import { useLocation } from 'react-router-dom';
 import './Book.css'
 import ElementoCalendar from '../../Components/ElementoCalendar';
 import '../../Style/Style.css'
+import { useNavigate } from 'react-router-dom';
+
 
 
 const Book = () => {
+  const navigate = useNavigate(); 
   const location = useLocation();  // Hook para obtener el estado enviado
-  const { id, nombre, numero, imgSrc } = location.state || {};  // Extraer datos del estado
-  const [selectedDateRange, setSelectedDateRange] = useState(null); // Rango de fechas seleccionado
+  const {  id, imgSrc, guests_number, date_in, date_out, price, house_title, guest_username, guest_name, guest_lastname, guest_mail, guest_number } = location.state || {};  // Extraer datos del estado
 
-
-  const handleDateRangeChange = (range) => {
-    setSelectedDateRange(range);
-    console.log("Rango de fechas seleccionado:\n", range[0].toLocaleDateString('es-ES'), "--->", range[1].toLocaleDateString('es-ES') );
-  };
-
-  const [elementos, setElementos] = useState([
-    { id: 1, fechaIni: [2, 11, 2024] , fechaFin: [4, 11, 2024] },
-    { id: 2, fechaIni: [7, 11, 2024], fechaFin: [15, 11, 2024] },
-    { id: 3, fechaIni: [18, 11, 2024], fechaFin: [21, 11, 2024] },
-  ]);
+  const fechaIni = new Date(date_in + 'T00:00:00Z');
+  const fechaFin = new Date(date_out + 'T00:00:00Z');
 
   return (
     <div className='container'>
       <div className='title'>
-        <div className='text'>Reserva de {nombre}</div>
+        <div className='text'>Reserva de {house_title}</div>
         <div className='underline'></div>
       </div>
-      <div className='book-content'>
-          <div className='book-fotocontent'>
-            <img src={imgSrc} alt={`Imagen de ${nombre}`} className="book-foto" />
-          </div>
-          <div className='book-info'>
-            <div className='book-numero'>Número: {numero}</div>
-            <ElementoCalendar onDateRangeChange={handleDateRangeChange} selectable={true} fechas={elementos}/>
+      <div className='infoizq-infodcha'>
+        <div className='infoizq'>
+          <img src={imgSrc} alt={`Imagen de ${house_title}`} className="book-foto" />
+        </div>
+
+        <div className='infodcha'>
+          <div className='house-info'>
+            <div className='house-infodcha-elem'><b>Fecha inicial:</b> {fechaIni.toLocaleDateString('es-ES')}</div>
+            <div className='house-infodcha-elem'><b>Fecha final:</b> {fechaFin.toLocaleDateString('es-ES')}</div>
+            <div className='house-infodcha-elem'><b>Precio total:</b> {price}€</div>
+            <div className='house-infodcha-elem'><b>Número de huéspedes:</b> {guests_number}</div>
+            <div className='house-infodcha-elem'><b>Nombre de usuario del huésped:</b> {guest_username}</div>
+            <div className='house-infodcha-elem'><b>Primer nombre del huésped:</b> {guest_name}</div>
+            <div className='house-infodcha-elem'><b>Apellidos del huésped:</b> {guest_lastname}</div>
+            <div className='house-infodcha-elem'><b>Correo del huésped:</b> {guest_mail}</div>
+            <div className='house-infodcha-elem'><b>Teléfono del huésped:</b> +34{guest_number}</div>
           </div>
         </div>
+      </div>
+      <div className="accept">
+        <div className="accept-button" onClick={ () => { navigate(-1); }}>Aceptar</div>
+      </div>
     </div>
   )
 }
