@@ -9,11 +9,21 @@ const ElementoCalendar = ({ onDateRangeChange, selectable, fechas }) => {
 
   useEffect(() => {
     // Convertir las fechas de string a Date solo una vez
-    const dates = fechas.map(fecha => ({
-      id: fecha.id,
-      fechaIni: new Date(fecha.fechaIni[2], fecha.fechaIni[1] - 1, fecha.fechaIni[0]),
-      fechaFin: new Date(fecha.fechaFin[2], fecha.fechaFin[1] - 1, fecha.fechaFin[0]),
-    }));
+    const dates = fechas.map(fecha => {
+      const fechaIni = new Date(fecha.date_in + 'T00:00:00Z');
+      const fechaFin = new Date(fecha.date_out + 'T00:00:00Z');
+  
+      return {
+        fechaIni,
+        fechaFin,
+      };
+    });
+  
+    const invalidDates = dates.filter(d => isNaN(d.fechaIni.getTime()) || isNaN(d.fechaFin.getTime()));
+    if (invalidDates.length > 0) {
+      console.log("Fechas inválidas detectadas:", invalidDates);
+    }
+    
     setDateFechas(dates);
   }, [fechas]);
 

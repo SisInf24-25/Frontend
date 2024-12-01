@@ -35,6 +35,7 @@ const House = () => {
   console.log("is_public", is_public)
   console.log('guestCount:', guestCount);
   console.log('noches:', noches);
+  console.log('reservas:', reservations);
   console.log(location.state);
 
 const peticionReservar = async () => {
@@ -237,10 +238,9 @@ const peticionReservar = async () => {
             <div className='house-infoizq-elem'><b>Visible:</b>{is_public ? "Sí" : "No"}</div>
           </div>
         
-      
           {host && (
             <div className='house-infoizq-botones'>
-              <BotonCalendar nombre={title} id={id} />
+              <BotonCalendar nombre={title} id={id} fechas={reservations} />
               <BotonEditCasa 
                 id={id}
                 imgSrc={casaImg}

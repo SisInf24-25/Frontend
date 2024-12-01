@@ -2,13 +2,13 @@ import React from 'react';
 import './Botones.css'
 import { useNavigate } from 'react-router-dom';
 
-const BotonCalendar = ({ nombre, id }) => {
+const BotonCalendar = ({ nombre, id, fechas }) => {
     const navigate = useNavigate(); 
 
   // Función para manejar el click en el nombre
   const handleBotonClick = ( id ) => {
     navigate(`/houses/element/calendar?id=${id}`, {
-      state: { id, nombre }  // Pasamos el objeto como estado
+      state: { id, nombre, fechas }  // Pasamos el objeto como estado
     });
   };
 

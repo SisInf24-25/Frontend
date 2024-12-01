@@ -7,7 +7,7 @@ import ElementoCalendar from '../../Components/ElementoCalendar'
 const HouseCalendar = () => {
   const location = useLocation();  // Hook para obtener el estado enviado
   const navigate = useNavigate();
-  const { id, nombre } = location.state || {};  // Extraer datos del estado
+  const { id, nombre, fechas } = location.state || {};  // Extraer datos del estado
 
    // Lista de elementos con nombre y número
   //  const [elementos, setElementos] = useState([
@@ -15,7 +15,6 @@ const HouseCalendar = () => {
   //   { id: 2, fechaIni: [7, 11, 2024], fechaFin: [15, 11, 2024] },
   //   { id: 3, fechaIni: [18, 11, 2024], fechaFin: [21, 11, 2024] },
   // ]);
-  const [elementos, setElementos] = useState([])
 
   return (
     <div className='container'>
@@ -23,7 +22,7 @@ const HouseCalendar = () => {
         <div className='text'>Calendario de {nombre} </div>
         <div className='underline'></div>
         {/* Mapea la lista de elementos y usa el componente ElementoCasa */}
-        <ElementoCalendar onDateRangeChange={null} selectable={false} fechas={elementos}/>
+        <ElementoCalendar onDateRangeChange={null} selectable={false} fechas={fechas}/>
       </div>
       <div className="accept">
         <div className="accept-button" onClick={ () => { navigate(-1); }}>Aceptar</div>
