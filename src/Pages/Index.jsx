@@ -1,24 +1,24 @@
-import React, { useEffect, useState, useContext } from 'react'
-import '../Style/Style.css'
-import './Index.css'
+import React, { useEffect, useState, useContext } from 'react';
+import '../Style/Style.css';
+import './Index.css';
 import { useLocation } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import casaImg from '../Images/sample-house.jpg';
 import ElementoCasaExtendida from '../Components/ElementoCasaExtendida';
 import ElementoCalendar from '../Components/ElementoCalendar';
-import AuthContext from '../Context/AuthProvider'
+import AuthContext from '../Context/AuthProvider';
 
 const Index = () => {
   const location = useLocation();
   const [toastShown, setToastShown] = useState(false); // Estado para evitar múltiples toasts
   const [searchCity, setSearchCity] = useState(''); // Estado para almacenar la ciudad buscada
   const [selectedRange, setSelectedRange] = useState([null, null]);
+  const [noches, setNoches] = useState(0); // Nuevo estado para el número de noches
+  const [guestCount, setGuestCount] = useState(''); // Nuevo estado para el número de huéspedes
 
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   const { username } = auth;
-  const { user_id } = auth;
-  const { role } = auth;
 
   const [casas, setCasas] = useState([]);
 
@@ -26,20 +26,31 @@ const Index = () => {
     setSearchCity(e.target.value); // Actualiza el estado del buscador con el texto ingresado
   };
 
-  const filteredCasas = casas.filter((casa) => 
-    {
-      if(casa.city) {
-        return casa.city.toLowerCase().includes(searchCity.toLowerCase()) // Filtra las casas por ciudad
-      } else {
-        return false
-      }
+  const handleGuestChange = (e) => {
+    const value = e.target.value;
+    if (!isNaN(value) && Number(value) >= 0) {
+      setGuestCount(value); // Actualiza el estado del número de huéspedes
+      console.log('guestCount:', guestCount);
     }
-  );
+  };
 
-  const handleCambioFechas = (selectedRange) => {
-    console.log("Fechas cambiadas: ", selectedRange[0].toLocaleDateString('es-ES'), "--->", selectedRange[1].toLocaleDateString('es-ES'))
-    setSelectedRange(selectedRange)
-  }
+  const filteredCasas = casas.filter((casa) => {
+    const cityMatches = searchCity === '' || (casa.city && casa.city.toLowerCase().includes(searchCity.toLowerCase()));
+    const guestMatches = guestCount === '' || (casa.max_guests && casa.max_guests >= guestCount);
+  
+    return cityMatches && guestMatches;
+  });
+
+  const handleCambioFechas = (selectedRange, noches) => {
+    console.log(
+      'Fechas cambiadas: ',
+      selectedRange[0].toLocaleDateString('es-ES'),
+      '--->',
+      selectedRange[1].toLocaleDateString('es-ES')
+    );
+    setSelectedRange(selectedRange);
+    setNoches(noches); // Guardar el número de noches
+  };
 
   useEffect(() => {
     if (location.state && location.state.showOKToast && !toastShown) {
@@ -47,10 +58,21 @@ const Index = () => {
         ({ closeToast }) => (
           <div>
             <p style={{ fontSize: '25px', textAlign: 'center' }}>
-            <b>Reserva realizada correctamente</b>
+              <b>Reserva realizada correctamente</b>
             </p>
-          </div>), {position: "top-center", autoClose: 5000, onClose: () => setToastShown(false), hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined,
-      });
+          </div>
+        ),
+        {
+          position: 'top-center',
+          autoClose: 5000,
+          onClose: () => setToastShown(false),
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
       setToastShown(true); // Actualiza el estado para evitar múltiples toasts
     }
   }, [location.state]); // Este hook se activa cuando hay un estado en la navegación
@@ -64,11 +86,11 @@ const Index = () => {
 
       if (response.status === 200) {
         // Procesar datos aquí si es necesario
-        console.log("Datos recibidos:", response.data.houses);
+        console.log('Datos recibidos:', response.data.houses);
         setCasas(response.data.houses);
       }
     } catch (error) {
-      console.error("Error al obtener las casas:", error);
+      console.error('Error al obtener las casas:', error);
     }
   };
 
@@ -77,12 +99,17 @@ const Index = () => {
   }, []);
 
   return (
-    <div className='container'>
-      <div className='title'>
-        {username ? <div className='text'>Bienvenido a Casas Rurales, {username}</div> : <div className='text'>Casas Rurales</div>}
-        
-        <div className='underline'></div>
+    <div className="container">
+      <div className="title">
+        {username ? (
+          <div className="text">Bienvenido a Casas Rurales, {username}</div>
+        ) : (
+          <div className="text">Casas Rurales</div>
+        )}
+
+        <div className="underline"></div>
         <div className="index-search-container">
+          {/* Caja de texto para buscar por ciudad */}
           <input
             type="text"
             placeholder="Buscar por ciudad"
@@ -90,12 +117,24 @@ const Index = () => {
             onChange={handleSearchChange}
             className="index-search-input"
           />
+          {/* Caja de texto para ingresar número de huéspedes */}
+          <input
+            type="number"
+            placeholder="Número de huéspedes"
+            value={guestCount}
+            onChange={handleGuestChange}
+            className="index-guest-input"
+            min="0"
+          />
         </div>
-        <div className='index-calendar'>
-          <ElementoCalendar onDateRangeChange={handleCambioFechas} selectable={true} fechas={[]}/>
+        <div className="index-calendar">
+          <ElementoCalendar
+            onDateRangeChange={handleCambioFechas}
+            selectable={true}
+            fechas={[]}
+          />
         </div>
-        {/* Mapea las casas filtradas */}
-        {/* FALTARÁ METER LA BÚSQUEDA POR RANGOS DE FECHAS */}
+        {/* Renderizado de casas (pendiente lógica para huéspedes y fechas) */}
         {selectedRange[0] == null ? (
           <p></p>
         ) : searchCity === '' ? (
@@ -105,7 +144,7 @@ const Index = () => {
               key={i}
               id={casa.id}
               imgSrc={casaImg}
-              title={casa.title} 
+              title={casa.title}
               owner_id={casa.owner_id}
               price={casa.price}
               n_wc={casa.n_wc}
@@ -126,6 +165,8 @@ const Index = () => {
               host={false}
               fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
               fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
+              guestCount={guestCount}
+              noches={noches}
             />
           ))
         ) : filteredCasas.length > 0 ? (
@@ -135,7 +176,7 @@ const Index = () => {
               key={i}
               id={casa.id}
               imgSrc={casaImg}
-              title={casa.title} 
+              title={casa.title}
               owner_id={casa.owner_id}
               price={casa.price}
               n_wc={casa.n_wc}
@@ -156,16 +197,18 @@ const Index = () => {
               host={false}
               fechaIni={selectedRange[0].toLocaleDateString('es-ES')}
               fechaFin={selectedRange[1].toLocaleDateString('es-ES')}
+              guestCount={guestCount}
+              noches={noches}
             />
           ))
         ) : (
           // Si no hay casas que coincidan con la búsqueda
           <p>No hay casas en esa ciudad</p>
         )}
-        <ToastContainer/>
+        <ToastContainer />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

@@ -1,10 +1,10 @@
 import React from 'react';
 import './Botones.css'
 
-const BotonReservar = ({ id, fechaIni, fechaFin, handleBotonClick }) => {
+const BotonReservar = ({ id, fechaIni, fechaFin, noches, guestCount, price, handleBotonClick }) => {
 
   return (
-    <button className='botonreservar-container' onClick={() => handleBotonClick(id, fechaIni, fechaFin)}>
+    <button className='botonreservar-container' onClick={() => handleBotonClick(id, fechaIni, fechaFin, noches, guestCount, price)}>
       <div className='botongen-content'>
         <div className='botongen-nombre'>
           <h2>Reservar</h2>

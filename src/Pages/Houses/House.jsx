@@ -19,7 +19,7 @@ import InterruptorGenerico from '../../Components/InterruptorGenerico';
 const House = () => {
   const location = useLocation();  // Hook para obtener el estado enviado
   const navigate = useNavigate();
-  const { id, imgSrc, title, owner_id, price, n_wc, n_rooms, n_single_beds, n_double_beds, max_guests, city, address, lat, long, conditions, description, is_public, is_active, owner_username, reservations, host, fechaIni, fechaFin } = location.state || {};  // Extraer datos del estado
+  const { id, imgSrc, title, owner_id, price, n_wc, n_rooms, n_single_beds, n_double_beds, max_guests, city, address, lat, long, conditions, description, is_public, is_active, owner_username, reservations, host, fechaIni, fechaFin, guestCount, noches } = location.state || {};  // Extraer datos del estado
   
   const { auth } = useContext(AuthContext);
   const { username } = auth;
@@ -28,6 +28,9 @@ const House = () => {
 
   console.log("is_active", is_active)
   console.log("is_public", is_public)
+  console.log('guestCount:', guestCount);
+  console.log('noches:', noches);
+  console.log(location.state);
 
    // Notificación de error
    const notifyError = (message) => toast.error(message, {
@@ -121,24 +124,54 @@ const House = () => {
     if(!role || role !== "guest"){
       navigate("/auth?action=login");
     } else {
+      console.log('guestCount:', guestCount);
+      console.log('price:', price);
+      console.log('noches:', noches);
       toast.info(
         ({ closeToast }) => (
           <div>
-            <p style={{ fontSize: '25px', textAlign: 'center' }}>¿Estás seguro de que deseas <b>RESERVAR</b> esta casa entre las fechas <b>{fechaIni}</b> y <b>{fechaFin}</b>?</p>
+            <p style={{ fontSize: '25px', textAlign: 'center' }}>
+              ¿Estás seguro de que deseas <b>RESERVAR</b> esta casa entre las fechas <b>{fechaIni}</b> y <b>{fechaFin}</b>?
+            </p>
+            <p style={{ fontSize: '18px', textAlign: 'center' }}>
+              Número de huéspedes: <b>{guestCount}</b><br />
+              Precio por noche: <b>{price}€</b><br />
+              Precio total por {noches} noches: <b>{(price * noches).toFixed(2)}€</b>
+            </p>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-              <button onClick={closeToast} style={{ width: '100px', padding: '5px 10px', backgroundColor: 'gray', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '17px' }}>Cancelar</button>
-              <button onClick={() => { 
-                closeToast(); // Cierra el toast inmediatamente
-                setTimeout(() => {
-                  navigate("/", { state: { showOKToast: true } }); // Navega después de un retraso
-                }, 1000);
-              }} 
-              style={{ width: '100px', padding: '5px 10px', backgroundColor: 'green', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '17px' }}>Aceptar</button>
+              <button 
+                onClick={closeToast} 
+                style={{ 
+                  width: '100px', padding: '5px 10px', backgroundColor: 'gray', 
+                  color: 'white', border: 'none', borderRadius: '5px', 
+                  cursor: 'pointer', fontSize: '17px' 
+                }}
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={() => { 
+                  closeToast(); // Cierra el toast inmediatamente
+                  setTimeout(() => {
+                    navigate("/", { state: { showOKToast: true } }); // Navega después de un retraso
+                  }, 1000);
+                }} 
+                style={{ 
+                  width: '100px', padding: '5px 10px', backgroundColor: 'green', 
+                  color: 'white', border: 'none', borderRadius: '5px', 
+                  cursor: 'pointer', fontSize: '17px' 
+                }}
+              >
+                Aceptar
+              </button>
             </div>
           </div>
         ),
-        { position: "top-center", autoClose: false, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined }
-      );
+        { 
+          position: "top-center", autoClose: false, hideProgressBar: false, 
+          closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined 
+        }
+      );      
   }
   };
 
@@ -221,7 +254,7 @@ const House = () => {
       </div>
       {!host && (
       <div className='house-botonreservar'>
-        <BotonReservar id={id} fechaIni={fechaIni} fechaFin={fechaFin} handleBotonClick={() => handleBotonReservarClick(id)}></BotonReservar>
+        <BotonReservar id={id} fechaIni={fechaIni} fechaFin={fechaFin} noches={noches} guestCount={guestCount} price={price} handleBotonClick={() => handleBotonReservarClick(id)}></BotonReservar>
       </div>
       )}
     </div>
