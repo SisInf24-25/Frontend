@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 const ElementoReserva = ({ id, imgSrc, guests_number, date_in, date_out, price, house_title, guest_username, guest_name, guest_lastname, guest_mail, guest_number }) => {
   const navigate = useNavigate(); 
 
-  const fechaIni = new Date(date_in + 'T00:00:00Z');
-  const fechaFin = new Date(date_out + 'T00:00:00Z');
+  const fechaIni = new Date(date_in);
+  const fechaFin = new Date(date_out);
 
     
   // Función para manejar el click en el nombre

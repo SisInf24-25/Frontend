@@ -62,7 +62,7 @@ const BookList = () => {
             <ElementoReserva
               key={i}
               id={elemento.id}
-              imgSrc={elemento.imgSrc}
+              imgSrc={casaImg}
               guests_number={elemento.guests_number}
               date_in={elemento.date_in}
               date_out={elemento.date_out}

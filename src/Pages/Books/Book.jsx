@@ -12,8 +12,8 @@ const Book = () => {
   const location = useLocation();  // Hook para obtener el estado enviado
   const {  id, imgSrc, guests_number, date_in, date_out, price, house_title, guest_username, guest_name, guest_lastname, guest_mail, guest_number } = location.state || {};  // Extraer datos del estado
 
-  const fechaIni = new Date(date_in + 'T00:00:00Z');
-  const fechaFin = new Date(date_out + 'T00:00:00Z');
+  const fechaIni = new Date(date_in);
+  const fechaFin = new Date(date_out);
 
   return (
     <div className='container'>
