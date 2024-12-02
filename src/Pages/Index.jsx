@@ -61,21 +61,12 @@ const Index = () => {
     const guestMatches = guestCount === 0 || (casa.max_guests && casa.max_guests >= guestCount);
 
     const dateMatches = !casa.reservations.some((reservation) => {
-      console.log("Comparando reserva:", reservation);
       const reservationStart = new Date(reservation.date_in);
       const reservationEnd = new Date(reservation.date_out);
  
-      if(selectedRange[0] && selectedRange[1] && reservationStart && reservationEnd){
-        console.log(selectedRange[1].toLocaleDateString('es-ES'),">",reservationStart.toLocaleDateString('es-ES'));
-        console.log(selectedRange[0].toLocaleDateString('es-ES'),"<",reservationEnd.toLocaleDateString('es-ES'));
-      }
-      
       const isBooked = selectedRange[1] > reservationStart && selectedRange[0] < reservationEnd;
-      console.log("isBooked reserva:", isBooked);
       return isBooked;
     });
-
-    console.log("dateMatches casa", casa.title, "(id=", casa.id, "):", dateMatches);
 
     return cityMatches && guestMatches && dateMatches;
   });

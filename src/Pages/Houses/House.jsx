@@ -19,12 +19,12 @@ import InterruptorGenerico from '../../Components/InterruptorGenerico';
 const House = () => {
   const location = useLocation();  // Hook para obtener el estado enviado
   const navigate = useNavigate();
-  const { id, imgSrc, title, owner_id, price, n_wc, n_rooms, n_single_beds, n_double_beds, max_guests, city, address, lat, long, conditions, description, is_public, is_active, owner_username, reservations, host, fechaIni, fechaFin, guestCount, noches } = location.state || {};  // Extraer datos del estado
+  const { id, imgSrc, title, owner_id, price, n_wc, n_rooms, n_single_beds, n_double_beds, max_guests, city, address, lat, long, conditions, description, is_public, is_active, owner_username, reservations, host, fechaIniActualizadaString, fechaFin, guestCount, noches } = location.state || {};  // Extraer datos del estado
   
-  const fechaIniDate = new Date(fechaIni);
+  const fechaIniDate = new Date(fechaIniActualizadaString);
   const fechaFinDate = new Date(fechaFin);
 
-  console.log("fechas en house:", fechaIni, fechaFin)
+  console.log("fechas en house:", fechaIniDate, fechaFinDate);
 
   const { auth } = useContext(AuthContext);
   const { username } = auth;
@@ -45,7 +45,7 @@ const peticionReservar = async () => {
       JSON.stringify({
         guests_number: guestCount,
         house_id: id,
-        date_in: fechaIni,
+        date_in: fechaIniActualizadaString,
         date_out: fechaFin
       }),
       {
@@ -176,7 +176,7 @@ const peticionReservar = async () => {
         ({ closeToast }) => (
           <div>
             <p style={{ fontSize: '25px', textAlign: 'center' }}>
-              ¿Estás seguro de que deseas <b>RESERVAR</b> esta casa entre las fechas <b>{fechaIni}</b> y <b>{fechaFin}</b>?
+              ¿Estás seguro de que deseas <b>RESERVAR</b> esta casa entre las fechas <b>{fechaIniDate.toLocaleDateString()}</b> y <b>{fechaFinDate.toLocaleDateString()}</b>?
             </p>
             <p style={{ fontSize: '18px', textAlign: 'center' }}>
               Número de huéspedes: <b>{guestCount}</b><br />
@@ -234,11 +234,11 @@ const peticionReservar = async () => {
       <div className='infoizq-infodcha'>
         <div className='infocentroizq'>
           <img src={imgSrc} alt={`Imagen de ${title}`} className="house-foto" />
-          <div className='house-infoizq-info'>
-            <div className='house-infoizq-elem'><b>Visible:</b>{is_public ? "Sí" : "No"}</div>
-          </div>
-        
           {host && (
+            <>
+            <div className='house-infoizq-info'>
+              <div className='house-infoizq-elem'><b>Visible:</b>{is_public ? "Sí" : "No"}</div>
+            </div>
             <div className='house-infoizq-botones'>
               <BotonCalendar nombre={title} id={id} fechas={reservations} />
               <BotonEditCasa 
@@ -268,6 +268,7 @@ const peticionReservar = async () => {
               />
               <BotonEliminar id={id} handleBotonClick={() => handleBotonEliminarClick(id)}></BotonEliminar>
             </div>
+            </>
           )}
           
           <ToastContainer />
@@ -296,7 +297,7 @@ const peticionReservar = async () => {
       </div>
       {!host && (
       <div className='house-botonreservar'>
-        <BotonReservar id={id} fechaIni={fechaIni} fechaFin={fechaFin} noches={noches} guestCount={guestCount} price={price} handleBotonClick={() => handleBotonReservarClick(id)}></BotonReservar>
+        <BotonReservar id={id} fechaIni={fechaIniActualizadaString} fechaFin={fechaFin} noches={noches} guestCount={guestCount} price={price} handleBotonClick={() => handleBotonReservarClick(id)}></BotonReservar>
       </div>
       )}
     </div>

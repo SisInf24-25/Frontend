@@ -45,11 +45,6 @@ const BookList = () => {
     peticionReservas();
   }, []);
 
-  // Lista de elementos con nombre y número
-  const [elementos, setElementos] = useState([
-    { id: 1, imgSrc: casaImg, guests_number: 10, date_in: "2024-12-20", date_out: "2024-12-23", price: 15, house_title: 'Nombre de la casa', guest_username: 'username del huesped', guest_name: 'nombre del huesped', guest_lastname: 'appelidos del huesped', guest_mail: 'mail del huesped', guest_number: 123123123},
-  ]);
-
   return (
     <div className='container'>
       <div className='house-botonatras'>

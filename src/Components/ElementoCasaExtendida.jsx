@@ -5,11 +5,18 @@ import { useNavigate } from 'react-router-dom';
 const ElementoCasaExtendida = ({ id, imgSrc, title, owner_id, price, n_wc, n_rooms, n_single_beds, n_double_beds, max_guests, city, address, lat, long, conditions, description, is_public, is_active, owner_username, reservations, host, fechaIni, fechaFin, guestCount, noches }) => {
     const navigate = useNavigate(); 
   //MUESTRA: nombre, propietario, precio por noche, max huespedes, ciudad
-    
+  console.log("fechaIni",title,":", fechaIni);
+  const fechaIniActualizada = new Date(fechaIni);
+  fechaIniActualizada.setDate(fechaIniActualizada.getDate() + 1);
+  console.log("fechaIniActualizada",title,":", fechaIniActualizada);
+
+  const fechaIniActualizadaString = fechaIniActualizada.toISOString().split('T')[0];
+  console.log("fechaIniActualizadaString",title,":", fechaIniActualizadaString);
+
   // Función para manejar el click en el nombre
   const handleCasaClick = () => {
     navigate(`/houses/element?id=${id}`, {
-      state: { id, imgSrc, title, owner_id, price, n_wc, n_rooms, n_single_beds, n_double_beds, max_guests, city, address, lat, long, conditions, description, is_public, is_active, owner_username, reservations, host, fechaIni, fechaFin, guestCount, noches }  // Pasamos el objeto como estado
+      state: { id, imgSrc, title, owner_id, price, n_wc, n_rooms, n_single_beds, n_double_beds, max_guests, city, address, lat, long, conditions, description, is_public, is_active, owner_username, reservations, host, fechaIniActualizadaString, fechaFin, guestCount, noches }  // Pasamos el objeto como estado
     });
   };
 

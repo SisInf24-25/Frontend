@@ -39,7 +39,7 @@ const ElementoCalendar = ({ onDateRangeChange, selectable, fechas }) => {
 
     const [fechaIni, fechaFin] = range;
 
-    // Validar que la selección es al menos dos días
+    // Validar selección
     if (calcularDiferenciaEnNoches(fechaIni, fechaFin) < 1) {
       setDateRange([null, null]);
       return;
@@ -117,7 +117,7 @@ const ElementoCalendar = ({ onDateRangeChange, selectable, fechas }) => {
         <div>
           <p>Días seleccionados: <b>{dateRange[0].toLocaleDateString('es-ES')}</b> --- <b>{dateRange[1].toLocaleDateString('es-ES')}</b></p>
           <p id='calendar-diasnoches'>
-            <b>{calcularDiferenciaEnNoches(dateRange[0], dateRange[1])}</b> {calcularDiferenciaEnNoches(dateRange[0], dateRange[1]) === 1 ? "noche" : "noches"}
+            <b>{calcularDiferenciaEnNoches(dateRange[0], dateRange[1]) + 1}</b> {calcularDiferenciaEnNoches(dateRange[0], dateRange[1] + 1) === 1 ? "noche" : "noches"}
           </p>
         </div>
       )}
