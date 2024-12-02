@@ -117,7 +117,7 @@ const ElementoCalendar = ({ onDateRangeChange, selectable, fechas }) => {
         <div>
           <p>Días seleccionados: <b>{dateRange[0].toLocaleDateString('es-ES')}</b> --- <b>{dateRange[1].toLocaleDateString('es-ES')}</b></p>
           <p id='calendar-diasnoches'>
-            <b>{calcularDiferenciaEnNoches(dateRange[0], dateRange[1]) + 1}</b> {calcularDiferenciaEnNoches(dateRange[0], dateRange[1] + 1) === 1 ? "noche" : "noches"}
+            <b>{calcularDiferenciaEnNoches(dateRange[0], dateRange[1])}</b> {calcularDiferenciaEnNoches(dateRange[0], dateRange[1]) === 1 ? "noche" : "noches"}
           </p>
         </div>
       )}
